@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eprtools.postpro &mdash; eprtools 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="eprtools.best_fit" href="best_fit.html" />
+    <link rel="prev" title="API Reference" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            eprtools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-line interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">eprtools.postpro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#eprtools.postpro.GvalComparison"><code class="docutils literal notranslate"><span class="pre">GvalComparison</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eprtools.postpro.extract_gvals"><code class="docutils literal notranslate"><span class="pre">extract_gvals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eprtools.postpro.several_gvals"><code class="docutils literal notranslate"><span class="pre">several_gvals()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eprtools.postpro.extract_values"><code class="docutils literal notranslate"><span class="pre">extract_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eprtools.postpro.extract_system_info"><code class="docutils literal notranslate"><span class="pre">extract_system_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eprtools.postpro.add_gval2npz"><code class="docutils literal notranslate"><span class="pre">add_gval2npz()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eprtools.postpro.create_table_per_system"><code class="docutils literal notranslate"><span class="pre">create_table_per_system()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eprtools.postpro.create_table_per_method"><code class="docutils literal notranslate"><span class="pre">create_table_per_method()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eprtools.postpro.compute_bde"><code class="docutils literal notranslate"><span class="pre">compute_bde()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="best_fit.html">eprtools.best_fit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="g_valsetup.html">eprtools.g_valsetup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bonds2npz.html">eprtools.bonds2npz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="miscellaneous.html">eprtools.miscellaneous</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ase_utils.html">eprtools.ase_utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">eprtools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">API Reference</a></li>
+      <li class="breadcrumb-item active">eprtools.postpro</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/postpro.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="eprtools-postpro">
+<h1>eprtools.postpro<a class="headerlink" href="#eprtools-postpro" title="Link to this heading"></a></h1>
+<p>Post-processing of ORCA EPR outputs: g-value extraction, tabulation,
+spectral comparison, and bond dissociation enthalpy.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eprtools.postpro.</span></span><span class="sig-name descname"><span class="pre">GvalComparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecules</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison.add_gvals">
+<span class="sig-name descname"><span class="pre">add_gvals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison.add_gvals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison.add_gvals" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison.add_peak_loc">
+<span class="sig-name descname"><span class="pre">add_peak_loc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison.add_peak_loc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison.add_peak_loc" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison.add_spectra">
+<span class="sig-name descname"><span class="pre">add_spectra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spect_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison.add_spectra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison.add_spectra" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison.d_target_gval">
+<span class="sig-name descname"><span class="pre">d_target_gval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gval_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison.d_target_gval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison.d_target_gval" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison.fit_to">
+<span class="sig-name descname"><span class="pre">fit_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison.fit_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison.fit_to" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison.individual_corr">
+<span class="sig-name descname"><span class="pre">individual_corr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison.individual_corr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison.individual_corr" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison.lc_max_corr">
+<span class="sig-name descname"><span class="pre">lc_max_corr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison.lc_max_corr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison.lc_max_corr" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison.peak_loc">
+<span class="sig-name descname"><span class="pre">peak_loc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison.peak_loc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison.peak_loc" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eprtools.postpro.GvalComparison.pp_dist">
+<span class="sig-name descname"><span class="pre">pp_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#GvalComparison.pp_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.GvalComparison.pp_dist" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eprtools.postpro.extract_gvals">
+<span class="sig-prename descclassname"><span class="pre">eprtools.postpro.</span></span><span class="sig-name descname"><span class="pre">extract_gvals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orca_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/eprtools/postpro.html#extract_gvals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.extract_gvals" title="Link to this definition"></a></dt>
+<dd><p>This function extracts the g-values calculated by orca.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>orca_out</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – path to the output file from orca.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(np.array) [gx, gy, gz] where the order is increasing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eprtools.postpro.several_gvals">
+<span class="sig-prename descclassname"><span class="pre">eprtools.postpro.</span></span><span class="sig-name descname"><span class="pre">several_gvals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#several_gvals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.several_gvals" title="Link to this definition"></a></dt>
+<dd><p>Extract several gvals and compare them with experimental values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>names</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – names of the orca output files separated by commas.
+Eg: ‘cc-pVDZ.out,epr_info.out’</p></li>
+<li><p><strong>experiment</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – expected values according to the experiment</p></li>
+<li><p><strong>path</strong> (<em>str. Default='./'</em>) – path to the directory containing the output files from orca.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eprtools.postpro.extract_values">
+<span class="sig-prename descclassname"><span class="pre">eprtools.postpro.</span></span><span class="sig-name descname"><span class="pre">extract_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">systems</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">orca_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#extract_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.extract_values" title="Link to this definition"></a></dt>
+<dd><p>This function extracts the information of the gvalues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>systems</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – paths to the directories containing the orca files. Each path should
+correspond to a different system.</p></li>
+<li><p><strong>orca_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – names of the orca files containing the g-values. Each one should
+correspond to the calculation of the gvalues with different methods.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p><strong>(dict) shape={&lt;sytem_path&gt;</strong> –</p>
+<dl class="simple">
+<dt>gvalues[g-x, g-y, g-z,</dt><dd><p>maxerror, mean-abs-error]]</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.array([methods E.g. cc-pVDZ, cc-pVDZ i,</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eprtools.postpro.extract_system_info">
+<span class="sig-prename descclassname"><span class="pre">eprtools.postpro.</span></span><span class="sig-name descname"><span class="pre">extract_system_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sys_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">orca_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'epr_info.out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#extract_system_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.extract_system_info" title="Link to this definition"></a></dt>
+<dd><p>Creates gvalues_table.md and gvalues.png</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sys_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – path to the folder containing the candidates.</p></li>
+<li><p><strong>exp_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – String of the list of expected experimental values in shape of python
+list, f.e. ‘[2.0062, 2.0055, 2.0022]’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(StandardPlotter) StandardPlotter used to plot the gvalues.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It assumes that the ORCA output is called epr_info.out</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eprtools.postpro.add_gval2npz">
+<span class="sig-prename descclassname"><span class="pre">eprtools.postpro.</span></span><span class="sig-name descname"><span class="pre">add_gval2npz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#add_gval2npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.add_gval2npz" title="Link to this definition"></a></dt>
+<dd><p>Add g-values to the npz files in the directory based on the files with the
+shape &lt;name&gt;_&lt;index&gt;_epr.out, where the g-values are stored in the index
+&lt;index&gt; corresponds to the element of the g-values array in the npz file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – path to the directory containing the npz files and the epr.out files
+or the npz file itself.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eprtools.postpro.create_table_per_system">
+<span class="sig-prename descclassname"><span class="pre">eprtools.postpro.</span></span><span class="sig-name descname"><span class="pre">create_table_per_system</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">systems</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">orca_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'epr_info.out'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/eprtools/postpro.html#create_table_per_system"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.create_table_per_system" title="Link to this definition"></a></dt>
+<dd><p>For a given system, creates a table with the different systems used to
+compute the g-values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>numpy.array</em>) – g-values in the shape [sys][gx, gy, gz]</p></li>
+<li><p><strong>experiment</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – expected values obtained from the exteriment. [gx, gy, gz] in
+decreassing order.</p></li>
+<li><p><strong>systems</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – list of names of the systems used. they has to be in the same order
+than data.</p></li>
+<li><p><strong>orca_file</strong> (<em>str. Default='epr_info.out'</em>) – name of the orca file containing the g-values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(str) Table of g-values with the different systems and the associated</em></p></li>
+<li><p><em>max error and average error.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eprtools.postpro.create_table_per_method">
+<span class="sig-prename descclassname"><span class="pre">eprtools.postpro.</span></span><span class="sig-name descname"><span class="pre">create_table_per_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><span class="pre">list</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/eprtools/postpro.html#create_table_per_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.create_table_per_method" title="Link to this definition"></a></dt>
+<dd><p>For a given system, creates a table with the different methods used to
+compute the g-values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>numpy.array</em>) – g-values in the shape [meth][gx, gy, gz]</p></li>
+<li><p><strong>experiment</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – expected values obtained from the exteriment. [gx, gy, gz] in
+decreassing order.</p></li>
+<li><p><strong>methods</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – list of names of the methods used. they has to be in the same order
+than data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(str) Table of g-values with the different methods and the associated</em></p></li>
+<li><p><em>max error and average error.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eprtools.postpro.compute_bde">
+<span class="sig-prename descclassname"><span class="pre">eprtools.postpro.</span></span><span class="sig-name descname"><span class="pre">compute_bde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reactants</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">products</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eprtools/postpro.html#compute_bde"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eprtools.postpro.compute_bde" title="Link to this definition"></a></dt>
+<dd><p>Compute the bond dissociation enthalpy (BDE) for a reaction as the
+difference between the total enthalpy of products (P) and reactants (R),
+such that BDE = H_P - H_R.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reactants</strong> (<em>iterable</em>) – An iterable (e.g., list or tuple) of reactant species. Each element
+should be an orca output file path with computed enthalpy.</p></li>
+<li><p><strong>products</strong> (<em>iterable</em>) – An iterable (e.g., list or tuple) of product species. Each element
+should be an orca output file path with computed enthalpy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a>) The BDE computed. The units are the same as in the orca outputs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="best_fit.html" class="btn btn-neutral float-right" title="eprtools.best_fit" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

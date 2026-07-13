@@ -1,0 +1,37 @@
+[project]
+name = "eprtools"
+version = "0.1.0"
+description = "Tools for EPR g-value calculations and spectral analysis"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    { name = "Daniel Sucerquia", email = "sucerquiagaririad@mpip-mainz.mpg.de" }
+]
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "ase",
+    "networkx",
+    "pandas",
+    "PlottingTool",
+]
+
+[project.scripts]
+eprtools = "eprtools.cli.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["*.sh", "*.tcl"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
