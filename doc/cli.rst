@@ -62,6 +62,7 @@ Shell scripts
     eprtools gval_data_restart    [args...]
     eprtools gvals_template       [args...]
     eprtools spectrum_from_gval   [args...]
+    eprtools basics -path         # path to basics.sh, sourced by the scripts above
 
 Other files
 -----------

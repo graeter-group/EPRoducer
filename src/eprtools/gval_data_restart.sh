@@ -34,11 +34,11 @@ do
 
     v) verbose='true' ;;
     h) print_help ;;
-    *) echo "for usage check: myutils <function> -h" >&2 ; exit 1 ;;
+    *) echo "for usage check: eprtools <function> -h" >&2 ; exit 1 ;;
   esac
 done
 
-source "$(myutils basics -path)" submit_dataset $verbose
+source "$(eprtools basics -path)" submit_dataset $verbose
 
 # starting information
 verbose "JOB information"
@@ -68,11 +68,11 @@ do
   fi
 
   sbatch -n $processors $priority -J ${name%.xyz}  $job_options \
-    $(myutils gval_workflow -path) -c $charge \
-                                   -m $multi \
-                                   -f "g$radical,${charged_a}d3" \
-                                   -n ${xyz_file%.xyz} \
-                                   -v -s -p $processors $preemption $other_flags
+    $(eprtools gval_workflow -path) -c $charge \
+                                    -m $multi \
+                                    -f "g$radical,${charged_a}d3" \
+                                    -n ${xyz_file%.xyz} \
+                                    -v -s -p $processors $preemption $other_flags
 done
 
 finish "submitted jobs for the radicals in the npz files in this directory:

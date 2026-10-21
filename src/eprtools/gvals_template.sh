@@ -47,7 +47,7 @@ echo "## Best fit"
 mapfile -t all_fields < <(find . -name 'spectrum_wo_hyFiCorr.dat')
 
 
-myutils best_fit './experiments/<replace: experiment>.dat' \
+eprtools best_fit './experiments/<replace: experiment>.dat' \
    './best_fit_images/<replace: fitting name>.png' '' ${all_fields[@]} > delete_tmp.txt
 
 cat <<EOF

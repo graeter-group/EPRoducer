@@ -68,7 +68,7 @@ do
 
     v) verbose='true' ;;
     h) print_help ;;
-    *) echo "for usage check: myutils <function> -h" >&2 ; exit 1 ;;
+    *) echo "for usage check: eprtools <function> -h" >&2 ; exit 1 ;;
   esac
 done
 
@@ -81,10 +81,10 @@ fi
 if [ ! -f $experiment ]
 then
   fail "You have to give the dat file of the field of the experiment using the
-    flag -e. Check 'myutils extract_EPRspec -h' for details."
+    flag -e. Check 'eprtools extract_EPRspec -h' for details."
 fi
 
-source "$(myutils basics -path)" CandInfo $verbose
+source "$(eprtools basics -path)" CandInfo $verbose
 
 # starting information
 verbose "JOB information"
@@ -94,14 +94,14 @@ echo " * Command:"
 echo "$0" "$@"
 
 # ---- BODY --------------- ----------------------------------------------------
-reference=$(myutils gval_workflow -path)
+reference=$(eprtools gval_workflow -path)
 reference=${reference%/*}
 
 # Creates gvalues_table.md and gvalues.png
 verbose "create gvalues_table.md and gvalues.png"
 
-myutils extract_system_info "$mol_cand" "$exper_values" \
-                            --orca_output "$orca_output"
+eprtools extract_system_info "$mol_cand" "$exper_values" \
+                             --orca_output "$orca_output"
 
 # experiments and outputs are compared pairwise when several outputs are given
 mapfile -t all_exper < <(echo -e "${experiment//,/\\n}")
@@ -128,7 +128,7 @@ do
   do
     if [ ! -f $out_dat ]
     then
-      fail "$out_dat does not exist in $(pwd). Execute 'myutils extract_EPRspec'
+      fail "$out_dat does not exist in $(pwd). Execute 'eprtools extract_EPRspec'
         first."
     fi
   done
@@ -151,7 +151,7 @@ do
     fi
     name_w_ext=${exper_spect##*/}
     name=${name_w_ext%.dat}.png
-    myutils spect_w_experiment $exper_spect $out_dat $name
+    eprtools spect_w_experiment $exper_spect $out_dat $name
     cat <<EOF >> ./vmd_image.md
 
 <div align="center">

@@ -49,6 +49,7 @@ pymodules = {
 }
 
 sh_executers = {
+    'basics': './basics.sh',
     'extract_bonds_vmd': './extract_bonds_vmd.sh',
     'extract_EPRspec': './extract_EPRspec.sh',
     'gval_data_restart': './gval_data_restart.sh',

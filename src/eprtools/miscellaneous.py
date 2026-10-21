@@ -55,7 +55,7 @@ def output_terminal(cmd, print_output=True, skip_error=False, print_cmd=False,
 
 def _time(keyword, logfile):
     """
-    Used in myutils.miscellaneous.time_g09. It extracts the time from a
+    Used in eprtools.miscellaneous.time_g09. It extracts the time from a
     line of gaussian.
 
     Parameters

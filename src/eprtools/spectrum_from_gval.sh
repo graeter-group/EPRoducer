@@ -71,12 +71,12 @@ do
 
     v) verbose='true' ;;
     h) print_help ;;
-    *) echo "for usage check: myutils <function> -h" >&2 ; exit 1 ;;
+    *) echo "for usage check: eprtools <function> -h" >&2 ; exit 1 ;;
   esac
 done
 
 
-source "$(myutils basics -path)" ExtGVals $verbose
+source "$(eprtools basics -path)" ExtGVals $verbose
 load_modules
 
 # starting information

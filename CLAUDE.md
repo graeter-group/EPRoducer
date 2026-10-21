@@ -1,6 +1,6 @@
 Description
 -----------
-This project aims to separate the section sith of myutils (../myutils/src/myutils/g_vals) into
+This project aims to separate the section g_values of myutils (../myutils/src/myutils/g_values) into
 a completely new python package.
 
 rules
