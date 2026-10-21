@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#SBATCH -N 1 
+#SBATCH -N 1
 #SBATCH --threads-per-core=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=64G
+#SBATCH --mem=20G
 #SBATCH -t 24:00:00
 #SBATCH --output=%x-%j.o
 #SBATCH --error=%x-%j.e
