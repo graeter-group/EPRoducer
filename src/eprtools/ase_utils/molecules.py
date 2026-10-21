@@ -1,3 +1,8 @@
+"""
+Molecular geometry tools built on top of ASE: alignment, transformation,
+PCA-based matching, and VMD-based connectivity extraction.
+"""
+
 from ase.calculators.gaussian import Gaussian
 import numpy as np
 from ase import Atom
@@ -14,6 +19,10 @@ class MoleculeSetter:
         molecule to be analyzed.
     """
     def __init__(self, atoms):
+        """
+        Stores the molecule to be edited. See the class docstring for the
+        parameters.
+        """
         self.atoms = atoms
 
     def rot_x(self, angle):
@@ -78,8 +87,8 @@ class MoleculeSetter:
 
     def align_axis(self, vector):
         """
-        Apply the necessary rotations to set a vector aligned with positive x
-        axis.
+        Computes the rotation matrix that aligns a vector with the positive x
+        axis. The atoms are not modified.
 
         Parameters
         ==========
@@ -132,11 +141,12 @@ class MoleculeSetter:
             that means the transformation is applied to the positions of all
             the atoms.
         shift: list. Default=None
-            vector to apply a translation.
+            translation vector added after the transformation. It is applied
+            to all the atoms, also to those not included in indexes.
 
         Return
         ======
-        (numpy.array)[#natoms x 3float] new xyz positions of the N atoms. It
+        (list)[#natoms x 3float] new xyz positions of the N atoms. It
             changes the positions of the internal atoms object.
         """
         if shift is None:
@@ -167,7 +177,7 @@ class MoleculeSetter:
             direction of x would go from atom 1 to atom 2.
         index3: int. Default=None
             The atom with index 3 would be in the xy plane in case to be given.
-        Center: int. Default=None
+        center: int. Default=None
             It must be index1 or index2, that means the atom with this index
             will be placed in the origin. In case center=None (default), the
             origin would be in the geometrical center between atoms with index1
@@ -219,8 +229,10 @@ class MoleculeSetter:
     def increase_distance_with_constraints(self, constraints, deltad):
         """
         Take a configuration and increase the distance between two atoms by
-        moving those atoms and all constraints containing them and keeping
-        the rest of the atoms in the same place.
+        moving those atoms and the atoms connected to them through the other
+        constraints, and keeping the rest of the atoms in the same place. The
+        molecule is first centered and rotated such that the two atoms lie on
+        the x axis (see MoleculeSetter.xy_alignment).
 
         Parameters
         ==========
@@ -272,7 +284,8 @@ class MoleculeSetter:
     def scale_distance(self, constraints, deltad, index3=None):
         """
         Increase the distance between two atoms by aligning those atoms with
-        the x axis and scaling the x-coordinate of all intermedia atoms.
+        the x axis (the first atom at the origin) and scaling the x-coordinate
+        of all the atoms.
 
         Parameters
         ==========
@@ -287,7 +300,9 @@ class MoleculeSetter:
 
         Return
         ======
-        (ase.Atoms) Internal Atoms object with the corresponding modification.
+        (list)[#natoms x 3float] scaled xyz positions, before the rotation of
+        index3 into the xy plane. The internal atoms object is also modified
+        (including that rotation).
         """
         index1, index2 = constraints[0]
         d1norm = self.atoms.get_distance(index1, index2)
@@ -351,6 +366,10 @@ class Alignment:
         molecule to be aligned.
     """
     def __init__(self, atoms):
+        """
+        Stores the molecule to be aligned and a MoleculeSetter to transform it.
+        See the class docstring for the parameters.
+        """
         self.atoms = atoms
         self.ms = MoleculeSetter(self.atoms)
 
@@ -445,6 +464,10 @@ class PCAMatcher:
         molecule to be compared to the reference.
     """
     def __init__(self, reference, to_compare):
+        """
+        Stores copies of the two molecules to be matched. They must have the same
+        number of atoms. See the class docstring for the parameters.
+        """
         assert len(reference) == len(to_compare), "The reference and the " + \
             "structure to compare have to have the same number of atoms"
         self.reference = reference.copy()
@@ -478,7 +501,8 @@ class PCAMatcher:
 
         Note
         ----
-        align before using this function
+        Both molecules are aligned (see PCAMatcher.align_molecules) before
+        matching.
         """
         self.align_molecules()
         n_atoms = len(self.reference)
@@ -502,6 +526,24 @@ class PCAMatcher:
 
 
 def vmd_connectivity(mol):
+    """
+    Extracts the connectivity of a molecule using VMD.
+
+    Parameters
+    ==========
+    mol: str
+        path to a molecule file that VMD can read (e.g. xyz or pdb).
+
+    Return
+    ======
+    (list) [n_atoms] list where the element i contains the indices of the
+    atoms bonded to the atom i. Indices start from 0 and every bond appears
+    twice (j in the list of i and i in the list of j).
+
+    Note
+    ====
+    VMD must be available in the PATH. It uses 'eprtools extract_bonds_vmd'.
+    """
     raw = output_terminal(f'eprtools extract_bonds_vmd {mol} | ' +
                            r"awk '/atomselect0/{flag=1} /Info\)/{flag=0} flag' | tail -n +2",
                           print_output=False).split('\n')
@@ -511,6 +553,20 @@ def vmd_connectivity(mol):
 
 
 def vmd_connectivity_unique(mol):
+    """
+    Extracts the connectivity of a molecule using VMD, keeping each bond only
+    once.
+
+    Parameters
+    ==========
+    mol: str
+        path to a molecule file that VMD can read (e.g. xyz or pdb).
+
+    Return
+    ======
+    (list) [n_atoms] list where the element i contains the indices j > i of
+    the atoms bonded to the atom i. Indices start from 0.
+    """
     redundant = vmd_connectivity(mol)
     unique = []
     for i, connections in enumerate(redundant):
@@ -523,6 +579,19 @@ def vmd_connectivity_unique(mol):
 
 
 def vmd_connectivity_matrix(mol):
+    """
+    Builds the adjacency matrix of a molecule using the connectivity from VMD.
+
+    Parameters
+    ==========
+    mol: str
+        path to a molecule file that VMD can read (e.g. xyz or pdb).
+
+    Return
+    ======
+    (numpy.array) [n_atoms x n_atoms] symmetric matrix with 1 where two atoms
+    are bonded and 0 otherwise.
+    """
     redundant = vmd_connectivity(mol)
     matrix = np.zeros((len(redundant), len(redundant)))
     for i, connections in enumerate(redundant):

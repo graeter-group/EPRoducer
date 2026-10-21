@@ -1,3 +1,8 @@
+"""
+General-purpose utilities: shell command execution and introspection
+helpers.
+"""
+
 import subprocess
 import inspect
 from importlib import import_module
@@ -6,25 +11,26 @@ from importlib import import_module
 def output_terminal(cmd, print_output=True, skip_error=False, print_cmd=False,
                     **kwargs):
     """
-    Runs a command in a terminal and save the output in a list
-    of strings
+    Runs a command in a terminal and returns its output.
 
     Parameters
     ==========
     cmd: str
         bash command to be executed in the terminal.
     print_output: bool. Default=True
-        True for printing the output besides of returning it. Default False.
+        True for printing the output (without empty lines) besides of
+        returning it.
     skip_error: bool. Default=False
-        True for continuing running although the command fails. Default False.
+        True for continuing running although the command fails. Otherwise, an
+        AssertionError with the error message is raised.
+    print_cmd: bool. Default=False
+        print the command before executing it.
     **kwargs:
         additional options for subprocess.Popen
-    print_cmd: Default=False
-        print the command that was just executed.
 
     Return
     ======
-    (list) [#linesStr] output of the executed command, line by line.
+    (str) standard output of the executed command.
     """
     if print_cmd:
         print(cmd)
@@ -67,7 +73,8 @@ def _time(keyword, logfile):
 
     Return
     ======
-    # TODO: add return information
+    (tuple) month (str), day, hour, minutes and seconds (int) written in the
+    first line of logfile that contains keyword.
     """
     out = output_terminal("grep '" + keyword + "' " + logfile)
     out = out.split()
@@ -96,8 +103,9 @@ def time_g09(logfile):
 
     Return
     ======
-    (float) Time in seconds although the time in minutes, seconds and hours are
-    printed.
+    (float) Time in minutes. The time in seconds, minutes and hours is also
+    printed. If the simulation starts and ends in different months, it only
+    prints a message and returns None.
     """
     t_i = _time('Leave Link    1', logfile)
     t_f = _time('Normal termination of Gaussian', logfile)
@@ -143,15 +151,16 @@ def optimized_e(file):
 # add2executable
 def args_and_defaults(module, *args):
     """
-    Takes a function and prints its parameters with their default values.
+    Takes a function and returns its parameters with their default values.
 
     Parameters
     ==========
-    func:
-        function that you want to extract the parameters and default values.
-    module:
-        module to extract arguments and defatuls.
-    *args subclases or modules inside module.
+    module: str
+        name of the module containing the function, e.g.
+        'eprtools.ase_utils.molecules'.
+    *args: str
+        path to the function inside the module, e.g. 'MoleculeSetter',
+        'rot_x' for eprtools.ase_utils.molecules.MoleculeSetter.rot_x.
 
     Return
     ======
@@ -183,13 +192,16 @@ def args_and_defaults(module, *args):
 # add2executable
 def function_doc(module, *args):
     """
-    Takes a function and prints its documentation.
+    Takes a function and returns its documentation.
 
     Parameters
     ==========
-    module:
-        module to extract the documentation.
-    *args subclases or modules inside module.
+    module: str
+        name of the module containing the function, e.g.
+        'eprtools.ase_utils.molecules'.
+    *args: str
+        path to the function inside the module, e.g. 'MoleculeSetter',
+        'rot_x' for eprtools.ase_utils.molecules.MoleculeSetter.rot_x.
 
     Return
     ======

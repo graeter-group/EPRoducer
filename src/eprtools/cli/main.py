@@ -1,3 +1,9 @@
+"""
+Entry point of the 'eprtools' command. It exposes the python functions in
+pymodules, the shell scripts in sh_executers and the bundled files in
+other_files as 'eprtools <function> [args...]'.
+"""
+
 from importlib import import_module
 import subprocess
 from pathlib import Path
@@ -6,6 +12,24 @@ import numpy as np
 
 
 def output_terminal(cmd, print_output=True, skip_error=False, **kwargs):
+    """
+    Runs a command in a terminal and prints its output while it runs.
+
+    Parameters
+    ==========
+    cmd: str
+        bash command to be executed in the terminal.
+    print_output: bool. Default=True
+        True for printing the output besides of returning it.
+    skip_error: bool. Default=False
+        True for continuing running although the command fails.
+    **kwargs:
+        additional options for subprocess.Popen
+
+    Return
+    ======
+    (str) standard output of the executed command.
+    """
     p = subprocess.Popen(cmd,
                          shell=True,
                          stdout=subprocess.PIPE,
@@ -66,6 +90,19 @@ other_files = {
 
 
 def _read_arguments():
+    """
+    Reads the arguments given in the terminal after the name of the function.
+    The arguments before the first '--<key>' are passed as positional
+    arguments (str). Each '--<key> <value>' is passed as a keyword argument
+    whose value is evaluated as a python expression, e.g. '--n 3' gives n=3
+    and "--selection '[1, 2]'" gives selection=[1, 2]. Hence, string values
+    must be quoted, e.g. --orca_output "'epr_info.out'".
+
+    Return
+    ======
+    (tuple) (args, kwargs) with the list of positional arguments and the
+    dictionary of keyword arguments.
+    """
     if len(sys.argv) == 1:
         return ((), {})
     argument = '_reader_args'
@@ -97,6 +134,18 @@ def _read_arguments():
 
 
 def main():
+    """
+    Runs each time eprtools is called from the terminal. Depending on the
+    first argument, it prints the list of functions (-h), runs a python
+    function, runs a shell script or prints the path of a bundled file.
+    After the name of a python function, -h prints its docstring and -path
+    its module. After the name of a shell script, -path prints the path of
+    the script.
+
+    Return
+    ======
+    (None)
+    """
     if sys.argv[1] in ('-h', '--help', 'help'):
         functions = list(pymodules.keys()) + list(sh_executers.keys())
         functions.sort()

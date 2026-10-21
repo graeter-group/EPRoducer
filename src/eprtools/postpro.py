@@ -1,3 +1,8 @@
+"""
+Post-processing of ORCA EPR outputs: g-value extraction, tabulation,
+spectral comparison, and bond dissociation enthalpy.
+"""
+
 from PlottingTool import StandardPlotter
 import matplotlib.pyplot as plt
 from glob import glob
@@ -22,7 +27,7 @@ def extract_gvals(orca_out: str) -> np.ndarray:
 
     Return
     ======
-    (np.array) [gx, gy, gz] where the order is increasing.
+    (np.array) [gx, gy, gz] in decreasing order.
     """
 
     out = output_terminal(f'grep -A 21 "ELECTRONIC G-MATRIX" {orca_out}' +
@@ -43,13 +48,16 @@ def several_gvals(names: str, experiment: np.ndarray, path: str = './'):
     names: str
         names of the orca output files separated by commas.
         Eg: 'cc-pVDZ.out,epr_info.out'
-    experiment: str
-        expected values according to the experiment
+    experiment: numpy.array
+        expected values according to the experiment [gx, gy, gz] in
+        decreasing order.
     path: str. Default='./'
         path to the directory containing the output files from orca.
 
     Return
     ======
+    (list) one array per orca file with [gx, gy, gz, max absolute error,
+    mean absolute error] as strings.
     """
     methods = names.split(',')
 
@@ -78,8 +86,9 @@ def create_table_per_method(data: np.ndarray,
     Parameters
     ==========
     data: numpy.array
-        g-values in the shape [meth][gx, gy, gz]
-    experiment: list
+        g-values and errors in the shape [meth][gx, gy, gz, max absolute
+        error, mean absolute error], as returned by several_gvals.
+    experiment: numpy.array
         expected values obtained from the exteriment. [gx, gy, gz] in
         decreassing order.
     methods: list
@@ -88,8 +97,8 @@ def create_table_per_method(data: np.ndarray,
 
     Return
     ======
-    (str) Table of g-values with the different methods and the associated
-    max error and average error.
+    (str) Table in LaTeX format of g-values with the different methods and
+    the associated max error and average error. The table is also printed.
     """
     assert len(data) == len(methods), "There is not the same amount of " + \
         "methods than g-values."
@@ -123,19 +132,18 @@ def create_table_per_system(experiment: list,
                             systems: list,
                             orca_file: str='epr_info.out') -> str:
     """
-    For a given system, creates a table with the different systems used to
-    compute the g-values.
+    Creates a markdown table with the g-values of several systems computed
+    with the same method, and their errors with respect to the experiment.
 
     Parameters
     ==========
-    data: numpy.array
-        g-values in the shape [sys][gx, gy, gz]
     experiment: list
         expected values obtained from the exteriment. [gx, gy, gz] in
         decreassing order.
     systems: list
-        list of names of the systems used. they has to be in the same order
-        than data.
+        paths to the directories of the systems, ending with '/'. Each
+        directory contains orca_file, and the name of the system in the table
+        links to <system>vmd_image.md.
     orca_file: str. Default='epr_info.out'
         name of the orca file containing the g-values.
 
@@ -199,15 +207,18 @@ def extract_values(systems: list, orca_files: list, experiment: list):
     systems: list
         paths to the directories containing the orca files. Each path should
         correspond to a different system.
-    orca_files: list
-        names of the orca files containing the g-values. Each one should
-        correspond to the calculation of the gvalues with different methods.
+    orca_files: str
+        names of the orca files containing the g-values separated by commas,
+        e.g. 'cc-pVDZ.out,epr_info.out'. Each one should correspond to the
+        calculation of the gvalues with different methods.
+    experiment: list
+        expected values obtained from the experiment. [gx, gy, gz] in
+        decreasing order.
 
     Return
     ======
-    (dict) shape={<sytem_path>: np.array([methods E.g. cc-pVDZ, cc-pVDZ i,
-                                          gvalues[g-x, g-y, g-z,
-                                                  maxerror, mean-abs-error]]
+    (dict) {<system_path>: list with one array per orca file [gx, gy, gz,
+    max absolute error, mean absolute error]}, see several_gvals.
     """
     all_gvalues = {}
     for system in systems:
@@ -220,24 +231,24 @@ def extract_values(systems: list, orca_files: list, experiment: list):
 def extract_system_info(sys_path: str, exp_values: str,
                         orca_output: str = 'epr_info.out'):
     """
-    Creates gvalues_table.md and gvalues.png
+    Creates gvalues_table.md and gvalues.png in sys_path.
 
     Parameters
     ==========
     sys_path: str
-        path to the folder containing the candidates.
+        path to the folder containing the candidates. The candidates are the
+        subdirectories whose name contains '-'.
     exp_values: str
         String of the list of expected experimental values in shape of python
-        list, f.e. '[2.0062, 2.0055, 2.0022]'
+        list, f.e. '[2.0062, 2.0055, 2.0022]'. Use '' if there are no
+        experimental values.
+    orca_output: str. Default='epr_info.out'
+        name of the orca output file with the g-values in each candidate
+        directory.
 
     Return
     ======
     (StandardPlotter) StandardPlotter used to plot the gvalues.
-
-
-    Note
-    ====
-    It assumes that the ORCA output is called epr_info.out
     """
     if exp_values == '':
         experiment = np.zeros(3)
@@ -307,15 +318,17 @@ def extract_system_info(sys_path: str, exp_values: str,
 # add2executable
 def add_gval2npz(path):
     """
-    Add g-values to the npz files in the directory based on the files with the
-    shape <name>_<index>_epr.out, where the g-values are stored in the index
-    <index> corresponds to the element of the g-values array in the npz file.
+    Add g-values to the npz files in the entry 'g-values', based on the files
+    with the shape <name>_<index>_epr.out next to <name>.npz. The g-values of
+    each file are stored in the row <index> of 'g-values', which is created
+    with zeros (one row per radical in 'heavy_atom_missing_idxs') if it does
+    not exist.
 
     Parameters
     ==========
     path: str
-        path to the directory containing the npz files and the epr.out files
-        or the npz file itself.
+        path to the directory containing the npz files and the epr.out files,
+        the npz file itself or a .dat file with a list of npz files.
     """
     if path[-4:] == '.npz':
         npz_files = [path]
@@ -349,11 +362,41 @@ def add_gval2npz(path):
         np.savez(file, **info)
 
 class GvalComparison:
+    """
+    Table (pandas.DataFrame stored in GvalComparison.df) to compare the
+    g-values and spectra of several candidate molecules with each other and
+    with experiments. Each method adds one or more columns to the table.
+
+    Parameters
+    ==========
+    molecules: list
+        paths to the directories of the candidate molecules. They are stored
+        in the column 'molecule'.
+    """
     def __init__(self, molecules):
+        """
+        Creates the table with the column 'molecule'. See the class docstring
+        for the parameters.
+        """
         self.tme = None
         self.df = pd.DataFrame({'molecule': molecules})
 
     def add_gvals(self, output_files):
+        """
+        Extracts the g-values of each molecule from its orca output and stores
+        them in the column 'gval'.
+
+        Parameters
+        ==========
+        output_files: str or list
+            orca output files, one per molecule. If a str is given, it is taken
+            as the name of the file inside the directory of each molecule, i.e.
+            <molecule>/<output_files>.
+
+        Return
+        ======
+        (list) g-values [gx, gy, gz] of each molecule.
+        """
         if isinstance(output_files, str):
             output_files = [i + '/' + output_files
                             for i in self.df['molecule']]
@@ -365,12 +408,47 @@ class GvalComparison:
         return gvals
 
     def d_target_gval(self, gval_ref, column_name):
+        """
+        Computes the euclidean distance between the g-values of each molecule
+        and a reference, and stores it in a new column. Requires the column
+        'gval' (see GvalComparison.add_gvals).
+
+        Parameters
+        ==========
+        gval_ref: list
+            reference g-values [gx, gy, gz], e.g. from the experiment.
+        column_name: str
+            name of the new column.
+
+        Return
+        ======
+        (pandas.DataFrame) updated table.
+        """
         delta_fuction = lambda x: np.linalg.norm(np.array(x) - gval_ref)
         self.df[column_name] = self.df['gval'].apply(delta_fuction)
 
         return self.df
 
     def add_spectra(self, spect_files, experiment=None):
+        """
+        Loads the computed spectrum of each molecule, interpolated onto the field
+        of the experiment (see TheoMatchExpe), and stores it in the column
+        'spectrum'. It also adds the column 'peak_loc'.
+
+        Parameters
+        ==========
+        spect_files: str or list
+            .dat files (field vs intensity) of the computed spectra, one per
+            molecule. If a str is given, it is taken as the name of the file
+            inside the directory of each molecule, i.e. <molecule>/<spect_files>.
+        experiment: str. Default=None
+            .dat file of the experimental spectrum whose field is used for the
+            interpolation. If None, the field of the first spectrum is used.
+
+        Return
+        ======
+        (numpy.array) [n_molecules x n_points] interpolated spectra.
+        """
         if isinstance(spect_files, str):
             spect_files = [i + '/' + spect_files
                            for i in self.df['molecule']]
@@ -382,6 +460,15 @@ class GvalComparison:
         return self.tme.intensities
 
     def add_peak_loc(self):
+        """
+        Stores the field where each spectrum has its maximum in the column
+        'peak_loc'. Requires the column 'spectrum' (see
+        GvalComparison.add_spectra).
+
+        Return
+        ======
+        (list) field of the maximum of each spectrum.
+        """
         ds = []
         for spec in self.df['spectrum']:
             ipeak, _ = self.peak_loc(self.tme.fieldexp, spec)
@@ -391,6 +478,24 @@ class GvalComparison:
         return ds
 
     def fit_to(self, experiment_file, **kwargs):
+        """
+        Fits the spectra of the molecules to an experimental spectrum, keeping
+        only the molecules that contribute the most (see
+        TheoMatchExpe.gradual_cleaning). Requires GvalComparison.add_spectra to
+        be called first.
+
+        Parameters
+        ==========
+        experiment_file: str
+            .dat file of the experimental spectrum.
+        **kwargs:
+            passed to TheoMatchExpe.gradual_cleaning, e.g. threshold, steps or
+            shifting_width.
+
+        Return
+        ======
+        (tuple) files of the selected spectra and their percentages in the fit.
+        """
         self.tme.fieldexp, self.tme.intensexp = np.loadtxt(experiment_file,
                                                            unpack=True)
         self.tme.intensexp = self.tme.intensexp / max(self.tme.intensexp)
@@ -400,7 +505,34 @@ class GvalComparison:
         return self.tme.files, self.tme.percentages
 
     def lc_max_corr(self, experiment, column_name):
+        """
+        Finds the coefficients of the linear combination of the spectra that
+        maximizes the Pearson correlation with an experimental spectrum, and
+        stores them in a new column. Requires the column 'spectrum' (see
+        GvalComparison.add_spectra).
+
+        Parameters
+        ==========
+        experiment: numpy.array
+            experimental intensities, defined on the same field values as the
+            spectra in the column 'spectrum'.
+        column_name: str
+            name of the new column with the coefficients.
+
+        Return
+        ======
+        (tuple) coefficients and the maximum correlation reached.
+
+        Note
+        ====
+        The optimization starts from random coefficients, so the result can
+        change between runs.
+        """
         def lc_corr(coefs, functions, experiment):
+            """
+            Negative Pearson correlation between the linear combination of functions
+            (weighted by coefs) and the experiment. It is the function minimized.
+            """
             linear_combination = np.sum(coefs * functions, axis=0)
             return -pearsonr(linear_combination, experiment)[0]
         x0 = np.random.rand(len(self.df['spectrum']))
@@ -411,6 +543,23 @@ class GvalComparison:
         return result.x, -result.fun
 
     def individual_corr(self, experiment, column_name):
+        """
+        Computes the Pearson correlation between each spectrum and an
+        experimental spectrum, and stores it in a new column. Requires the column
+        'spectrum' (see GvalComparison.add_spectra).
+
+        Parameters
+        ==========
+        experiment: numpy.array
+            [2 x n_points] experimental field and intensities. The spectra are
+            interpolated onto this field before computing the correlation.
+        column_name: str
+            name of the new column.
+
+        Return
+        ======
+        (list) correlation of each spectrum with the experiment.
+        """
         corr = []
         for spec in self.df['spectrum']:
             intensity = np.interp(experiment[0], self.tme.fieldexp, spec)
@@ -421,12 +570,44 @@ class GvalComparison:
         return corr
 
     def peak_loc(self, x, y):
+        """
+        Finds the maximum of a spectrum.
+
+        Parameters
+        ==========
+        x: numpy.array
+            field values.
+        y: numpy.array
+            intensities.
+
+        Return
+        ======
+        (tuple) field where the maximum is located and the maximum intensity.
+        """
         ymax = np.max(y)
         i = np.where(y == ymax)[0][0]
 
         return x[i], ymax
 
     def pp_dist(self, reference, column_name):
+        """
+        Computes the distance between the peak of each spectrum and a reference
+        peak, and stores it in a new column. Requires the column 'peak_loc' (see
+        GvalComparison.add_spectra).
+
+        Parameters
+        ==========
+        reference: float, numpy.array or str
+            field of the reference peak, or a [2 x n_points] spectrum (field and
+            intensities) whose maximum is taken as reference, or the path to a
+            .dat file with that spectrum.
+        column_name: str
+            name of the new column.
+
+        Return
+        ======
+        (pandas.Series) peak_loc - reference for each molecule.
+        """
         if isinstance(reference, str):
             reference = np.loadtxt(reference, unpack=True)
         if len(np.array(reference).shape) != 0:

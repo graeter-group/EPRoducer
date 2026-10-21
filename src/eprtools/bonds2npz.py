@@ -1,3 +1,8 @@
+"""
+Utilities for adding bond connectivity and molecular ID information to npz
+dataset files.
+"""
+
 from eprtools.g_valsetup import ext_xyz_from_npz, get_connectivity
 import numpy as np
 import glob
@@ -7,7 +12,8 @@ from ase.io import write
 # add2executable
 def addfile2npz(npz_file_ref, npz_file_add, file_name):
     """
-    Add file information to npz files from another one
+    Copies one entry of an npz file into another npz file. If the entry
+    already exists in the second file, it is overwritten.
 
     Parameters
     ==========
@@ -15,10 +21,12 @@ def addfile2npz(npz_file_ref, npz_file_add, file_name):
         Path to the reference npz file.
     npz_file_add: str
         Path to the npz file to add information.
+    file_name: str
+        key of the entry in npz_file_ref to be copied.
 
     Returns
     =======
-    (dict) data in npz file.
+    (dict) data in npz_file_add after adding the entry.
     """
     ref = np.load(npz_file_ref)
     add = np.load(npz_file_add)
@@ -31,9 +39,11 @@ def addfile2npz(npz_file_ref, npz_file_add, file_name):
 # add2executable
 def bonds2npz(npz_file):
     """
-    Add bond information to npz files. The bond information is obtained from
-    the xyz files that are created from the npz files. The connectivity is
-    obtained using the VMD method.
+    Add bond information to npz files in the entry 'bonds'. The connectivity
+    of the original molecule ('original_atomic_numbers' and 'original_xyz') is
+    obtained with VMD. Then, for each hydrogen in 'original_hydrogen_idxs', the
+    bonds of the molecule without that hydrogen are stored (with the indices
+    shifted accordingly). The npz files that fail are listed in failed.dat.
 
     Parameters
     ==========
@@ -43,7 +53,8 @@ def bonds2npz(npz_file):
 
     Returns
     =======
-    (list) connectivity information for each molecule in the npz file(s).
+    (list) [n_hydrogens][n_bonds x 2] bonds of each radical of the last npz
+    file processed.
     """
     if npz_file.endswith('.npz'):
         npz_files = [npz_file]
@@ -100,7 +111,9 @@ def bonds2npz(npz_file):
 # add2executable
 def molid2npz(npz_file):
     """
-    Add molecular ID information to npz files. The molecular ID information
+    Add molecular ID information to npz files in the entry 'molid'. The ID of
+    the structure i is '<npz path without extension>_<i>', with i written with
+    three digits, e.g. 'dir/mol_007'.
 
     Parameters
     ==========
@@ -109,7 +122,7 @@ def molid2npz(npz_file):
 
     Returns
     =======
-
+    (None) it modifies the npz files.
     """
     if npz_file.endswith('.npz'):
         npz_files = [npz_file]

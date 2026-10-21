@@ -1,3 +1,9 @@
+"""
+Molecular structure utilities for EPR g-value calculations: connectivity
+analysis, radical site location, and structure extraction from npz
+datasets.
+"""
+
 from ase.io import read, write
 from ase.geometry.analysis import Analysis
 from ase import Atoms
@@ -7,8 +13,9 @@ import networkx as nx
 
 def HFC_relevantA(atoms, radicals, depth=2):
     """
-    Extract the H atoms of the neighbors up to certain depth (neighbors of
-    neighbors). It also includes all O and N atoms.
+    Extract the H, O and N atoms in the neighborhood of the radicals up to
+    certain depth (neighbors of neighbors, moving only through heavy atoms).
+    It also includes the H atoms bonded to those O and N atoms.
 
     Parameters
     ==========
@@ -22,8 +29,9 @@ def HFC_relevantA(atoms, radicals, depth=2):
 
     Return
     ======
-    (np.array) Indexes of the H atoms belonging to the neighborhood of the
-    radicals and the indexes of the N and O atoms. The indices start with 1.
+    (dict) {element: list of indexes} with the indexes of the H, O and N
+    atoms grouped by element, e.g. {'H': [3, 4], 'O': [7]}. The indices start
+    with 1.
     """
     centers = np.array(radicals) - 1
     elements = np.array(atoms.get_chemical_symbols())
@@ -67,10 +75,9 @@ def HFC_relevantA(atoms, radicals, depth=2):
 # add2executable
 def iHFC_fromxyz(file, radicals, depth):
     """
-    Extract the H atoms of the neighbors up to certain depth (neighbors of
-    neighbors). It also includes all O and N atoms. Those atoms are the
-    relevant ones for HyperFine Calculations (HFC). This function receives
-    strings as inputs.
+    Extract the H, O and N atoms in the neighborhood of the radicals up to
+    certain depth (see HFC_relevantA). Those atoms are the relevant ones for
+    HyperFine Calculations (HFC). This function receives strings as inputs.
 
     Parameters
     ==========
@@ -87,8 +94,8 @@ def iHFC_fromxyz(file, radicals, depth):
 
     Return
     ======
-    (np.array) Indexes of the H atoms belonging to the neighborhood of the
-    radicals and the indexes of the N and O atoms. It starts from 1.
+    (dict) {element: list of indexes} with the indexes of the H, O and N
+    atoms grouped by element. The indices start from 1.
     """
     atoms = read(file)
     radicals = eval(radicals)
@@ -98,6 +105,22 @@ def iHFC_fromxyz(file, radicals, depth):
 
 
 def get_connectivity(atoms, engine):
+    """
+    Computes the connectivity of a molecule.
+
+    Parameters
+    ==========
+    atoms: ase.Atoms
+        molecule to be analyzed.
+    engine: str
+        'vmd' to use the bonds detected by VMD (VMD must be in the PATH) or
+        'ase' to use the natural cutoffs of ase.neighborlist.
+
+    Return
+    ======
+    (list) [n_atoms] list where the element i contains the indices of the
+    atoms bonded to the atom i. Indices start from 0.
+    """
     if engine == 'vmd':
         from ase.io import write
         from eprtools.ase_utils.molecules import vmd_connectivity
@@ -120,6 +143,23 @@ def get_connectivity(atoms, engine):
 
 
 def ase_to_nx_graph(atoms, engine='vmd'):
+    """
+    Converts a molecule into a networkx graph whose nodes are the atoms, with
+    their atomic number in the attribute 'atomic_number', and whose edges are
+    the bonds.
+
+    Parameters
+    ==========
+    atoms: ase.Atoms
+        molecule to be converted.
+    engine: str. Default='vmd'
+        engine used to get the connectivity, 'vmd' or 'ase'. See
+        get_connectivity.
+
+    Return
+    ======
+    (networkx.Graph) graph of the molecule.
+    """
     connectivity  = get_connectivity(atoms, engine)
 
     G = nx.Graph()
@@ -136,21 +176,31 @@ def ase_to_nx_graph(atoms, engine='vmd'):
 
 def get_isomorphic_permutation(nx_graph1, nx_graph2):
     """
-    Returns a permutation list to reorder the atoms of `graph2` to match `graph1`
-    based on their isomorphic structure such that e.g.:
+    Returns a permutation list to reorder the atoms of `nx_graph2` to match
+    `nx_graph1` based on their isomorphic structure (nodes are matched by
+    their 'atomic_number'), such that e.g.:
 
     permutation = get_isomorphic_permutation(g1, g2)
-    g2.atomic_number[:,permutation] = g1.atomic_number
+    numbers2[permutation] == numbers1
 
-    Parameters:
-    - graph1: A DGLGraph object representing the first molecular graph.
-    - graph2: A DGLGraph object representing the second molecular graph.
+    Parameters
+    ==========
+    nx_graph1: networkx.Graph
+        first molecular graph (see ase_to_nx_graph).
+    nx_graph2: networkx.Graph
+        second molecular graph (see ase_to_nx_graph).
 
-    Returns:
-    - List[int]: A list of indices representing the permutation required to align graph1 to graph2.
+    Return
+    ======
+    (list) permutation such that the node i of nx_graph1 corresponds to the
+    node permutation[i] of nx_graph2. Raises ValueError if the graphs are not
+    isomorphic.
     """
 
     def node_match(n1, n2):
+        """
+        True if both nodes have the same atomic number.
+        """
         return n1['atomic_number'] == n2['atomic_number']
 
     gm = nx.isomorphism.GraphMatcher(nx_graph1, nx_graph2, node_match=node_match)
@@ -163,6 +213,27 @@ def get_isomorphic_permutation(nx_graph1, nx_graph2):
         raise ValueError("Graphs are not isomorphic")
 
 def get_permutation_of_heavy_atoms(heavy_ref_mol, heavy_mch_mol, engine='vmd'):
+    """
+    Finds the permutation that maps the heavy atoms of the reference molecule
+    onto the heavy atoms of the molecule to match, using the isomorphism of
+    their molecular graphs.
+
+    Parameters
+    ==========
+    heavy_ref_mol: ase.Atoms
+        reference molecule (only heavy atoms).
+    heavy_mch_mol: ase.Atoms
+        molecule to match (only heavy atoms).
+    engine: str. Default='vmd'
+        engine used to get the connectivity, 'vmd' or 'ase'. See
+        get_connectivity.
+
+    Return
+    ======
+    (list) permutation such that the atom i of heavy_ref_mol corresponds to
+    the atom permutation[i] of heavy_mch_mol. Raises ValueError if the
+    molecular graphs are not isomorphic.
+    """
     graph_ref = ase_to_nx_graph(heavy_ref_mol, engine=engine)
     graph_2ma = ase_to_nx_graph(heavy_mch_mol, engine=engine)
     perm = get_isomorphic_permutation(graph_ref, graph_2ma)
@@ -172,19 +243,23 @@ def get_permutation_of_heavy_atoms(heavy_ref_mol, heavy_mch_mol, engine='vmd'):
 # add2executable
 def rad_loc(ref_mol_xyz: str, rad_mol_xyz: str, engine='vmd') -> int:
     """
-    Find the index of the atom where a hydrogen atom was attached.
+    Find the index of the atom where a hydrogen atom was attached. The heavy
+    atoms of both molecules are matched by graph isomorphism and the first
+    heavy atom with a different number of bonds is returned.
 
-    Parametes
-    =========
-    ref_mol: str
+    Parameters
+    ==========
+    ref_mol_xyz: str
         path to the file describing the molecule with the hydrogen included.
-    redical: str
+    rad_mol_xyz: str
         path to the file describing the molecule without the hydrogen.
+    engine: str. Default='vmd'
+        engine to use to get the connectivity. It can be 'vmd' or 'ase'.
 
     Return
     ======
-    (int) index of the atom where the hydrogen was attached. Index counting
-    starting from 1.
+    (int) index, in rad_mol_xyz, of the atom where the hydrogen was attached.
+    Index counting starting from 1. None if no atom lost a bond.
     """
 
     ref_mol = read(ref_mol_xyz)
@@ -212,10 +287,12 @@ def rad_loc(ref_mol_xyz: str, rad_mol_xyz: str, engine='vmd') -> int:
 def heavya_idx_from_ref(ref_mol_xyz: str, rad_mol_xyz: str,
                         index: int, engine: str='vmd') -> np.ndarray:
     """
-    Find the index of the atom where a hydrogen atom was attached.
+    Find the index, in the radical, of the heavy atom that corresponds to a
+    given heavy atom of the reference molecule. The heavy atoms of both
+    molecules are matched by graph isomorphism.
 
-    Parametes
-    =========
+    Parameters
+    ==========
     ref_mol_xyz: str
         path to the file describing the molecule with the hydrogen included.
     rad_mol_xyz: str
@@ -228,8 +305,8 @@ def heavya_idx_from_ref(ref_mol_xyz: str, rad_mol_xyz: str,
 
     Return
     ======
-    (int) index of the atom where the hydrogen was attached. Index counting
-    starting from 1.
+    (int) index of the corresponding heavy atom in rad_mol_xyz. Index
+    counting starting from 1.
     """
 
     ref_mol = read(ref_mol_xyz)
@@ -261,7 +338,7 @@ def rad_loc_deprecated(ref_mol: str, radical: str) -> np.ndarray:
     =========
     ref_mol: str
         path to the file describing the molecule with the hydrogen included.
-    redical: str
+    radical: str
         path to the file describing the molecule without the hydrogen.
 
     Return
@@ -342,18 +419,25 @@ def ext_xyz_from_npz(npz_file, selection=None, create_xyz_files=True):
 def nrand_rad(npz_file, n=None, Nmin=None, entry='energy_MACE',
               exclude=None):
     """
-    Extracts a random subset of radical structures from a given npz file.
+    Extracts a random subset of radical structures from a given npz file. It
+    takes the Nmin structures with the lowest values of entry and randomly
+    selects n of them.
 
     Parameters
     ==========
     npz_file: str
         file containing the radicals.
     n: int. Default=None
-        number if radical structures to extract from the subset.
+        number if radical structures to extract from the subset. If None, all
+        the structures in the subset are selected.
     Nmin: int. Default=None
         number of structures in the subset that minimizes the entry parameter.
+        If None, all the structures are included in the subset.
     entry: str. Default='energy_MACE'
         entry of the npz file from where the Nmin are selected.
+    exclude: list. Default=None
+        indexes of the structures that cannot be selected, e.g. because they
+        were already computed.
 
     Return
     ======

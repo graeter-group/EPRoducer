@@ -1,3 +1,8 @@
+"""
+Spectral fitting of computed EPR spectra against experimental data using
+non-negative least squares.
+"""
+
 import numpy as np
 from scipy.optimize import nnls
 from eprtools.miscellaneous import output_terminal
@@ -12,23 +17,31 @@ class TheoMatchExpe:
 
     Parameters
     ==========
+    files: list
+        paths to the .dat files (field vs intensity) of the computed spectra
+        of the candidates.
     experiment_file: str. Default=None
-        .dat field vs intensity of the experiment.
-    basis_pattern: str. Default='spectrum_wo_hyFiCorr.dat'
-        pattern of the .dat files containing the spectrum of the computed spectrum.
-    basis_location: str. Default='../'
-        location where to search for the files with the basis_pattern.
+        .dat field vs intensity of the experiment. If None, the first file of
+        files is used as experiment.
+    **kwargs:
+        passed to TheoMatchExpe.fit_shifting, e.g. fieldrange or
+        shifting_width.
 
     Note
     ====
-    This script assumes that the basis files has a common pattern and they are all
-    in subdirectories of the location where it is running. It also assumes that all
-    the values of the computed intensities are defined for the same values of the field.
+    The computed spectra are interpolated onto the field values of the
+    experiment, and the experimental intensities are normalized to a maximum
+    of 1.
     """
     def __init__(self,
                  files,
                  experiment_file=None,
                  **kwargs):
+        """
+        Loads and normalizes the experimental spectrum and fits the computed
+        spectra to it (see TheoMatchExpe.fit_shifting). See the class docstring
+        for the parameters.
+        """
         self.shifting_width = 0
         self.shift = 0
         if experiment_file is None:
@@ -50,6 +63,30 @@ class TheoMatchExpe:
 
 
     def fit_theoretical(self, files=None, fieldexp=None, fieldrange=None):
+        """
+        Fits the experimental spectrum with a non-negative linear combination of
+        the computed spectra (non-negative least squares).
+
+        Parameters
+        ==========
+        files: list. Default=None
+            paths to the .dat files of the computed spectra. If None,
+            TheoMatchExpe.files is used.
+        fieldexp: numpy.array. Default=None
+            field values where the computed spectra are interpolated. If None,
+            TheoMatchExpe.fieldexp is used.
+        fieldrange: list. Default=None
+            [min, max] field range to fit. The experimental intensities outside
+            this range (shifted by TheoMatchExpe.shift) are set to zero before
+            fitting. If None, the whole range is used.
+
+        Return
+        ======
+        (tuple) coeffs [n_files x 1] of the linear combination, intensities
+        [n_files x n_points] interpolated computed spectra, intensfit [n_points]
+        fitted spectrum, error (residual of the fit) and corr (Pearson
+        correlation between the fitted spectrum and the experiment).
+        """
         if files is None:
             files = self.files
         if fieldexp is None:
@@ -88,6 +125,31 @@ class TheoMatchExpe:
 
     def fit_shifting(self, files=None, shifting_width=None, shift_step=0.2,
                      **kwargs):
+        """
+        Shifts the experimental field within [-shifting_width, shifting_width]
+        and keeps the shift whose fit (see TheoMatchExpe.fit_theoretical) has the
+        smallest residual. The results are stored in the attributes coeffs,
+        intensities, intensfit, error, corr and shift.
+
+        Parameters
+        ==========
+        files: list. Default=None
+            paths to the .dat files of the computed spectra. If None,
+            TheoMatchExpe.files is used.
+        shifting_width: float. Default=None
+            maximum shift of the field in both directions. If None, the last
+            value given is used (0 at the beginning, i.e. no shifting).
+        shift_step: float. Default=0.2
+            step between the tested shifts.
+        **kwargs:
+            fieldrange: list. [min, max] field range to fit. If not given, the
+            whole range of the experiment is used.
+
+        Return
+        ======
+        (tuple) coeffs, intensities, intensfit, error and corr of the best shift.
+        See TheoMatchExpe.fit_theoretical.
+        """
         if files is None:
             files = self.files
         min_error = float('inf')
@@ -152,6 +214,7 @@ class TheoMatchExpe:
         """
         Removes gradually the candidates that do not weight much in the fitting
         up to having all the candidates with a minimum percentage in the fitting.
+        It starts again from all the candidates given initially.
 
         Parameters
         ==========
@@ -159,6 +222,8 @@ class TheoMatchExpe:
             minimum percentage per candidate to be considered into the fitting.
         steps: float. Default=0.1
             size of the steps in the filtering.
+        **kwargs:
+            passed to TheoMatchExpe.fit_shifting, e.g. shifting_width.
 
         Return
         ======
@@ -175,13 +240,16 @@ class TheoMatchExpe:
     def clean_candidates(self, threshold=1, **kwargs):
         """
         Removes the candidates that are expected to be less than certain
-        percentage. It means, TheoFitExpe.intensities and TheoFitExpe.files
-        might be reduced.
+        percentage. It means, TheoMatchExpe.intensities and TheoMatchExpe.files
+        might be reduced. The fit is repeated until all the remaining
+        candidates reach the threshold.
 
         Parameters
         ==========
         threshold: float. Default=1
             minimum percentage that a candidate should have to be considered.
+        **kwargs:
+            passed to TheoMatchExpe.fit_shifting, e.g. shifting_width.
 
         Return
         ======
@@ -212,13 +280,15 @@ def fit_experiment(experiment_file='../experiments/field_vs_spectrum.dat',
 
     Return
     ======
-    (list) field vs intensity fitted.
+    (tuple) fieldexp and intensexp of the experiment, field of the computed
+    spectra and best_fit_intensity [n_files x n_points], i.e. each computed
+    spectrum multiplied by its coefficient in the fit.
 
     Note
     ====
     This script assumes that the basis files has a common pattern and they are all
-    in subdirectories of the location where it is running. It also assumes that all
-    the values of the computed intensities are defined for the same values of the field.
+    in subdirectories of '../'. It also assumes that all the values of the
+    computed intensities are defined for the same values of the field.
     """
     fieldexp, intensexp = np.loadtxt(experiment_file, unpack=True)
     files = output_terminal(f"find ../ -name '${basis_pattern}' | sort",
@@ -267,9 +337,8 @@ def create_fit_file(output,
 
     Note
     ====
-    This script assumes that the basis files has a common pattern and they are all
-    in subdirectories of the location where it is running. It also assumes that all
-    the values of the computed intensities are defined for the same values of the field.
+    The basis files are searched recursively in basis_location. They are
+    interpolated onto the field of the experiment (see TheoMatchExpe).
     """
     files = output_terminal(f"find {basis_location} -name '${basis_pattern}'", print_output=False)
     files = files.split('\n')[:-1]
@@ -287,7 +356,7 @@ def create_fit_file(output,
 def spect_w_experiment(experiment, theory, output):
     """
     Fits the peak of the theoretical spectrum into the experimental value at
-    that value of the field.
+    that value of the field and saves a plot of both spectra.
 
     Parameters
     ==========
@@ -302,7 +371,7 @@ def spect_w_experiment(experiment, theory, output):
 
     Return
     ======
-    (StandardPlotter) StandardPlotter used to plot.
+    (None) it saves the plot of both spectra in output.
     """
     fieldexp, intensexp = np.loadtxt(experiment, unpack=True)
     field, intens = np.loadtxt(theory, unpack=True)
@@ -324,6 +393,36 @@ def spect_w_experiment(experiment, theory, output):
 
 # add2executable
 def best_fit(experiment, output, fieldrange, *argv):
+    """
+    Fits an experimental spectrum with the computed spectra of several
+    candidates, keeps the candidates that contribute at least 5 % to the fit,
+    prints their percentages and saves a plot of the fit.
+
+    Parameters
+    ==========
+    experiment: str
+        path to the .dat file containing the experimental field and the
+        intensity.
+    output: str
+        name of the png file where the plot is stored.
+    fieldrange: str
+        [min, max] field range to fit in python list format, e.g.
+        '[640, 650]'. Use '' to fit the whole range. The range is marked with
+        dotted lines in the plot.
+    *argv: str
+        paths to the .dat files containing the computed spectra of the
+        candidates.
+
+    Return
+    ======
+    (None) it prints the percentage of each candidate and the shift of the
+    field, and saves the plot in output.
+
+    Note
+    ====
+    The experimental field is shifted up to 10 units in both directions (in
+    steps of 0.2) to find the best fit. See TheoMatchExpe.fit_shifting.
+    """
     if fieldrange == '':
         fieldrange = None
     else:
@@ -353,6 +452,23 @@ def best_fit(experiment, output, fieldrange, *argv):
 
 # add2executable
 def mat2dat(file_field: str, file_spectrum: str, output: str):
+    """
+    Converts an experimental spectrum stored in MATLAB .mat files into a .dat
+    file with two columns: field and spectrum.
+
+    Parameters
+    ==========
+    file_field: str
+        .mat file containing the field in a variable called 'fieldexp'.
+    file_spectrum: str
+        .mat file containing the intensities in a variable called 'specexp'.
+    output: str
+        name of the .dat file where the field vs spectrum is saved.
+
+    Return
+    ======
+    (None) it creates the .dat file.
+    """
     try:
         data = loadmat(file_field)
         field = data['fieldexp'].flatten()
