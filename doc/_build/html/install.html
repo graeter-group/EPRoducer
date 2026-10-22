@@ -52,7 +52,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#orca-and-matlab-set-up">ORCA and MATLAB set up</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#build-the-documentation">Build the documentation</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="cli.html">Command-line interface</a></li>
@@ -134,23 +133,6 @@ binary, e.g.</p>
 in a cluster).</p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">gval_postpro</span></code> and <code class="docutils literal notranslate"><span class="pre">extract_bonds_vmd</span></code> also need <code class="docutils literal notranslate"><span class="pre">vmd</span></code> in your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
-</section>
-<section id="build-the-documentation">
-<span id="build-doc"></span><h2>Build the documentation<a class="headerlink" href="#build-the-documentation" title="Link to this heading"></a></h2>
-<p>This documentation is built with Sphinx and the Read the Docs theme:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sphinx</span> <span class="n">sphinx_rtd_theme</span>
-<span class="n">cd</span> <span class="n">doc</span>
-<span class="n">make</span> <span class="n">html</span>
-</pre></div>
-</div>
-<p>The HTML pages are written in <code class="docutils literal notranslate"><span class="pre">doc/_build/html</span></code>. <code class="code docutils literal notranslate"><span class="pre">eproducer</span> <span class="pre">doc</span></code> does
-this automatically when needed and opens the documentation in your web
-browser. The pages of the shell
-scripts (<code class="docutils literal notranslate"><span class="pre">doc/modules/bash_rsts_doc</span></code> and <code class="docutils literal notranslate"><span class="pre">doc/modules/bash_rsts_scripts</span></code>)
-are generated from the scripts on every build by
-<code class="docutils literal notranslate"><span class="pre">doc/generate_script_docs.py</span></code>, so they are always up to date. A new script
-only has to be included in <code class="docutils literal notranslate"><span class="pre">doc/modules/eproducer.rst</span></code>; the build prints a
-warning for the scripts that are not.</p>
 </section>
 </section>
 

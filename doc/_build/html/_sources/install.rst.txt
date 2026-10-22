@@ -52,23 +52,3 @@ next programs available:
   in a cluster).
 
 ``gval_postpro`` and ``extract_bonds_vmd`` also need ``vmd`` in your ``PATH``.
-
-.. _build-doc:
-
-Build the documentation
------------------------
-
-This documentation is built with Sphinx and the Read the Docs theme::
-
-    pip install sphinx sphinx_rtd_theme
-    cd doc
-    make html
-
-The HTML pages are written in ``doc/_build/html``. :code:`eproducer doc` does
-this automatically when needed and opens the documentation in your web
-browser. The pages of the shell
-scripts (``doc/modules/bash_rsts_doc`` and ``doc/modules/bash_rsts_scripts``)
-are generated from the scripts on every build by
-``doc/generate_script_docs.py``, so they are always up to date. A new script
-only has to be included in ``doc/modules/eproducer.rst``; the build prints a
-warning for the scripts that are not.
