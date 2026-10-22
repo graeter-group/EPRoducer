@@ -30,7 +30,7 @@ while getopts 'h' flag;
 do
   case "${flag}" in
     h) print_help ;;
-    *) echo "for usage check: eprtools <function> -h" >&2 ; exit 1 ;;
+    *) echo "for usage check: eproducer <function> -h" >&2 ; exit 1 ;;
   esac
 done
 

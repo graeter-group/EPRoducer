@@ -6,13 +6,13 @@ spectral comparison, and bond dissociation enthalpy.
 from PlottingTool import StandardPlotter
 import matplotlib.pyplot as plt
 from glob import glob
-from eprtools.miscellaneous import output_terminal
+from eproducer.miscellaneous import output_terminal
 import numpy as np
-from eprtools.best_fit import TheoMatchExpe
+from eproducer.best_fit import TheoMatchExpe
 import pandas as pd
 from scipy.stats import pearsonr
 from scipy.optimize import minimize
-from eprtools.g_valsetup import ext_xyz_from_npz
+from eproducer.g_valsetup import ext_xyz_from_npz
 
 
 # add2executable

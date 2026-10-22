@@ -123,7 +123,7 @@ def get_connectivity(atoms, engine):
     """
     if engine == 'vmd':
         from ase.io import write
-        from eprtools.ase_utils.molecules import vmd_connectivity
+        from eproducer.ase_utils.molecules import vmd_connectivity
         import os
 
         id = int(np.random.random() * 1000000)

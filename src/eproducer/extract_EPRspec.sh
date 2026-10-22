@@ -65,11 +65,11 @@ do
 
     v) verbose='true' ;;
     h) print_help ;;
-    *) echo "for usage check: eprtools <function> -h" >&2 ; exit 1 ;;
+    *) echo "for usage check: eproducer <function> -h" >&2 ; exit 1 ;;
   esac
 done
 
-source "$(eprtools basics -path)" ExtGVals $verbose
+source "$(eproducer basics -path)" ExtGVals $verbose
 load_modules
 
 # starting information
@@ -82,7 +82,7 @@ echo "$0" "$@"
 if [ ! -f $experiment ]
 then
   fail "you have to give the mat file of the field of the experiment using the
-    flag -e. Check 'eprtools extract_EPRspec -h' for details."
+    flag -e. Check 'eproducer extract_EPRspec -h' for details."
 fi
 
 

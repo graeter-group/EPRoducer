@@ -22,10 +22,10 @@ files, which are marked as 'heavy_atom_missing_idxs' and
   -n  <n=1> number of radicals to be selected from each npz file.
   -N  <N=3> number of radicals in the subset that minimizes the entry
       parameter.
-  -o  <other_flags=''> extra flags passed through to 'eprtools gval_workflow'.
+  -o  <other_flags=''> extra flags passed through to 'eproducer gval_workflow'.
   -p  <processors=8> number of processors requested for each submitted job.
   -r  Use this flag to RESTART the optimization; it is forwarded as the -R
-      flag to 'eprtools gval_workflow'.
+      flag to 'eproducer gval_workflow'.
 
   -v  verbose.
   -h  prints this message.
@@ -60,11 +60,11 @@ do
 
     v) verbose='true' ;;
     h) print_help ;;
-    *) echo "for usage check: eprtools <function> -h" >&2 ; exit 1 ;;
+    *) echo "for usage check: eproducer <function> -h" >&2 ; exit 1 ;;
   esac
 done
 
-source "$(eprtools basics -path)" submit_dataset $verbose
+source "$(eproducer basics -path)" submit_dataset $verbose
 
 # starting information
 verbose "JOB information"
@@ -104,10 +104,10 @@ do
     echo "  - $file: already has $existing_n radicals, skipping."
     continue
   fi
-  selection=$(eprtools nrand_rad $file --n $new_n --Nmin $N \
+  selection=$(eproducer nrand_rad $file --n $new_n --Nmin $N \
               --exclude "$exclude_indices") || \
     { warning "Error selecting the radicals for the file: $file"; continue; }
-  eprtools ext_xyz_from_npz $file --selection "$selection" > /dev/null || fail "extracting the xyz files for the file: $file"
+  eproducer ext_xyz_from_npz $file --selection "$selection" > /dev/null || fail "extracting the xyz files for the file: $file"
 
   for i in $(echo "$selection" | tr -d '[],')
   do
@@ -122,7 +122,7 @@ do
     name=${xyz_file##*/}
     sbatch $job_options -J ${name%.xyz} \
       -n $processors \
-      $(eprtools gval_workflow -path) -c $charge \
+      $(eproducer gval_workflow -path) -c $charge \
                                       -m $multi \
                                       -f "g$radical,${charged_a}d3" \
                                       -n ${xyz_file%.xyz} \

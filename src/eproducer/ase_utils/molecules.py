@@ -6,7 +6,7 @@ PCA-based matching, and VMD-based connectivity extraction.
 from ase.calculators.gaussian import Gaussian
 import numpy as np
 from ase import Atom
-from eprtools.miscellaneous import output_terminal
+from eproducer.miscellaneous import output_terminal
 
 
 class MoleculeSetter:
@@ -542,9 +542,9 @@ def vmd_connectivity(mol):
 
     Note
     ====
-    VMD must be available in the PATH. It uses 'eprtools extract_bonds_vmd'.
+    VMD must be available in the PATH. It uses 'eproducer extract_bonds_vmd'.
     """
-    raw = output_terminal(f'eprtools extract_bonds_vmd {mol} | ' +
+    raw = output_terminal(f'eproducer extract_bonds_vmd {mol} | ' +
                            r"awk '/atomselect0/{flag=1} /Info\)/{flag=0} flag' | tail -n +2",
                           print_output=False).split('\n')
     connectivity = [[int(i) for i in line.split()] for line in raw[:-1]]

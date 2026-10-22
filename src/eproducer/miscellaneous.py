@@ -61,7 +61,7 @@ def output_terminal(cmd, print_output=True, skip_error=False, print_cmd=False,
 
 def _time(keyword, logfile):
     """
-    Used in eprtools.miscellaneous.time_g09. It extracts the time from a
+    Used in eproducer.miscellaneous.time_g09. It extracts the time from a
     line of gaussian.
 
     Parameters
@@ -157,10 +157,10 @@ def args_and_defaults(module, *args):
     ==========
     module: str
         name of the module containing the function, e.g.
-        'eprtools.ase_utils.molecules'.
+        'eproducer.ase_utils.molecules'.
     *args: str
         path to the function inside the module, e.g. 'MoleculeSetter',
-        'rot_x' for eprtools.ase_utils.molecules.MoleculeSetter.rot_x.
+        'rot_x' for eproducer.ase_utils.molecules.MoleculeSetter.rot_x.
 
     Return
     ======
@@ -198,10 +198,10 @@ def function_doc(module, *args):
     ==========
     module: str
         name of the module containing the function, e.g.
-        'eprtools.ase_utils.molecules'.
+        'eproducer.ase_utils.molecules'.
     *args: str
         path to the function inside the module, e.g. 'MoleculeSetter',
-        'rot_x' for eprtools.ase_utils.molecules.MoleculeSetter.rot_x.
+        'rot_x' for eproducer.ase_utils.molecules.MoleculeSetter.rot_x.
 
     Return
     ======

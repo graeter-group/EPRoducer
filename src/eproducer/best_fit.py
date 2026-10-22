@@ -5,7 +5,7 @@ non-negative least squares.
 
 import numpy as np
 from scipy.optimize import nnls
-from eprtools.miscellaneous import output_terminal
+from eproducer.miscellaneous import output_terminal
 from PlottingTool import StandardPlotter
 from scipy.io import loadmat
 from scipy.stats import pearsonr

@@ -34,11 +34,11 @@ do
 
     v) verbose='true' ;;
     h) print_help ;;
-    *) echo "for usage check: eprtools <function> -h" >&2 ; exit 1 ;;
+    *) echo "for usage check: eproducer <function> -h" >&2 ; exit 1 ;;
   esac
 done
 
-source "$(eprtools basics -path)" submit_dataset $verbose
+source "$(eproducer basics -path)" submit_dataset $verbose
 
 # starting information
 verbose "JOB information"
@@ -68,7 +68,7 @@ do
   fi
 
   sbatch -n $processors $priority -J ${name%.xyz}  $job_options \
-    $(eprtools gval_workflow -path) -c $charge \
+    $(eproducer gval_workflow -path) -c $charge \
                                     -m $multi \
                                     -f "g$radical,${charged_a}d3" \
                                     -n ${xyz_file%.xyz} \

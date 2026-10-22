@@ -22,7 +22,7 @@ flags:
       unuseful when this flag is activated.
   -f  <hyperfine=''> indexes of atoms to be included in hyperfine corrections.
       If the argument of this flag starts with g, the guess util
-      'eprtools iHFC_fromxyz' is used to find the H, O, and N atoms around the
+      'eproducer iHFC_fromxyz' is used to find the H, O, and N atoms around the
       indexes atoms with the indexes given in the arguments. If you use the
       guess util, be sure to add the depth of the neighborhood with the letter
       d. E.g. 'g4,5d3' finds the relevant atoms in the 3-depth-neigborhood of
@@ -90,11 +90,11 @@ do
 
     v) verbose='-v' ;;
     h) print_help ;;
-    *) echo "for usage check: eprtools <function> -h" >&2 ; exit 1 ;;
+    *) echo "for usage check: eproducer <function> -h" >&2 ; exit 1 ;;
   esac
 done
 
-source "$(eprtools basics -path)" Gvals $verbose
+source "$(eproducer basics -path)" Gvals $verbose
 load_modules
 if [[ -z "$processors" ]]
 then
@@ -128,7 +128,7 @@ restart_job() {
          -J "$SLURM_JOB_NAME" \
          --partition="s.otter,c.otter" \
          --qos=low \
-    "$(eprtools gval_workflow -path)" -c "$charge" \
+    "$(eproducer gval_workflow -path)" -c "$charge" \
                                       -d "$directory" \
                                       -f "$hyperfine" \
                                       -m "$mult" \
@@ -227,7 +227,7 @@ then
   rad_loc=""
   if [[ "$reference_mol" != "" ]]
   then
-    location=$(eprtools rad_loc $reference_mol ${prior_name}_opt.xyz)
+    location=$(eproducer rad_loc $reference_mol ${prior_name}_opt.xyz)
     rad_loc="$location,"
   fi
 
@@ -236,7 +236,7 @@ then
     nog=${hyperfine: 1}           # remove g
     radicals="$rad_loc${nog%d*}"  # list of radicals
     depth=${nog#*d}               # depth
-    tmp_var=$(eprtools iHFC_fromxyz ${prior_name}_opt.xyz "[$radicals]" \
+    tmp_var=$(eproducer iHFC_fromxyz ${prior_name}_opt.xyz "[$radicals]" \
       "$depth")
     mapfile -t hyperfine < <(echo $tmp_var |  grep -oP '\[\K[^\]]+')
   fi
@@ -278,7 +278,7 @@ fi
 
 if grep -q "ORCA TERMINATED NORMALLY" ${prior_name}_epr.out && $sweep
 then
-  eprtools add_gval2npz ${prior_name: :-4}.npz
+  eproducer add_gval2npz ${prior_name: :-4}.npz
   rm ${xyz_file%.xyz}_epr.densities
   rm ${xyz_file%.xyz}_epr.engrad
   rm ${xyz_file%.xyz}_epr.gbw

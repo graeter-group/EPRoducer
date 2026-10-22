@@ -70,11 +70,11 @@ do
 
     v) verbose='true' ;;
     h) print_help ;;
-    *) echo "for usage check: eprtools <function> -h" >&2 ; exit 1 ;;
+    *) echo "for usage check: eproducer <function> -h" >&2 ; exit 1 ;;
   esac
 done
 
-source "$(eprtools basics -path)" CandInfo $verbose
+source "$(eproducer basics -path)" CandInfo $verbose
 
 if [ -z "$mol_cand" ] || [ ! -d "$mol_cand" ]
 then
@@ -87,7 +87,7 @@ fi
 if [ -z "$experiment" ]
 then
   fail "You have to give the dat file of the field of the experiment using the
-    flag -e. Check 'eprtools gval_postpro -h' for details."
+    flag -e. Check 'eproducer gval_postpro -h' for details."
 fi
 
 # starting information
@@ -98,13 +98,13 @@ echo " * Command:"
 echo "$0" "$@"
 
 # ---- BODY --------------- ----------------------------------------------------
-reference=$(eprtools gval_workflow -path)
+reference=$(eproducer gval_workflow -path)
 reference=${reference%/*}
 
 # Creates gvalues_table.md and gvalues.png
 verbose "create gvalues_table.md and gvalues.png"
 
-eprtools extract_system_info "$mol_cand" "$exper_values" \
+eproducer extract_system_info "$mol_cand" "$exper_values" \
                              --orca_output "$orca_output"
 
 # experiments and outputs are compared pairwise when several outputs are given
@@ -132,7 +132,7 @@ do
   do
     if [ ! -f $out_dat ]
     then
-      fail "$out_dat does not exist in $(pwd). Execute 'eprtools extract_EPRspec'
+      fail "$out_dat does not exist in $(pwd). Execute 'eproducer extract_EPRspec'
         first."
     fi
   done
@@ -164,7 +164,7 @@ do
     fi
     name_w_ext=${exper_spect##*/}
     name=${name_w_ext%.dat}.png
-    eprtools spect_w_experiment $exper_spect $out_dat $name
+    eproducer spect_w_experiment $exper_spect $out_dat $name
     cat <<EOF >> ./vmd_image.md
 
 <div align="center">

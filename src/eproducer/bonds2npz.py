@@ -3,7 +3,7 @@ Utilities for adding bond connectivity and molecular ID information to npz
 dataset files.
 """
 
-from eprtools.g_valsetup import ext_xyz_from_npz, get_connectivity
+from eproducer.g_valsetup import ext_xyz_from_npz, get_connectivity
 import numpy as np
 import glob
 from ase import Atoms

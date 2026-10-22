@@ -1,5 +1,5 @@
 [project]
-name = "eprtools"
+name = "EPRoducer"
 version = "0.1.0"
 description = "Tools for EPR g-value calculations and spectral analysis"
 readme = "README.md"
@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.scripts]
-eprtools = "eprtools.cli.main:main"
+eproducer = "eproducer.cli.main:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

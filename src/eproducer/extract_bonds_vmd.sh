@@ -1,4 +1,7 @@
 #!/bin/bash
+# Prints the bonds of a molecule detected by VMD: one line per atom with the
+# indices (starting from 0) of the atoms bonded to it. VMD must be installed.
+# Usage: eproducer extract_bonds_vmd <molecule.pdb or molecule.xyz>
 
 if [ $# -ne 1 ]; then
     echo "Usage: $0 molecule.pdb"

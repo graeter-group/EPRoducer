@@ -1,13 +1,16 @@
 """
-Entry point of the 'eprtools' command. It exposes the python functions in
+Entry point of the 'eproducer' command. It exposes the python functions in
 pymodules, the shell scripts in sh_executers and the bundled files in
-other_files as 'eprtools <function> [args...]'.
+other_files as 'eproducer <function> [args...]', and opens the documentation
+with 'eproducer doc'.
 """
 
 from importlib import import_module
+from importlib.util import find_spec
 import subprocess
 from pathlib import Path
 import sys
+import webbrowser
 import numpy as np
 
 
@@ -52,24 +55,24 @@ def output_terminal(cmd, print_output=True, skip_error=False, **kwargs):
 
 
 pymodules = {
-    'compute_bde': 'eprtools.postpro',
-    'add_gval2npz': 'eprtools.postpro',
-    'extract_system_info': 'eprtools.postpro',
-    'create_table_per_system': 'eprtools.postpro',
-    'create_table_per_method': 'eprtools.postpro',
-    'extract_gvals': 'eprtools.postpro',
-    'nrand_rad': 'eprtools.g_valsetup',
-    'ext_xyz_from_npz': 'eprtools.g_valsetup',
-    'heavya_idx_from_ref': 'eprtools.g_valsetup',
-    'rad_loc': 'eprtools.g_valsetup',
-    'iHFC_fromxyz': 'eprtools.g_valsetup',
-    'molid2npz': 'eprtools.bonds2npz',
-    'bonds2npz': 'eprtools.bonds2npz',
-    'addfile2npz': 'eprtools.bonds2npz',
-    'mat2dat': 'eprtools.best_fit',
-    'best_fit': 'eprtools.best_fit',
-    'spect_w_experiment': 'eprtools.best_fit',
-    'create_fit_file': 'eprtools.best_fit',
+    'compute_bde': 'eproducer.postpro',
+    'add_gval2npz': 'eproducer.postpro',
+    'extract_system_info': 'eproducer.postpro',
+    'create_table_per_system': 'eproducer.postpro',
+    'create_table_per_method': 'eproducer.postpro',
+    'extract_gvals': 'eproducer.postpro',
+    'nrand_rad': 'eproducer.g_valsetup',
+    'ext_xyz_from_npz': 'eproducer.g_valsetup',
+    'heavya_idx_from_ref': 'eproducer.g_valsetup',
+    'rad_loc': 'eproducer.g_valsetup',
+    'iHFC_fromxyz': 'eproducer.g_valsetup',
+    'molid2npz': 'eproducer.bonds2npz',
+    'bonds2npz': 'eproducer.bonds2npz',
+    'addfile2npz': 'eproducer.bonds2npz',
+    'mat2dat': 'eproducer.best_fit',
+    'best_fit': 'eproducer.best_fit',
+    'spect_w_experiment': 'eproducer.best_fit',
+    'create_fit_file': 'eproducer.best_fit',
 }
 
 sh_executers = {
@@ -87,6 +90,10 @@ sh_executers = {
 other_files = {
     'create_mol_png': './create_mol_png.tcl',
 }
+
+# sources of the documentation. They exist when EPRoducer is installed from its
+# repository (pip install -e .).
+DOC_DIR = Path(__file__).resolve().parents[3] / 'doc'
 
 
 def _eval_value(value):
@@ -155,14 +162,98 @@ def _read_arguments():
     return (args, args_dict)
 
 
+def _doc_outdated(index):
+    """
+    Checks if the html documentation has to be built.
+
+    Parameters
+    ==========
+    index: pathlib.Path
+        index.html of the built documentation.
+
+    Return
+    ======
+    (bool) True if the documentation was not built yet, or if a file of the
+    documentation sources or of the package changed after the last build.
+    """
+    if not index.exists():
+        return True
+    built = index.stat().st_mtime
+    doc_sources = [p for p in DOC_DIR.rglob('*')
+                   if p.relative_to(DOC_DIR).parts[0] != '_build']
+    pkg_sources = list(Path(__file__).resolve().parents[1].rglob('*'))
+    return any(p.stat().st_mtime > built for p in doc_sources + pkg_sources
+               if p.is_file() and '__pycache__' not in p.parts)
+
+
+def open_doc(path_only=False):
+    """
+    Opens the html documentation of EPRoducer in the web browser. Before, it
+    builds the documentation with Sphinx if it was not built yet or if its
+    sources changed after the last build.
+
+    Parameters
+    ==========
+    path_only: bool. Default=False
+        True to print the path of the documentation (index.html) instead of
+        opening it.
+
+    Return
+    ======
+    (None)
+    """
+    index = DOC_DIR / '_build' / 'html' / 'index.html'
+    if not (DOC_DIR / 'conf.py').exists():
+        print(f"ERROR: the documentation was not found in {DOC_DIR}. "
+              "'eproducer doc' needs EPRoducer installed from its repository "
+              "(pip install -e .).", file=sys.stderr)
+        return
+
+    if _doc_outdated(index):
+        if find_spec('sphinx') is None or \
+                find_spec('sphinx_rtd_theme') is None:
+            print("Sphinx is needed to build the documentation. Install it "
+                  "with 'pip install sphinx sphinx_rtd_theme'.",
+                  file=sys.stderr)
+            built = False
+        else:
+            print("Building the documentation, this can take a minute...",
+                  file=sys.stderr)
+            build = subprocess.run([sys.executable, '-m', 'sphinx', '-M',
+                                    'html', str(DOC_DIR),
+                                    str(DOC_DIR / '_build'), '-q'],
+                                   stdout=sys.stderr)
+            built = build.returncode == 0
+            if built:
+                # Sphinx only rewrites the pages that changed, so the time of
+                # the last build is kept in index.html
+                index.touch()
+            else:
+                print("ERROR: the documentation could not be built.",
+                      file=sys.stderr)
+        if not built:
+            if not index.exists():
+                return
+            print("Using the documentation built before, which may be "
+                  "outdated.", file=sys.stderr)
+
+    if path_only:
+        print(index)
+        return
+    print(f"Opening {index}")
+    if not webbrowser.open(index.as_uri()):
+        print("No web browser could be opened. Open the file above in your "
+              "browser.")
+
+
 def main():
     """
-    Runs each time eprtools is called from the terminal. Depending on the
+    Runs each time eproducer is called from the terminal. Depending on the
     first argument, it prints the list of functions (-h), runs a python
-    function, runs a shell script or prints the path of a bundled file.
-    After the name of a python function, -h prints its docstring and -path
-    its module. After the name of a shell script, -path prints the path of
-    the script.
+    function, runs a shell script, prints the path of a bundled file or opens
+    the documentation (doc). After the name of a python function, -h prints
+    its docstring and -path its module. After the name of a shell script or
+    after doc, -path prints the path of the script or of the documentation.
 
     Return
     ======
@@ -171,13 +262,15 @@ def main():
     if sys.argv[1] in ('-h', '--help', 'help'):
         functions = list(pymodules.keys()) + list(sh_executers.keys())
         functions.sort()
-        print("\n'eprtools' contains the next set of tools:\n")
+        print("\n'eproducer' contains the next set of tools:\n")
         for function in functions:
             print("    -   " + function)
         print("\nTo use one of the functions from the terminal, use:\n\n"
-              "  'eprtools <function> <arg1> <arg2>...'\n\n"
+              "  'eproducer <function> <arg1> <arg2>...'\n\n"
               "For detailed information of any function, use \"-h\" as first"
-              " argument (<arg1>).")
+              " argument (<arg1>).\n\n"
+              "To open the documentation in your web browser, use:\n\n"
+              "  'eproducer doc'")
 
     elif sys.argv[1] in pymodules.keys():
         module = import_module(pymodules[sys.argv[1]])
@@ -208,9 +301,12 @@ def main():
     elif sys.argv[1] == 'path':
         print(str(Path(__file__).parent.parent))
 
+    elif sys.argv[1] == 'doc':
+        open_doc(path_only='-path' in sys.argv[2:])
+
     else:
         print(f"ERROR: keyword '{sys.argv[1]}' not recognized. "
-              "Use 'eprtools -h' to see the available options.")
+              "Use 'eproducer -h' to see the available options.")
 
 
 if __name__ == "__main__":
