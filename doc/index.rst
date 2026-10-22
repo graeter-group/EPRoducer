@@ -10,6 +10,7 @@ g-value calculations, spectral fitting, and post-processing of ORCA outputs.
 
    install
    cli
+   tutorials/tutorials
    api/index
 
 Indices and tables
