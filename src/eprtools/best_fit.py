@@ -44,6 +44,7 @@ class TheoMatchExpe:
         """
         self.shifting_width = 0
         self.shift = 0
+        self.fieldrange = None
         if experiment_file is None:
             self.fieldexp, self.intensexp = np.loadtxt(files[0], unpack=True)
             self.intensexp = self.intensexp / max(self.intensexp)
@@ -143,7 +144,8 @@ class TheoMatchExpe:
             step between the tested shifts.
         **kwargs:
             fieldrange: list. [min, max] field range to fit. If not given, the
-            whole range of the experiment is used.
+            last value given is used. None (the initial value) means the
+            whole range of the experiment.
 
         Return
         ======
@@ -161,12 +163,15 @@ class TheoMatchExpe:
             shift_interval = np.arange(-self.shifting_width,
                                        self.shifting_width + shift_step,
                                        shift_step)
+        # stored like shifting_width, so the refits done while cleaning the
+        # candidates keep the same range
         if 'fieldrange' in kwargs.keys():
-            interval = np.array(kwargs['fieldrange'])
-            del kwargs['fieldrange']
-        else:
+            self.fieldrange = kwargs.pop('fieldrange')
+        if self.fieldrange is None:
             interval = np.array([min(self.fieldexp),
                                  max(self.fieldexp)])
+        else:
+            interval = np.array(self.fieldrange)
 
         for shift in shift_interval:
             exp_intensity = self.fieldexp + shift
@@ -262,7 +267,7 @@ class TheoMatchExpe:
 
         self.files = self.files[condition]
         self.fit_shifting(self.files, **kwargs)
-        self.clean_candidates(threshold=threshold)
+        return self.clean_candidates(threshold=threshold)
 
 
 # The subsequent functions were not addapted to shifting.
@@ -291,7 +296,7 @@ def fit_experiment(experiment_file='../experiments/field_vs_spectrum.dat',
     computed intensities are defined for the same values of the field.
     """
     fieldexp, intensexp = np.loadtxt(experiment_file, unpack=True)
-    files = output_terminal(f"find ../ -name '${basis_pattern}' | sort",
+    files = output_terminal(f"find ../ -name '{basis_pattern}' | sort",
                             print_output=False)
     files = files.split('\n')[:-1]
 
@@ -340,10 +345,10 @@ def create_fit_file(output,
     The basis files are searched recursively in basis_location. They are
     interpolated onto the field of the experiment (see TheoMatchExpe).
     """
-    files = output_terminal(f"find {basis_location} -name '${basis_pattern}'", print_output=False)
+    files = output_terminal(f"find {basis_location} -name '{basis_pattern}'", print_output=False)
     files = files.split('\n')[:-1]
     tme = TheoMatchExpe(files, experiment_file)
-    field = tme.field
+    field = tme.fieldexp
     inten = tme.intensfit
 
     with open(output, 'w') as outfile:

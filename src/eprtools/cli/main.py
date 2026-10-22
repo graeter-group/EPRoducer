@@ -89,14 +89,36 @@ other_files = {
 }
 
 
+def _eval_value(value):
+    """
+    Evaluates the value of a '--<key> <value>' terminal argument as a python
+    expression. If it is not a valid expression (e.g. a file name like
+    epr_info.out), the value is returned as a string.
+
+    Parameters
+    ==========
+    value: str
+        value given in the terminal.
+
+    Return
+    ======
+    evaluated value, or the value itself (str) without surrounding spaces.
+    """
+    try:
+        return eval(value)
+    except Exception:
+        return value.strip()
+
+
 def _read_arguments():
     """
     Reads the arguments given in the terminal after the name of the function.
     The arguments before the first '--<key>' are passed as positional
     arguments (str). Each '--<key> <value>' is passed as a keyword argument
     whose value is evaluated as a python expression, e.g. '--n 3' gives n=3
-    and "--selection '[1, 2]'" gives selection=[1, 2]. Hence, string values
-    must be quoted, e.g. --orca_output "'epr_info.out'".
+    and "--selection '[1, 2]'" gives selection=[1, 2]. Values that are not
+    valid python expressions, e.g. '--orca_output epr_info.out', are passed
+    as strings (see _eval_value).
 
     Return
     ======
@@ -115,7 +137,7 @@ def _read_arguments():
                 argument = entry.replace('--', '')
                 values = ''
             else:
-                args_dict[argument] = eval(values)
+                args_dict[argument] = _eval_value(values)
                 argument = entry.replace('--', '')
                 values = ''
         else:
@@ -123,7 +145,7 @@ def _read_arguments():
     if argument == '_reader_args':
         args_dict[argument] = values.split(" ")[2:]
     else:
-        args_dict[argument] = eval(values)
+        args_dict[argument] = _eval_value(values)
     args = args_dict['_reader_args']
     del args_dict['_reader_args']
 

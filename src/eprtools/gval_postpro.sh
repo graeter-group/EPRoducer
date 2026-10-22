@@ -11,7 +11,8 @@ Create all the files after complete the computation of the gvalues with Orca.
   -E  <experimental values> guess of the gvalues obtained experimentally in
       python list format, f.e. '[2.0062, 2.0055, 2.0022]'
   -e  <experiment1.dat,exp2.dat,...> experimental field vs absorption files in
-      which this candidate can play a role.
+      which this candidate can play a role. Relative paths are taken from each
+      candidate directory, e.g. '../../experiments/exp.dat'.
   -o  <output.dat='spectrum_wo_hyFiCorr.dat'> dat output file where you want to
       save the field vs spectrum. Several outputs can be given separated by
       commas, f.e. 'out1.dat,out2.dat'. In that case, the number of outputs must
@@ -53,6 +54,7 @@ EOF
 # ----- set up starts ---------------------------------------------------------
 # General variables
 output="spectrum_wo_hyFiCorr.dat"
+orca_output='epr_info.out'
 experiment=''
 verbose='false'
 exper_values=''
@@ -72,19 +74,21 @@ do
   esac
 done
 
-if [ ! -d $mol_cand ]
+source "$(eprtools basics -path)" CandInfo $verbose
+
+if [ -z "$mol_cand" ] || [ ! -d "$mol_cand" ]
 then
   fail "You have to provide a the name of a molecule that is a candidate. Use
         the flag -c for this proporsal"
 fi
 
-if [ ! -f $experiment ]
+# the experiment files are checked inside each candidate directory, where they
+# are used, because their paths are usually relative to it (../../exp.dat)
+if [ -z "$experiment" ]
 then
   fail "You have to give the dat file of the field of the experiment using the
-    flag -e. Check 'eprtools extract_EPRspec -h' for details."
+    flag -e. Check 'eprtools gval_postpro -h' for details."
 fi
-
-source "$(eprtools basics -path)" CandInfo $verbose
 
 # starting information
 verbose "JOB information"
@@ -130,6 +134,15 @@ do
     then
       fail "$out_dat does not exist in $(pwd). Execute 'eprtools extract_EPRspec'
         first."
+    fi
+  done
+
+  for exper_spect in ${all_exper[@]}
+  do
+    if [ ! -f $exper_spect ]
+    then
+      fail "$exper_spect does not exist in $(pwd). The experiments given with
+        -e must be absolute paths or relative to the candidate directories."
     fi
   done
   

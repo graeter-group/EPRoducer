@@ -102,10 +102,12 @@ def create_table_per_method(data: np.ndarray,
     """
     assert len(data) == len(methods), "There is not the same amount of " + \
         "methods than g-values."
-    res = np.array(data).T
+    # object dtype, otherwise np.insert truncates the labels to the width of
+    # the g-value strings
+    res = np.array(data, dtype=object).T
 
     header = np.array(["", "\\text{experiments}"] +
-                      [f"\\text{meth}" for meth in methods])
+                      [f"\\text{{{meth}}}" for meth in methods])
     rows_labels = ["g_x", "g_y", "g_z", "\\text{max absolute error}",
                 "\\text{Mean absolute error}"]
 
@@ -121,8 +123,9 @@ def create_table_per_method(data: np.ndarray,
     table_str = []
     for row in table:
         row_data = [f"{col:{width}}" for col, width in zip(row, column_widths)]
-        print(" & ".join(row_data), " \\\\ \\hline")
-        table_str.append(row_data)
+        line = " & ".join(row_data) + " \\\\ \\hline"
+        print(line)
+        table_str.append(line)
 
     return "\n".join(table_str)
 
@@ -285,7 +288,7 @@ def extract_system_info(sys_path: str, exp_values: str,
                                 'xticklabels': systems})
 
     # experiment
-    if (experiment == np.zeros(3)).all():
+    if not (experiment == np.zeros(3)).all():
         sp.plot_data([1, len(systems)], [experiment[0], experiment[0]], pstyle='--')
         sp.plot_data([1, len(systems)], [experiment[1], experiment[1]], pstyle='--', ax = 1)
         sp.plot_data([1, len(systems)], [experiment[2], experiment[2]], pstyle='--', ax = 2)
