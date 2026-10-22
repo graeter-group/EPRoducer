@@ -1,0 +1,611 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eproducer.g_valsetup &mdash; EPRoducer 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=32ed3f93" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            EPRoducer
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command-line interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules/eproducer.html">eproducer package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EPRoducer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">eproducer.g_valsetup</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for eproducer.g_valsetup</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Molecular structure utilities for EPR g-value calculations: connectivity</span>
+<span class="sd">analysis, radical site location, and structure extraction from npz</span>
+<span class="sd">datasets.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">ase.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">read</span><span class="p">,</span> <span class="n">write</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ase.geometry.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">Analysis</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ase</span><span class="w"> </span><span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+
+
+<div class="viewcode-block" id="HFC_relevantA">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.HFC_relevantA">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">HFC_relevantA</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">radicals</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract the H, O and N atoms in the neighborhood of the radicals up to</span>
+<span class="sd">    certain depth (neighbors of neighbors, moving only through heavy atoms).</span>
+<span class="sd">    It also includes the H atoms bonded to those O and N atoms.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    atoms: ase.Atoms</span>
+<span class="sd">        Atoms object containing the molecule.</span>
+<span class="sd">    radicals: list</span>
+<span class="sd">        posible positions of the radicals, implying that that neighborhood is</span>
+<span class="sd">        important for the HFC. Indexes starting from 1.</span>
+<span class="sd">    depth: int. Default=2</span>
+<span class="sd">        number of times that it searches the neighbors of the neighbors.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (dict) {element: list of indexes} with the indexes of the H, O and N</span>
+<span class="sd">    atoms grouped by element, e.g. {&#39;H&#39;: [3, 4], &#39;O&#39;: [7]}. The indices start</span>
+<span class="sd">    with 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">radicals</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">atoms</span><span class="o">.</span><span class="n">get_chemical_symbols</span><span class="p">())</span>
+    <span class="n">ana</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+    <span class="n">relevant</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">depth</span><span class="p">):</span>
+        <span class="n">new_neighbors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">centers</span><span class="p">:</span>
+            <span class="n">neighbors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ana</span><span class="o">.</span><span class="n">all_bonds</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">e_neighbors</span> <span class="o">=</span> <span class="n">elements</span><span class="p">[</span><span class="n">neighbors</span><span class="p">]</span>
+            <span class="n">hydrogens</span> <span class="o">=</span> <span class="n">e_neighbors</span> <span class="o">==</span> <span class="s1">&#39;H&#39;</span>
+            <span class="n">oxygens</span> <span class="o">=</span> <span class="n">e_neighbors</span> <span class="o">==</span> <span class="s1">&#39;O&#39;</span>
+            <span class="n">nitrogens</span> <span class="o">=</span> <span class="n">e_neighbors</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span>
+            <span class="n">condition</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">hydrogens</span><span class="p">,</span>
+                                                    <span class="n">oxygens</span><span class="p">),</span>
+                                                    <span class="n">nitrogens</span><span class="p">)</span>
+            <span class="n">relevant</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbors</span><span class="p">[</span><span class="n">condition</span><span class="p">])</span>
+            <span class="n">new_neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbors</span><span class="p">[</span><span class="n">e_neighbors</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">])</span>
+        <span class="n">centers</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">new_neighbors</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+
+    <span class="c1"># Add last hydrogens</span>
+    <span class="n">centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">index</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">relevant</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">centers</span><span class="p">:</span>
+        <span class="n">neighbors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ana</span><span class="o">.</span><span class="n">all_bonds</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">e_neighbors</span> <span class="o">=</span> <span class="n">elements</span><span class="p">[</span><span class="n">neighbors</span><span class="p">]</span>
+        <span class="n">hydrogens</span> <span class="o">=</span> <span class="n">e_neighbors</span> <span class="o">==</span> <span class="s1">&#39;H&#39;</span>
+        <span class="n">relevant</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbors</span><span class="p">[</span><span class="n">hydrogens</span><span class="p">])</span>
+
+    <span class="n">relevant</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">index</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">relevant</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">])</span>
+    <span class="n">relevant</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">relevant</span><span class="p">)</span>
+    <span class="n">separated_relevant</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">element</span>  <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">elements</span><span class="p">[</span><span class="n">relevant</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">element</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">separated_relevant</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="n">separated_relevant</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">element</span><span class="p">)]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">separated_relevant</span><span class="p">[</span><span class="n">element</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">relevant</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">separated_relevant</span></div>
+
+
+
+<span class="c1"># add2executable</span>
+<div class="viewcode-block" id="iHFC_fromxyz">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.iHFC_fromxyz">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">iHFC_fromxyz</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">radicals</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract the H, O and N atoms in the neighborhood of the radicals up to</span>
+<span class="sd">    certain depth (see HFC_relevantA). Those atoms are the relevant ones for</span>
+<span class="sd">    HyperFine Calculations (HFC). This function receives strings as inputs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    file: str</span>
+<span class="sd">        path to the molecule that you want to analyse. ASE must be able to read</span>
+<span class="sd">        this file.</span>
+<span class="sd">    radicals: str</span>
+<span class="sd">        index of the atoms of posible location of the radicals, implying that</span>
+<span class="sd">        that neighborhoods of this atoms are important for the HFC. 1-based</span>
+<span class="sd">        indexes. It should be a list of integers in string format, e.g.:</span>
+<span class="sd">        &quot;[1, 5, 7]&quot;.</span>
+<span class="sd">    depth: str</span>
+<span class="sd">        number of times that it searches the neighbors of the neighbors.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (dict) {element: list of indexes} with the indexes of the H, O and N</span>
+<span class="sd">    atoms grouped by element. The indices start from 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">atoms</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">radicals</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">radicals</span><span class="p">)</span>
+    <span class="n">depth</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">HFC_relevantA</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">radicals</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_connectivity">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.get_connectivity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_connectivity</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">engine</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the connectivity of a molecule.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    atoms: ase.Atoms</span>
+<span class="sd">        molecule to be analyzed.</span>
+<span class="sd">    engine: str</span>
+<span class="sd">        &#39;vmd&#39; to use the bonds detected by VMD (VMD must be in the PATH) or</span>
+<span class="sd">        &#39;ase&#39; to use the natural cutoffs of ase.neighborlist.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (list) [n_atoms] list where the element i contains the indices of the</span>
+<span class="sd">    atoms bonded to the atom i. Indices start from 0.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">engine</span> <span class="o">==</span> <span class="s1">&#39;vmd&#39;</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">ase.io</span><span class="w"> </span><span class="kn">import</span> <span class="n">write</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">eproducer.ase_utils.molecules</span><span class="w"> </span><span class="kn">import</span> <span class="n">vmd_connectivity</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+        <span class="nb">id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000000</span><span class="p">)</span>
+        <span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tmp_Mview_</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s1">.xyz&#39;</span><span class="p">,</span> <span class="n">atoms</span><span class="p">)</span>
+        <span class="n">connectivity</span> <span class="o">=</span> <span class="n">vmd_connectivity</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tmp_Mview_</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s1">.xyz&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;tmp_Mview_</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s1">.xyz&#39;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">engine</span> <span class="o">==</span> <span class="s1">&#39;ase&#39;</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">ase.neighborlist</span><span class="w"> </span><span class="kn">import</span> <span class="n">natural_cutoffs</span><span class="p">,</span> <span class="n">NeighborList</span>
+
+        <span class="n">cutoffs</span> <span class="o">=</span> <span class="n">natural_cutoffs</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="n">nl</span> <span class="o">=</span> <span class="n">NeighborList</span><span class="p">(</span><span class="n">cutoffs</span><span class="p">,</span> <span class="n">self_interaction</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bothways</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">nl</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+        <span class="n">connectivity</span> <span class="o">=</span> <span class="p">[</span><span class="n">nl</span><span class="o">.</span><span class="n">get_neighbors</span><span class="p">(</span><span class="n">i</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">))]</span>
+
+    <span class="k">return</span> <span class="n">connectivity</span></div>
+
+
+
+<div class="viewcode-block" id="ase_to_nx_graph">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.ase_to_nx_graph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ase_to_nx_graph</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;vmd&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a molecule into a networkx graph whose nodes are the atoms, with</span>
+<span class="sd">    their atomic number in the attribute &#39;atomic_number&#39;, and whose edges are</span>
+<span class="sd">    the bonds.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    atoms: ase.Atoms</span>
+<span class="sd">        molecule to be converted.</span>
+<span class="sd">    engine: str. Default=&#39;vmd&#39;</span>
+<span class="sd">        engine used to get the connectivity, &#39;vmd&#39; or &#39;ase&#39;. See</span>
+<span class="sd">        get_connectivity.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (networkx.Graph) graph of the molecule.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">connectivity</span>  <span class="o">=</span> <span class="n">get_connectivity</span><span class="p">(</span><span class="n">atoms</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+
+    <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">atom</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atoms</span><span class="p">):</span>
+        <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">atomic_number</span><span class="o">=</span><span class="n">atom</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">atoms</span><span class="p">)):</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">connectivity</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">G</span><span class="o">.</span><span class="n">has_edge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">G</span></div>
+
+
+<div class="viewcode-block" id="get_isomorphic_permutation">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.get_isomorphic_permutation">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_isomorphic_permutation</span><span class="p">(</span><span class="n">nx_graph1</span><span class="p">,</span> <span class="n">nx_graph2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns a permutation list to reorder the atoms of `nx_graph2` to match</span>
+<span class="sd">    `nx_graph1` based on their isomorphic structure (nodes are matched by</span>
+<span class="sd">    their &#39;atomic_number&#39;), such that e.g.:</span>
+
+<span class="sd">    permutation = get_isomorphic_permutation(g1, g2)</span>
+<span class="sd">    numbers2[permutation] == numbers1</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    nx_graph1: networkx.Graph</span>
+<span class="sd">        first molecular graph (see ase_to_nx_graph).</span>
+<span class="sd">    nx_graph2: networkx.Graph</span>
+<span class="sd">        second molecular graph (see ase_to_nx_graph).</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (list) permutation such that the node i of nx_graph1 corresponds to the</span>
+<span class="sd">    node permutation[i] of nx_graph2. Raises ValueError if the graphs are not</span>
+<span class="sd">    isomorphic.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">node_match</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        True if both nodes have the same atomic number.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">n1</span><span class="p">[</span><span class="s1">&#39;atomic_number&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">n2</span><span class="p">[</span><span class="s1">&#39;atomic_number&#39;</span><span class="p">]</span>
+
+    <span class="n">gm</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">isomorphism</span><span class="o">.</span><span class="n">GraphMatcher</span><span class="p">(</span><span class="n">nx_graph1</span><span class="p">,</span> <span class="n">nx_graph2</span><span class="p">,</span> <span class="n">node_match</span><span class="o">=</span><span class="n">node_match</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">gm</span><span class="o">.</span><span class="n">is_isomorphic</span><span class="p">():</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="n">gm</span><span class="o">.</span><span class="n">mapping</span>
+        <span class="n">permutation</span> <span class="o">=</span> <span class="p">[</span><span class="n">mapping</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nx_graph1</span><span class="p">))]</span>
+        <span class="k">return</span> <span class="n">permutation</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Graphs are not isomorphic&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_permutation_of_heavy_atoms">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.get_permutation_of_heavy_atoms">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_permutation_of_heavy_atoms</span><span class="p">(</span><span class="n">heavy_ref_mol</span><span class="p">,</span> <span class="n">heavy_mch_mol</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;vmd&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds the permutation that maps the heavy atoms of the reference molecule</span>
+<span class="sd">    onto the heavy atoms of the molecule to match, using the isomorphism of</span>
+<span class="sd">    their molecular graphs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    heavy_ref_mol: ase.Atoms</span>
+<span class="sd">        reference molecule (only heavy atoms).</span>
+<span class="sd">    heavy_mch_mol: ase.Atoms</span>
+<span class="sd">        molecule to match (only heavy atoms).</span>
+<span class="sd">    engine: str. Default=&#39;vmd&#39;</span>
+<span class="sd">        engine used to get the connectivity, &#39;vmd&#39; or &#39;ase&#39;. See</span>
+<span class="sd">        get_connectivity.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (list) permutation such that the atom i of heavy_ref_mol corresponds to</span>
+<span class="sd">    the atom permutation[i] of heavy_mch_mol. Raises ValueError if the</span>
+<span class="sd">    molecular graphs are not isomorphic.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">graph_ref</span> <span class="o">=</span> <span class="n">ase_to_nx_graph</span><span class="p">(</span><span class="n">heavy_ref_mol</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+    <span class="n">graph_2ma</span> <span class="o">=</span> <span class="n">ase_to_nx_graph</span><span class="p">(</span><span class="n">heavy_mch_mol</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+    <span class="n">perm</span> <span class="o">=</span> <span class="n">get_isomorphic_permutation</span><span class="p">(</span><span class="n">graph_ref</span><span class="p">,</span> <span class="n">graph_2ma</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">perm</span></div>
+
+
+<span class="c1"># add2executable</span>
+<div class="viewcode-block" id="rad_loc">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.rad_loc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rad_loc</span><span class="p">(</span><span class="n">ref_mol_xyz</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rad_mol_xyz</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">engine</span><span class="o">=</span><span class="s1">&#39;vmd&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the index of the atom where a hydrogen atom was attached. The heavy</span>
+<span class="sd">    atoms of both molecules are matched by graph isomorphism and the first</span>
+<span class="sd">    heavy atom with a different number of bonds is returned.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    ref_mol_xyz: str</span>
+<span class="sd">        path to the file describing the molecule with the hydrogen included.</span>
+<span class="sd">    rad_mol_xyz: str</span>
+<span class="sd">        path to the file describing the molecule without the hydrogen.</span>
+<span class="sd">    engine: str. Default=&#39;vmd&#39;</span>
+<span class="sd">        engine to use to get the connectivity. It can be &#39;vmd&#39; or &#39;ase&#39;.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (int) index, in rad_mol_xyz, of the atom where the hydrogen was attached.</span>
+<span class="sd">    Index counting starting from 1. None if no atom lost a bond.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ref_mol</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">ref_mol_xyz</span><span class="p">)</span>
+    <span class="n">con_ref</span> <span class="o">=</span> <span class="n">get_connectivity</span><span class="p">(</span><span class="n">ref_mol</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ref_mol</span><span class="o">.</span><span class="n">get_chemical_symbols</span><span class="p">())</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">non_H_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">elements</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">heavy_ref_mol</span> <span class="o">=</span> <span class="n">ref_mol</span><span class="p">[</span><span class="n">elements</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">]</span>
+
+    <span class="n">mch_mol</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">rad_mol_xyz</span><span class="p">)</span>
+    <span class="n">con_mch</span> <span class="o">=</span> <span class="n">get_connectivity</span><span class="p">(</span><span class="n">mch_mol</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mch_mol</span><span class="o">.</span><span class="n">get_chemical_symbols</span><span class="p">())</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">non_H_mch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">elements</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">heavy_mch_mol</span> <span class="o">=</span> <span class="n">mch_mol</span><span class="p">[</span><span class="n">elements</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">]</span>
+
+    <span class="n">perm</span> <span class="o">=</span> <span class="n">get_permutation_of_heavy_atoms</span><span class="p">(</span><span class="n">heavy_ref_mol</span><span class="p">,</span>
+                                          <span class="n">heavy_mch_mol</span><span class="p">,</span>
+                                          <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">non_H_ref</span><span class="p">,</span> <span class="n">non_H_mch</span><span class="p">[</span><span class="n">perm</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">con_ref</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">con_mch</span><span class="p">[</span><span class="n">j</span><span class="p">]):</span>
+            <span class="k">return</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span></div>
+
+
+
+<span class="c1"># add2executable</span>
+<div class="viewcode-block" id="heavya_idx_from_ref">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.heavya_idx_from_ref">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">heavya_idx_from_ref</span><span class="p">(</span><span class="n">ref_mol_xyz</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rad_mol_xyz</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">engine</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s1">&#39;vmd&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the index, in the radical, of the heavy atom that corresponds to a</span>
+<span class="sd">    given heavy atom of the reference molecule. The heavy atoms of both</span>
+<span class="sd">    molecules are matched by graph isomorphism.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    ref_mol_xyz: str</span>
+<span class="sd">        path to the file describing the molecule with the hydrogen included.</span>
+<span class="sd">    rad_mol_xyz: str</span>
+<span class="sd">        path to the file describing the molecule without the hydrogen.</span>
+<span class="sd">    index: int</span>
+<span class="sd">        index of the heavy atom in the reference molecule to match in the new</span>
+<span class="sd">        molecule. Starting from 1.</span>
+<span class="sd">    engine: str. Default=&#39;vmd&#39;</span>
+<span class="sd">        engine to use to get the connectivity. It can be &#39;vmd&#39; or &#39;ase&#39;.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (int) index of the corresponding heavy atom in rad_mol_xyz. Index</span>
+<span class="sd">    counting starting from 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">ref_mol</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">ref_mol_xyz</span><span class="p">)</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ref_mol</span><span class="o">.</span><span class="n">get_chemical_symbols</span><span class="p">())</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">non_H_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">elements</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">heavy_ref_mol</span> <span class="o">=</span> <span class="n">ref_mol</span><span class="p">[</span><span class="n">elements</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">]</span>
+
+    <span class="n">mch_mol</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">rad_mol_xyz</span><span class="p">)</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mch_mol</span><span class="o">.</span><span class="n">get_chemical_symbols</span><span class="p">())</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">non_H_mch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">elements</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">heavy_mch_mol</span> <span class="o">=</span> <span class="n">mch_mol</span><span class="p">[</span><span class="n">elements</span> <span class="o">!=</span> <span class="s1">&#39;H&#39;</span><span class="p">]</span>
+
+    <span class="n">perm</span> <span class="o">=</span> <span class="n">get_permutation_of_heavy_atoms</span><span class="p">(</span><span class="n">heavy_ref_mol</span><span class="p">,</span> <span class="n">heavy_mch_mol</span><span class="p">,</span>
+                                          <span class="n">engine</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+
+    <span class="n">idx_in_reduced_ref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">non_H_ref</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx_in_reduced_ref</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2"> seems not to be a heavy atom or it is not&quot;</span> <span class="o">+</span>
+                         <span class="s2">&quot; part of the molecule to match.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">non_H_mch</span><span class="p">[</span><span class="n">perm</span><span class="p">][</span><span class="n">idx_in_reduced_ref</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span></div>
+
+
+
+<div class="viewcode-block" id="rad_loc_deprecated">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.rad_loc_deprecated">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rad_loc_deprecated</span><span class="p">(</span><span class="n">ref_mol</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">radical</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Find the index of the atom where a hydrogen atom was attached.</span>
+
+<span class="sd">    Parametes</span>
+<span class="sd">    =========</span>
+<span class="sd">    ref_mol: str</span>
+<span class="sd">        path to the file describing the molecule with the hydrogen included.</span>
+<span class="sd">    radical: str</span>
+<span class="sd">        path to the file describing the molecule without the hydrogen.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (int) index of the atom where the hydrogen was attached. Index counting</span>
+<span class="sd">    starting from 1.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">withrad</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">radical</span><span class="p">)</span>
+    <span class="n">ana_rad</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">withrad</span><span class="p">)</span>
+    <span class="n">cone_rad</span> <span class="o">=</span> <span class="n">ana_rad</span><span class="o">.</span><span class="n">all_bonds</span>
+    <span class="n">reference</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">ref_mol</span><span class="p">)</span>
+    <span class="n">Hs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">reference</span><span class="o">.</span><span class="n">get_chemical_symbols</span><span class="p">())</span> <span class="o">==</span> <span class="s1">&#39;H&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">Hs</span><span class="p">:</span>
+        <span class="n">reference</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">ref_mol</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">reference</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+
+        <span class="n">ana</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+        <span class="n">cone</span> <span class="o">=</span> <span class="n">ana</span><span class="o">.</span><span class="n">all_bonds</span>
+
+        <span class="k">if</span> <span class="n">cone</span> <span class="o">==</span> <span class="n">cone_rad</span><span class="p">:</span>
+            <span class="n">reference</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">ref_mol</span><span class="p">)</span>
+            <span class="n">ana</span> <span class="o">=</span> <span class="n">Analysis</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+            <span class="n">cone</span> <span class="o">=</span> <span class="n">ana</span><span class="o">.</span><span class="n">all_bonds</span>
+            <span class="k">return</span> <span class="n">cone</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">h</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span></div>
+
+
+
+<span class="c1"># add2executable</span>
+<div class="viewcode-block" id="ext_xyz_from_npz">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.ext_xyz_from_npz">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ext_xyz_from_npz</span><span class="p">(</span><span class="n">npz_file</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">create_xyz_files</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts structures in xyz files from a given npz file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    npz_file: str</span>
+<span class="sd">        file containing the structures.</span>
+<span class="sd">    selection: list. Default=None</span>
+<span class="sd">        list of indexes of the structures to extract. If None, all structures</span>
+<span class="sd">        are extracted.</span>
+<span class="sd">    create_xyz_files: bool. Default=True</span>
+<span class="sd">        whether to create xyz files for the extracted structures or not.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (list) list of ASE Atoms objects corresponding to the extracted structures.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">npz_file</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">selection</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">selection</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;xyz&#39;</span><span class="p">]))</span>
+
+    <span class="n">a2ret</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">:</span>
+        <span class="n">atoms</span> <span class="o">=</span> <span class="n">Atoms</span><span class="p">(</span><span class="n">numbers</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;atomic_numbers&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+                      <span class="n">positions</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;xyz&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">npz_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s1">03</span><span class="si">}</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;.xyz&#39;</span>
+
+        <span class="n">comment</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;total_charge: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;total_charge&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">; &#39;</span> <span class="o">+</span> \
+                   <span class="sa">f</span><span class="s1">&#39;multiplicity: 2; &#39;</span> <span class="o">+</span> \
+                   <span class="sa">f</span><span class="s1">&#39;heavy_atom_missing_idxs: &#39;</span> <span class="o">+</span> \
+                   <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;heavy_atom_missing_idxs&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="s1">&#39;atom_chargerelevant_idx&#39;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;atom_chargerelevant_idx&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">charged</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span>
+                                 <span class="n">data</span><span class="p">[</span><span class="s2">&quot;atom_chargerelevant_idx&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]])</span>
+            <span class="n">comment</span> <span class="o">+=</span> <span class="s1">&#39;; atom_chargerelevant_idx: &#39;</span> <span class="o">+</span> \
+                       <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">charged</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="s1">&#39;source_names&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">comment</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;; source_name: </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;source_names&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="n">create_xyz_files</span><span class="p">:</span>
+            <span class="n">write</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">atoms</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="n">comment</span><span class="p">)</span>
+        <span class="n">a2ret</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atoms</span><span class="p">)</span>
+
+    <span class="n">data</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">a2ret</span></div>
+
+
+
+<span class="c1"># add2executable</span>
+<div class="viewcode-block" id="nrand_rad">
+<a class="viewcode-back" href="../../modules/eproducer.html#eproducer.g_valsetup.nrand_rad">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">nrand_rad</span><span class="p">(</span><span class="n">npz_file</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Nmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">entry</span><span class="o">=</span><span class="s1">&#39;energy_MACE&#39;</span><span class="p">,</span>
+              <span class="n">exclude</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts a random subset of radical structures from a given npz file. It</span>
+<span class="sd">    takes the Nmin structures with the lowest values of entry and randomly</span>
+<span class="sd">    selects n of them.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ==========</span>
+<span class="sd">    npz_file: str</span>
+<span class="sd">        file containing the radicals.</span>
+<span class="sd">    n: int. Default=None</span>
+<span class="sd">        number if radical structures to extract from the subset. If None, all</span>
+<span class="sd">        the structures in the subset are selected.</span>
+<span class="sd">    Nmin: int. Default=None</span>
+<span class="sd">        number of structures in the subset that minimizes the entry parameter.</span>
+<span class="sd">        If None, all the structures are included in the subset.</span>
+<span class="sd">    entry: str. Default=&#39;energy_MACE&#39;</span>
+<span class="sd">        entry of the npz file from where the Nmin are selected.</span>
+<span class="sd">    exclude: list. Default=None</span>
+<span class="sd">        indexes of the structures that cannot be selected, e.g. because they</span>
+<span class="sd">        were already computed.</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ======</span>
+<span class="sd">    (list) indexes of the selected entries in the npz file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">confs_info</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">npz_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Nmin</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">Nmin</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">confs_info</span><span class="p">[</span><span class="s1">&#39;xyz&#39;</span><span class="p">]):</span>
+        <span class="n">Nmin</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">confs_info</span><span class="p">[</span><span class="s1">&#39;xyz&#39;</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">exclude</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">exclude</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">entry_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">confs_info</span><span class="p">[</span><span class="n">entry</span><span class="p">],</span> <span class="n">exclude</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">sorted_entries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">entry_values</span><span class="p">)[:</span><span class="n">Nmin</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sorted_entries</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">entry_values</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n is too large. There are only&quot;</span> <span class="o">+</span>
+                         <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">entry_values</span><span class="p">)</span><span class="si">}</span><span class="s2"> entries available after&quot;</span> <span class="o">+</span>
+                         <span class="s2">&quot; excluding the specified indices.&quot;</span><span class="p">)</span>
+
+    <span class="n">selected_entries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">sorted_entries</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">selected_idx</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">selected_entries</span><span class="p">:</span>
+        <span class="n">indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">confs_info</span><span class="p">[</span><span class="n">entry</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">indexes</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">indexes</span><span class="p">,</span> <span class="n">exclude</span><span class="p">)]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;No available entries to select from after excluding specified indices.&quot;</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">selected_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">selected_idx</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Daniel Sucerquia.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

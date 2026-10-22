@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eproducer.cli package &mdash; EPRoducer</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=32ed3f93" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Script of EPRoducer basics" href="bash_rsts_scripts/basics.html" />
+    <link rel="prev" title="eproducer.ase_utils package" href="eproducer.ase_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #ffffff" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-line interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="eproducer.html">eproducer package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="eproducer.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="eproducer.ase_utils.html">eproducer.ase_utils package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">eproducer.cli package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="eproducer.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eproducer.html#shell-scripts">Shell scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #ffffff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EPRoducer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="eproducer.html">eproducer package</a></li>
+      <li class="breadcrumb-item active">eproducer.cli package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/eproducer.cli.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-eproducer.cli">
+<span id="eproducer-cli-package"></span><h1>eproducer.cli package<a class="headerlink" href="#module-eproducer.cli" title="Link to this heading"></a></h1>
+<p>Command-line interface of EPRoducer.</p>
+<p>The use of the command line is described in <a class="reference internal" href="../cli.html"><span class="doc">Command-line interface</span></a>.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<section id="module-eproducer.cli.main">
+<span id="eproducer-cli-main"></span><h3>eproducer.cli.main<a class="headerlink" href="#module-eproducer.cli.main" title="Link to this heading"></a></h3>
+<p>Entry point of the ‘eproducer’ command. It exposes the python functions in
+pymodules, the shell scripts in sh_executers and the bundled files in
+other_files as ‘eproducer &lt;function&gt; [args…]’, and opens the documentation
+with ‘eproducer doc’.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.cli.main.main">
+<span class="sig-prename descclassname"><span class="pre">eproducer.cli.main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/cli/main.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.cli.main.main" title="Link to this definition"></a></dt>
+<dd><p>Runs each time eproducer is called from the terminal. Depending on the
+first argument, it prints the list of functions (-h), runs a python
+function, runs a shell script, prints the path of a bundled file or opens
+the documentation (doc). After the name of a python function, -h prints
+its docstring and -path its module. After the name of a shell script or
+after doc, -path prints the path of the script or of the documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.cli.main.open_doc">
+<span class="sig-prename descclassname"><span class="pre">eproducer.cli.main.</span></span><span class="sig-name descname"><span class="pre">open_doc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/cli/main.html#open_doc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.cli.main.open_doc" title="Link to this definition"></a></dt>
+<dd><p>Opens the html documentation of EPRoducer in the web browser. Before, it
+builds the documentation with Sphinx if it was not built yet or if its
+sources changed after the last build.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path_only</strong> (<em>bool. Default=False</em>) – True to print the path of the documentation (index.html) instead of
+opening it.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.cli.main.output_terminal">
+<span class="sig-prename descclassname"><span class="pre">eproducer.cli.main.</span></span><span class="sig-name descname"><span class="pre">output_terminal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/cli/main.html#output_terminal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.cli.main.output_terminal" title="Link to this definition"></a></dt>
+<dd><p>Runs a command in a terminal and prints its output while it runs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – bash command to be executed in the terminal.</p></li>
+<li><p><strong>print_output</strong> (<em>bool. Default=True</em>) – True for printing the output besides of returning it.</p></li>
+<li><p><strong>skip_error</strong> (<em>bool. Default=False</em>) – True for continuing running although the command fails.</p></li>
+<li><p><strong>**kwargs</strong> – additional options for subprocess.Popen</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)">str</a>) standard output of the executed command.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="eproducer.ase_utils.html" class="btn btn-neutral float-left" title="eproducer.ase_utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bash_rsts_scripts/basics.html" class="btn btn-neutral float-right" title="Script of EPRoducer basics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Daniel Sucerquia.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

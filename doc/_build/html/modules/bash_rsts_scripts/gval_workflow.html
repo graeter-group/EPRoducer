@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Script of EPRoducer gval_workflow &mdash; EPRoducer</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=32ed3f93" />
+
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Script of EPRoducer gvals_template" href="gvals_template.html" />
+    <link rel="prev" title="Script of EPRoducer gval_postpro" href="gval_postpro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #ffffff" >
+
+          
+          
+          <a href="../../index.html">
+            
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cli.html">Command-line interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../eproducer.html">eproducer package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../eproducer.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../eproducer.html#submodules">Submodules</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../eproducer.html#shell-scripts">Shell scripts</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="basics.html">Script of EPRoducer basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="create_mol_png.html">Script of EPRoducer create_mol_png</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extract_EPRspec.html">Script of EPRoducer extract_EPRspec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="extract_bonds_vmd.html">Script of EPRoducer extract_bonds_vmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gval_data_restart.html">Script of EPRoducer gval_data_restart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gval_dataset.html">Script of EPRoducer gval_dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gval_postpro.html">Script of EPRoducer gval_postpro</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Script of EPRoducer gval_workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gvals_template.html">Script of EPRoducer gvals_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spectrum_from_gval.html">Script of EPRoducer spectrum_from_gval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eproducer.html#g-value-calculations">g-value calculations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eproducer.html#spectra">Spectra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eproducer.html#post-processing">Post-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../eproducer.html#utilities">Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #ffffff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">EPRoducer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../eproducer.html">eproducer package</a></li>
+      <li class="breadcrumb-item active">Script of EPRoducer gval_workflow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/modules/bash_rsts_scripts/gval_workflow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="script-of-eproducer-gval-workflow">
+<span id="script-gval-workflow"></span><h1>Script of EPRoducer gval_workflow<a class="headerlink" href="#script-of-eproducer-gval-workflow" title="Link to this heading"></a></h1>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1">#SBATCH -N 1</span>
+<span class="c1">#SBATCH --threads-per-core=1</span>
+<span class="c1">#SBATCH --cpus-per-task=1</span>
+<span class="c1">#SBATCH --mem=20G</span>
+<span class="c1">#SBATCH -t 24:00:00</span>
+<span class="c1">#SBATCH --output=%x-%j.o</span>
+<span class="c1">#SBATCH --error=%x-%j.e</span>
+<span class="c1">#SBATCH --signal=B:USR1@120</span>
+
+
+print_help<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">This tool runs all the necessary steps to get the g-values. It works with some</span>
+<span class="s2">flags:</span>
+<span class="s2">  </span>
+<span class="s2">  -b  Use this flag to AVOID computation of frequencies.</span>
+<span class="s2">  -c  &lt;charge=0&gt; charge of the system.</span>
+<span class="s2">  -d  &lt;directory=&#39;.&#39;&gt; directory containing at least model.xyz</span>
+<span class="s2">  -e  Use this flag to AVOID computation of gvalues. Flags -f and -g are</span>
+<span class="s2">      unuseful when this flag is activated.</span>
+<span class="s2">  -f  &lt;hyperfine=&#39;&#39;&gt; indexes of atoms to be included in hyperfine corrections.</span>
+<span class="s2">      If the argument of this flag starts with g, the guess util</span>
+<span class="s2">      &#39;eproducer iHFC_fromxyz&#39; is used to find the H, O, and N atoms around the</span>
+<span class="s2">      indexes atoms with the indexes given in the arguments. If you use the</span>
+<span class="s2">      guess util, be sure to add the depth of the neighborhood with the letter</span>
+<span class="s2">      d. E.g. &#39;g4,5d3&#39; finds the relevant atoms in the 3-depth-neigborhood of</span>
+<span class="s2">      the atoms 4 and 5.</span>
+<span class="s2">  -g  &lt;reference_mol=&#39;&#39;&gt; guess the location of the radical assuming an</span>
+<span class="s2">      abstraction process. Give the path of the file of the molecule before</span>
+<span class="s2">      the abstraction.</span>
+<span class="s2">  -m  &lt;multiplicity=2&gt; multiplicity of the system.</span>
+<span class="s2">  -n  &lt;prior_name=&#39;model&#39;&gt; name of the input and output files. The script needs</span>
+<span class="s2">      at least a file called prior_name.xyz in the running directory (-d). Then,</span>
+<span class="s2">      it creates files called prior_name_opt., prior_name_epr., etc.</span>
+<span class="s2">  -o  Use this flag to AVOID the optimization step. &lt;prior_name&gt;_opt.xyz must</span>
+<span class="s2">      exist, then.</span>
+<span class="s2">  -p  &lt;processors=16&gt; number of processors used in the orca calculations.</span>
+<span class="s2">  -P  Use this flag to ENABLE preemption. When the job is preempted (or hits</span>
+<span class="s2">      its time limit) it resubmits itself with the same allocation (processors,</span>
+<span class="s2">      nice value, job name and partition) using the -R restart option, so a</span>
+<span class="s2">      higher priority job can run first.</span>
+<span class="s2">  -r  &lt;reference_mol=&#39;&#39;&gt; guess the location of the radical assuming an</span>
+<span class="s2">      abstraction process. Give the path of the file of the molecule before</span>
+<span class="s2">      the abstraction.</span>
+<span class="s2">  -R  Use this flag to RESTART the optimization. It uses the file</span>
+<span class="s2">      &lt;prior_name&gt;_opt.xyz as the input geometry for the optimization.</span>
+<span class="s2">  -s  Use this flag to delete orca files like gbw...</span>
+<span class="s2">  -x  &lt;xc=&#39;B3LYP EPR-II&#39;&gt; functional and basis set for the g-value calculation.</span>
+<span class="s2">      The default is B3LYP EPR-II, which is a good choice for g-values.</span>
+
+<span class="s2">  -h   prints this message.</span>
+<span class="s2">  -v   verbose.</span>
+<span class="s2">&quot;</span>
+<span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+<span class="o">}</span>
+
+<span class="nv">bdes</span><span class="o">=</span><span class="s1">&#39;true&#39;</span>
+<span class="nv">charge</span><span class="o">=</span><span class="m">0</span>
+<span class="nv">directory</span><span class="o">=</span><span class="s1">&#39;.&#39;</span>
+<span class="nv">mult</span><span class="o">=</span><span class="m">2</span>
+<span class="nv">optimization</span><span class="o">=</span><span class="s1">&#39;true&#39;</span>
+<span class="nv">epr</span><span class="o">=</span><span class="s1">&#39;true&#39;</span>
+<span class="nv">processors</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+<span class="nv">hyperfine</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+<span class="nv">prior_name</span><span class="o">=</span><span class="s1">&#39;model&#39;</span>
+<span class="nv">xc</span><span class="o">=</span><span class="s1">&#39;B3LYP EPR-II&#39;</span>
+<span class="nv">restart</span><span class="o">=</span><span class="s1">&#39;false&#39;</span>
+<span class="nv">preemption</span><span class="o">=</span><span class="s1">&#39;false&#39;</span>
+<span class="nv">sweep</span><span class="o">=</span><span class="s1">&#39;false&#39;</span>
+
+<span class="k">while</span><span class="w"> </span><span class="nb">getopts</span><span class="w"> </span><span class="s1">&#39;bc:d:ef:m:n:op:Pr:Rsx:vh&#39;</span><span class="w"> </span>flag<span class="p">;</span>
+<span class="k">do</span>
+<span class="w">  </span><span class="k">case</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">flag</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="k">in</span>
+<span class="w">    </span>b<span class="o">)</span><span class="w"> </span><span class="nv">bdes</span><span class="o">=</span><span class="s1">&#39;false&#39;</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>c<span class="o">)</span><span class="w"> </span><span class="nv">charge</span><span class="o">=</span><span class="si">${</span><span class="nv">OPTARG</span><span class="si">}</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>d<span class="o">)</span><span class="w"> </span><span class="nv">directory</span><span class="o">=</span><span class="si">${</span><span class="nv">OPTARG</span><span class="si">}</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>e<span class="o">)</span><span class="w"> </span><span class="nv">epr</span><span class="o">=</span><span class="s1">&#39;false&#39;</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>f<span class="o">)</span><span class="w"> </span><span class="nv">hyperfine</span><span class="o">=</span><span class="si">${</span><span class="nv">OPTARG</span><span class="si">}</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>m<span class="o">)</span><span class="w"> </span><span class="nv">mult</span><span class="o">=</span><span class="si">${</span><span class="nv">OPTARG</span><span class="si">}</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>n<span class="o">)</span><span class="w"> </span><span class="nv">prior_name</span><span class="o">=</span><span class="si">${</span><span class="nv">OPTARG</span><span class="si">}</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>o<span class="o">)</span><span class="w"> </span><span class="nv">optimization</span><span class="o">=</span><span class="s1">&#39;false&#39;</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>p<span class="o">)</span><span class="w"> </span><span class="nv">processors</span><span class="o">=</span><span class="si">${</span><span class="nv">OPTARG</span><span class="si">}</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>P<span class="o">)</span><span class="w"> </span><span class="nv">preemption</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>r<span class="o">)</span><span class="w"> </span><span class="nv">reference_mol</span><span class="o">=</span><span class="si">${</span><span class="nv">OPTARG</span><span class="si">}</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>R<span class="o">)</span><span class="w"> </span><span class="nv">restart</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>s<span class="o">)</span><span class="w"> </span><span class="nv">sweep</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>x<span class="o">)</span><span class="w"> </span><span class="nv">xc</span><span class="o">=</span><span class="si">${</span><span class="nv">OPTARG</span><span class="si">}</span><span class="w"> </span><span class="p">;;</span>
+
+<span class="w">    </span>v<span class="o">)</span><span class="w"> </span><span class="nv">verbose</span><span class="o">=</span><span class="s1">&#39;-v&#39;</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>h<span class="o">)</span><span class="w"> </span>print_help<span class="w"> </span><span class="p">;;</span>
+<span class="w">    </span>*<span class="o">)</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;for usage check: eproducer &lt;function&gt; -h&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">  </span><span class="k">esac</span>
+<span class="k">done</span>
+
+<span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span>eproducer<span class="w"> </span>basics<span class="w"> </span>-path<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>Gvals<span class="w"> </span><span class="nv">$verbose</span>
+load_modules
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$processors</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span>
+<span class="k">then</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SLURM_CPUS_ON_NODE</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span>
+<span class="w">  </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">processors</span><span class="o">=</span><span class="nv">$SLURM_CPUS_ON_NODE</span>
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="nv">processors</span><span class="o">=</span><span class="m">1</span>
+<span class="w">  </span><span class="k">fi</span>
+<span class="k">fi</span>
+
+
+<span class="c1"># ==== preemption =============================================================</span>
+<span class="c1"># Resubmits the current job with the same allocation so a higher priority job</span>
+<span class="c1"># can run first. Triggered by the trap set below when the job is preempted.</span>
+restart_job<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span>verbose<span class="w"> </span><span class="s2">&quot;Job preempted: resubmitting with the same allocation (-R restart).&quot;</span>
+<span class="w">  </span><span class="c1"># there is no SLURM env var for the nice value, so query it from scontrol</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span>nice_val
+<span class="w">  </span><span class="nv">nice_val</span><span class="o">=</span><span class="k">$(</span>scontrol<span class="w"> </span>show<span class="w"> </span>job<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SLURM_JOB_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s1">&#39;Nice=\K-?[0-9]+&#39;</span><span class="k">)</span>
+<span class="w">  </span>:<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">nice_val</span><span class="p">:=0</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="nv">$bdes</span><span class="w">        </span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">bdes_flag</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w">  </span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="nv">bdes_flag</span><span class="o">=</span><span class="s1">&#39;-b&#39;</span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="nv">$epr</span><span class="w">         </span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">epr_flag</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w">   </span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="nv">epr_flag</span><span class="o">=</span><span class="s1">&#39;-e&#39;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="nv">$optimization</span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">opt_flag</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w">   </span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="nv">opt_flag</span><span class="o">=</span><span class="s1">&#39;-o&#39;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="nv">$sweep</span><span class="w">       </span><span class="p">;</span><span class="w"> </span><span class="k">then</span><span class="w"> </span><span class="nv">swe_flag</span><span class="o">=</span><span class="s1">&#39;-s&#39;</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="nv">swe_flag</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="w">   </span><span class="p">;</span><span class="w"> </span><span class="k">fi</span>
+
+<span class="w">  </span>sbatch<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$processors</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>--nice<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$nice_val</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>-J<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SLURM_JOB_NAME</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>--partition<span class="o">=</span><span class="s2">&quot;s.otter,c.otter&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">         </span>--qos<span class="o">=</span>low<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s2">&quot;</span><span class="k">$(</span>eproducer<span class="w"> </span>gval_workflow<span class="w"> </span>-path<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$charge</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$directory</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$hyperfine</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-m<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$mult</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$prior_name</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$processors</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-P<span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$reference_mol</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-R<span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-s<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$sweep</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span>-x<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$xc</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">                                      </span><span class="nv">$bdes_flag</span><span class="w"> </span><span class="nv">$epr_flag</span><span class="w"> </span><span class="nv">$opt_flag</span><span class="w">  </span><span class="nv">$swe_flag</span><span class="w"> </span><span class="nv">$verbose</span><span class="w"> </span>
+
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+<span class="o">}</span>
+
+<span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$preemption</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;true&#39;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SLURM_JOB_ID</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]]</span>
+<span class="k">then</span>
+<span class="w">  </span><span class="nv">qos_value</span><span class="o">=</span><span class="k">$(for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>scontrol<span class="w"> </span>show<span class="w"> </span>job<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SLURM_JOB_ID</span><span class="s2">&quot;</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$i</span><span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>qos<span class="k">)</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$qos_value</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;QOS=low&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>fail<span class="w"> </span><span class="s2">&quot;when preemption, qos has to be set to qos=low&quot;</span>
+<span class="w">  </span>
+<span class="w">  </span><span class="c1"># USR1 is delivered 120 s before the time limit / preemption thanks to the</span>
+<span class="w">  </span><span class="c1"># &#39;#SBATCH --signal=B:USR1@120&#39; directive above; SIGTERM is what SLURM sends</span>
+<span class="w">  </span><span class="c1"># after the configured GraceTime when preempting. Both trigger a resubmit.</span>
+<span class="w">  </span><span class="nb">trap</span><span class="w"> </span>restart_job<span class="w"> </span>SIGUSR1<span class="w"> </span>SIGTERM
+<span class="k">else</span>
+<span class="w">  </span><span class="c1"># The --signal directive is static and fires on every run. Without -P we must</span>
+<span class="w">  </span><span class="c1"># ignore USR1, otherwise its default action would kill the job 120 s early.</span>
+<span class="w">  </span><span class="nb">trap</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span>SIGUSR1
+<span class="k">fi</span>
+
+<span class="c1"># Runs orca in the background and waits for it, so a preemption signal is</span>
+<span class="c1"># handled by the trap above promptly instead of being blocked by a foreground</span>
+<span class="c1"># orca process.</span>
+run_orca<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nb">local</span><span class="w"> </span><span class="nv">inp</span><span class="o">=</span><span class="nv">$1</span><span class="w"> </span><span class="nv">out</span><span class="o">=</span><span class="nv">$2</span>
+<span class="w">  </span><span class="nv">$orca</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$inp</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$out</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span>
+<span class="w">  </span><span class="nb">wait</span><span class="w"> </span><span class="nv">$!</span>
+<span class="o">}</span>
+
+
+<span class="c1"># starting information</span>
+verbose<span class="w"> </span><span class="s2">&quot;JOB information&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; * Date:&quot;</span>
+date
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot; * Command:&quot;</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$0</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$directory</span>
+
+<span class="c1"># ==== optimization ===========================================================</span>
+<span class="k">if</span><span class="w"> </span><span class="nv">$optimization</span>
+<span class="k">then</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="nv">$restart</span>
+<span class="w">  </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">xyz_ref_file</span><span class="o">=</span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.xyz
+<span class="w">  </span><span class="k">else</span>
+<span class="w">    </span><span class="nv">xyz_ref_file</span><span class="o">=</span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>.xyz
+<span class="w">  </span><span class="k">fi</span>
+<span class="w">  </span>verbose<span class="w"> </span>Optimization
+<span class="w">  </span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; ${prior_name}_opt.inp</span>
+<span class="s">! B3LYP EPR-II OPT</span>
+<span class="s">%pal nprocs $processors end</span>
+
+<span class="s">%basis</span>
+<span class="s">  NewGTO Cl &quot;Def2-TZVP&quot; end</span>
+<span class="s">  NewGTO Br &quot;Def2-TZVP&quot; end</span>
+<span class="s">  NewGTO S &quot;Def2-TZVP&quot; end</span>
+<span class="s">  NewGTO P &quot;Def2-TZVP&quot; end</span>
+<span class="s">end</span>
+
+<span class="s">*XYZFile $charge $mult $xyz_ref_file</span>
+<span class="s">EOF</span>
+<span class="w">  </span>run_orca<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.inp<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.out
+<span class="w">  </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;ORCA TERMINATED NORMALLY&quot;</span><span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.out<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">optimization</span><span class="o">=</span><span class="s1">&#39;false&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>fail<span class="w"> </span><span class="s2">&quot;optimization failed, check </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span><span class="s2">_opt.out&quot;</span>
+<span class="k">else</span>
+<span class="w">  </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.xyz<span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>run_orca<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.inp<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.out
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;ORCA TERMINATED NORMALLY&quot;</span><span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.out<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">$sweep</span>
+<span class="k">then</span>
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_opt.densities
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_opt.engrad
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_opt.gbw
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_opt.inp
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_opt.opt
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_opt_property.txt
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_opt_trj.xyz
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_opt.gori.xyz
+<span class="k">fi</span>
+
+<span class="c1"># ==== epr ====================================================================</span>
+<span class="k">if</span><span class="w"> </span><span class="nv">$epr</span>
+<span class="k">then</span>
+<span class="w">  </span><span class="nv">rad_loc</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$reference_mol</span><span class="s2">&quot;</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="o">]]</span>
+<span class="w">  </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">location</span><span class="o">=</span><span class="k">$(</span>eproducer<span class="w"> </span>rad_loc<span class="w"> </span><span class="nv">$reference_mol</span><span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.xyz<span class="k">)</span>
+<span class="w">    </span><span class="nv">rad_loc</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$location</span><span class="s2">,&quot;</span>
+<span class="w">  </span><span class="k">fi</span>
+
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="si">${</span><span class="nv">hyperfine</span><span class="p">: 0: 1</span><span class="si">}</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;g&#39;</span><span class="w"> </span><span class="o">]]</span>
+<span class="w">  </span><span class="k">then</span>
+<span class="w">    </span><span class="nv">nog</span><span class="o">=</span><span class="si">${</span><span class="nv">hyperfine</span><span class="p">: 1</span><span class="si">}</span><span class="w">           </span><span class="c1"># remove g</span>
+<span class="w">    </span><span class="nv">radicals</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$rad_loc</span><span class="si">${</span><span class="nv">nog</span><span class="p">%d*</span><span class="si">}</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># list of radicals</span>
+<span class="w">    </span><span class="nv">depth</span><span class="o">=</span><span class="si">${</span><span class="nv">nog</span><span class="p">#*d</span><span class="si">}</span><span class="w">               </span><span class="c1"># depth</span>
+<span class="w">    </span><span class="nv">tmp_var</span><span class="o">=</span><span class="k">$(</span>eproducer<span class="w"> </span>iHFC_fromxyz<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_opt.xyz<span class="w"> </span><span class="s2">&quot;[</span><span class="nv">$radicals</span><span class="s2">]&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">      </span><span class="s2">&quot;</span><span class="nv">$depth</span><span class="s2">&quot;</span><span class="k">)</span>
+<span class="w">    </span>mapfile<span class="w"> </span>-t<span class="w"> </span>hyperfine<span class="w"> </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$tmp_var</span><span class="w"> </span><span class="p">|</span><span class="w">  </span>grep<span class="w"> </span>-oP<span class="w"> </span><span class="s1">&#39;\[\K[^\]]+&#39;</span><span class="o">)</span>
+<span class="w">  </span><span class="k">fi</span>
+
+<span class="w">  </span>verbose<span class="w"> </span>g-values
+<span class="w">  </span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF &gt; ${prior_name}_epr.inp</span>
+<span class="s">! $xc AUTOAUX</span>
+
+<span class="s">%basis</span>
+<span class="s">  NewGTO Cl &quot;Def2-TZVP&quot; end</span>
+<span class="s">  NewGTO Br &quot;Def2-TZVP&quot; end</span>
+<span class="s">  NewGTO S &quot;Def2-TZVP&quot; end</span>
+<span class="s">  NewGTO P &quot;Def2-TZVP&quot; end</span>
+<span class="s">end</span>
+
+<span class="s">%pal nprocs $processors end</span>
+<span class="s">%maxcore 3000</span>
+
+<span class="s">*XYZFile $charge $mult ${prior_name}_opt.xyz</span>
+<span class="s">%EPRNMR</span>
+<span class="s">        GTENSOR   TRUE</span>
+<span class="s">        ORI       GIAO</span>
+<span class="s">END</span>
+<span class="s">EOF</span>
+
+
+<span class="w">  </span><span class="c1"># add necleous for hyperfine corrections</span>
+<span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$hyperfine</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="o">]]</span>
+<span class="w">  </span><span class="k">then</span>
+<span class="w">    </span>verbose<span class="w"> </span>hyperfine
+<span class="w">    </span><span class="k">for</span><span class="w"> </span>sublist<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">hyperfine</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="k">do</span>
+<span class="w">      </span>sed<span class="w"> </span>-i<span class="w"> </span><span class="s2">&quot;/GTENSOR   TRUE/a\ \ \ \ \ \ \  NUCLEI\ \ \ \ = \</span>
+<span class="s2">        </span><span class="nv">$sublist</span><span class="s2"> {SHIFT, AISO, ADIP, AORB}&quot;</span><span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_epr.inp
+<span class="w">    </span><span class="k">done</span>
+<span class="w">  </span><span class="k">fi</span>
+<span class="w">  </span>run_orca<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_epr.inp<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_epr.out
+<span class="k">fi</span>
+
+<span class="k">if</span><span class="w"> </span>grep<span class="w"> </span>-q<span class="w"> </span><span class="s2">&quot;ORCA TERMINATED NORMALLY&quot;</span><span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_epr.out<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">$sweep</span>
+<span class="k">then</span>
+<span class="w">  </span>eproducer<span class="w"> </span>add_gval2npz<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="p">: </span><span class="k">:-</span><span class="nv">4</span><span class="si">}</span>.npz
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_epr.densities
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_epr.engrad
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_epr.gbw
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_epr.inp
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_epr.opt
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_epr_property.txt
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_epr_trj.xyz
+<span class="w">  </span>rm<span class="w"> </span><span class="si">${</span><span class="nv">xyz_file</span><span class="p">%.xyz</span><span class="si">}</span>_epr.gori.xyz
+<span class="k">fi</span>
+
+<span class="c1"># ==== BDEs ===================================================================</span>
+<span class="k">if</span><span class="w"> </span><span class="nv">$bdes</span>
+<span class="k">then</span>
+<span class="w">  </span>verbose<span class="w"> </span>BDES
+<span class="w">  </span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF &gt; ${prior_name}_freq.inp</span>
+<span class="s">! M062X def2-TZVP OPT FREQ</span>
+<span class="s">%maxcore 1200</span>
+<span class="s">%pal nprocs $processors end</span>
+<span class="s">*XYZFile $charge $mult ${prior_name}_opt.xyz</span>
+<span class="s">EOF</span>
+<span class="w">  </span>run_orca<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_freq.inp<span class="w"> </span><span class="si">${</span><span class="nv">prior_name</span><span class="si">}</span>_freq.out
+<span class="k">fi</span>
+
+finish
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gval_postpro.html" class="btn btn-neutral float-left" title="Script of EPRoducer gval_postpro" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gvals_template.html" class="btn btn-neutral float-right" title="Script of EPRoducer gvals_template" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Daniel Sucerquia.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

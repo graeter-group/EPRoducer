@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eproducer.ase_utils package &mdash; EPRoducer</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=32ed3f93" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="eproducer.cli package" href="eproducer.cli.html" />
+    <link rel="prev" title="eproducer package" href="eproducer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #ffffff" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-line interface</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="eproducer.html">eproducer package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="eproducer.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">eproducer.ase_utils package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eproducer.cli.html">eproducer.cli package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="eproducer.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eproducer.html#shell-scripts">Shell scripts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #ffffff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EPRoducer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="eproducer.html">eproducer package</a></li>
+      <li class="breadcrumb-item active">eproducer.ase_utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/eproducer.ase_utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-eproducer.ase_utils">
+<span id="eproducer-ase-utils-package"></span><h1>eproducer.ase_utils package<a class="headerlink" href="#module-eproducer.ase_utils" title="Link to this heading"></a></h1>
+<p>Molecular geometry tools built on top of ASE.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<section id="module-eproducer.ase_utils.molecules">
+<span id="eproducer-ase-utils-molecules"></span><h3>eproducer.ase_utils.molecules<a class="headerlink" href="#module-eproducer.ase_utils.molecules" title="Link to this heading"></a></h3>
+<p>Molecular geometry tools built on top of ASE: alignment, transformation,
+PCA-based matching, and VMD-based connectivity extraction.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.Alignment">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eproducer.ase_utils.molecules.</span></span><span class="sig-name descname"><span class="pre">Alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#Alignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.Alignment" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Set of tools to apply the necessary transformations for aligning a the
+three first eigenvectors of PCA with the x, y, z axis, in that order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>atoms</strong> (<em>ase.Atoms</em>) – molecule to be aligned.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.Alignment.align_with_components">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">align_with_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#Alignment.align_with_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.Alignment.align_with_components" title="Link to this definition"></a></dt>
+<dd><p>Aligns the coordinates x, y, z axis with the main vectors (in that
+order).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>atoms</strong> (<em>ase.Atoms</em>) – Molecule to be aligned.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(ase.Atoms) rotated and shifted molecule.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.Alignment.center_geo">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">center_geo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#Alignment.center_geo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.Alignment.center_geo" title="Link to this definition"></a></dt>
+<dd><p>Moves the coordinates origin to the geometrical center atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>atoms</strong> (<em>ase.Atoms</em>) – Molecule to be moved.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(ase.Atoms) Transformed atoms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.Alignment.pca_vectors">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pca_vectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indexes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#Alignment.pca_vectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.Alignment.pca_vectors" title="Link to this definition"></a></dt>
+<dd><p>Find the eigen vectors in the Principal Component Analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atoms</strong> (<em>ase.Atoms</em>) – molecule to be analyzed.</p></li>
+<li><p><strong>indexes</strong> (<em>Default=&quot;all&quot;</em>) – subset of atoms to be included in the pca analysis. numbering
+convention starting from 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(array) principal components.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eproducer.ase_utils.molecules.</span></span><span class="sig-name descname"><span class="pre">MoleculeSetter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Tool to edit or extract information from a molecule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>atoms</strong> (<em>ase.Atoms</em>) – molecule to be analyzed.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.align_axis">
+<span class="sig-name descname"><span class="pre">align_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.align_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.align_axis" title="Link to this definition"></a></dt>
+<dd><p>Computes the rotation matrix that aligns a vector with the positive x
+axis. The atoms are not modified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vector</strong> (<em>array</em>) – vector to be aligned.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(numpy.array) [3float x 3float] Transformation matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.align_plane">
+<span class="sig-name descname"><span class="pre">align_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.align_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.align_plane" title="Link to this definition"></a></dt>
+<dd><p>Rotation around x axis to set a vector in the xy plane.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vector</strong> (<em>array</em>) – vector to be rotated to be in the xy plane.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(numpy.array) [3float x 3float] Transformation matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.apply_trans">
+<span class="sig-name descname"><span class="pre">apply_trans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trans</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indexes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.apply_trans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.apply_trans" title="Link to this definition"></a></dt>
+<dd><p>Apply a transformation to all vector positions of some atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trans</strong> (<em>array</em><em> (</em><em>3x3</em><em>)</em>) – transformation matrix to be applied to all atom positions.</p></li>
+<li><p><strong>indexes</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a><em> or </em><em>array. Defatult=None</em>) – indexes of the atoms to apply the transformation. Default None
+that means the transformation is applied to the positions of all
+the atoms.</p></li>
+<li><p><strong>shift</strong> (<em>list. Default=None</em>) – translation vector added after the transformation. It is applied
+to all the atoms, also to those not included in indexes.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>changes the positions of the internal atoms object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)">list</a>)[#natoms x 3float] new xyz positions of the N atoms. It</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.create_gaussian_input">
+<span class="sig-name descname"><span class="pre">create_gaussian_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bmk'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'6-31+g'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.create_gaussian_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.create_gaussian_input" title="Link to this definition"></a></dt>
+<dd><p>Creates a g09 .com file without specifing the kind of calculus to run
+(optimization, ab-initio md, frequencies…). You would have to add it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>out</strong> (<em>str. Defatult=None</em>) – name of the gaussian file (.com) without extension. Default
+chemical formula.</p></li>
+<li><p><strong>charge</strong> (<em>int. Default=0</em>) – charge of the molecule in electron units. Default 0.</p></li>
+<li><p><strong>xc</strong> (<em>str. Default='bmk'</em>) – exchange correlation functional used in gaussian. Default bmk</p></li>
+<li><p><strong>basis</strong> (<em>str. Default='6-31+g'</em>) – basis set used in gaussian. Default 6-31+g</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(ase.calculator.Gaussian) Calculator used to create the input.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.increase_distance">
+<span class="sig-name descname"><span class="pre">increase_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constraints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.increase_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.increase_distance" title="Link to this definition"></a></dt>
+<dd><p>increase the distance between two atoms by moving them and keeping the
+rest of the atoms in the same place.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>constraints</strong> – constraints with the shape (n, 2), where n is the number of
+constraints and the first pair is the one to increase the
+distance.</p></li>
+<li><p><strong>deltad</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – amount to add to the distance between atoms.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(ase.Atoms) Internal Atoms object with the corresponding modification.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.increase_distance_with_constraints">
+<span class="sig-name descname"><span class="pre">increase_distance_with_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constraints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltad</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.increase_distance_with_constraints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.increase_distance_with_constraints" title="Link to this definition"></a></dt>
+<dd><p>Take a configuration and increase the distance between two atoms by
+moving those atoms and the atoms connected to them through the other
+constraints, and keeping the rest of the atoms in the same place. The
+molecule is first centered and rotated such that the two atoms lie on
+the x axis (see MoleculeSetter.xy_alignment).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>constraints</strong> – constraints with the shape (n, 2), where n is the number of
+constraints and the first pair is the one to increase the
+distance.</p></li>
+<li><p><strong>deltad</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – amount to add to the distance between atoms.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(ase.Atoms) Internal Atoms object with the corresponding modification.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.rot_x">
+<span class="sig-name descname"><span class="pre">rot_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.rot_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.rot_x" title="Link to this definition"></a></dt>
+<dd><p>Rotation matrix around x axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>angle</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>[</em><em>radians</em><em>]</em>) – angle to rotate around the x axis</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(numpy.array) [3float x 3float] Rotation matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.rot_y">
+<span class="sig-name descname"><span class="pre">rot_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.rot_y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.rot_y" title="Link to this definition"></a></dt>
+<dd><p>Retuns the rotation matrix around y axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>angle</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>[</em><em>radians</em><em>]</em>) – angle to rotate around the y axis</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(numpy.array) [3float x 3float] Rotation matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.rot_z">
+<span class="sig-name descname"><span class="pre">rot_z</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.rot_z"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.rot_z" title="Link to this definition"></a></dt>
+<dd><p>Retuns the rotation matrix around z axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>angle</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>[</em><em>radians</em><em>]</em>) – angle to rotate around the z axis</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(numpy.array) [3float x 3float] Rotation matrix.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.scale_distance">
+<span class="sig-name descname"><span class="pre">scale_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constraints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deltad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.scale_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.scale_distance" title="Link to this definition"></a></dt>
+<dd><p>Increase the distance between two atoms by aligning those atoms with
+the x axis (the first atom at the origin) and scaling the x-coordinate
+of all the atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>constraints</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – constraints with the shape (n, 2), where n is the number of
+constraints and the first pair is the one to increase the
+distance.</p></li>
+<li><p><strong>deltad</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>) – amount to add to the distance between atoms.</p></li>
+<li><p><strong>index3</strong> (<em>int. Default=None</em>) – The atom with index 3 would be in the xy plane in case to be given.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(list)[#natoms x 3float] scaled xyz positions, before the rotation of</em></p></li>
+<li><p><em>index3 into the xy plane. The internal atoms object is also modified</em></p></li>
+<li><p><em>(including that rotation).</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.MoleculeSetter.xy_alignment">
+<span class="sig-name descname"><span class="pre">xy_alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index3</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#MoleculeSetter.xy_alignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.MoleculeSetter.xy_alignment" title="Link to this definition"></a></dt>
+<dd><p>Transform the positions of the atoms such that the atoms of indexes1
+and index2 are aligned in the x axis. The atom with index3 would be in
+the xy plane in case to be given.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index2</strong> (<em>index1 and</em>) – indexes of the atoms to be aligned with the x-axis. The positive
+direction of x would go from atom 1 to atom 2.</p></li>
+<li><p><strong>index3</strong> (<em>int. Default=None</em>) – The atom with index 3 would be in the xy plane in case to be given.</p></li>
+<li><p><strong>center</strong> (<em>int. Default=None</em>) – It must be index1 or index2, that means the atom with this index
+will be placed in the origin. In case center=None (default), the
+origin would be in the geometrical center between atoms with index1
+and index2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>changes the positions of the internal atoms object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(numpy.array)[#natoms x 3float] new xyz positions of the N atoms. It</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.PCAMatcher">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eproducer.ase_utils.molecules.</span></span><span class="sig-name descname"><span class="pre">PCAMatcher</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_compare</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#PCAMatcher"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.PCAMatcher" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Tools to align two molecules with their PCA main vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference</strong> (<em>ase.Atoms</em>) – reference of the molecule to be matched.</p></li>
+<li><p><strong>to_compare</strong> (<em>ase.Atoms</em>) – molecule to be compared to the reference.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.PCAMatcher.align_molecules">
+<span class="sig-name descname"><span class="pre">align_molecules</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#PCAMatcher.align_molecules"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.PCAMatcher.align_molecules" title="Link to this definition"></a></dt>
+<dd><p>Align each molecule with their own main PCA vectors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)">tuple</a>) aligned reference and molecule to compare.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.PCAMatcher.matching">
+<span class="sig-name descname"><span class="pre">matching</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#PCAMatcher.matching"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.PCAMatcher.matching" title="Link to this definition"></a></dt>
+<dd><p>Finds the order of the indices of the molecule which fit with the atoms
+of the reference. So, if the outcome of this function is “out”, then
+PCAMatcher.to_compare[out[i]] == PCAMatcher.reference[i] should be
+true.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>(numpy.array) indices of the molecule that match the indices of the</em></p></li>
+<li><p><em>reference.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Both molecules are aligned (see PCAMatcher.align_molecules) before
+matching.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.vmd_connectivity">
+<span class="sig-prename descclassname"><span class="pre">eproducer.ase_utils.molecules.</span></span><span class="sig-name descname"><span class="pre">vmd_connectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#vmd_connectivity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.vmd_connectivity" title="Link to this definition"></a></dt>
+<dd><p>Extracts the connectivity of a molecule using VMD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mol</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to a molecule file that VMD can read (e.g. xyz or pdb).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(list) [n_atoms] list where the element i contains the indices of the</em></p></li>
+<li><p><em>atoms bonded to the atom i. Indices start from 0 and every bond appears</em></p></li>
+<li><p><em>twice (j in the list of i and i in the list of j).</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>VMD must be available in the PATH. It uses ‘eproducer extract_bonds_vmd’.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.vmd_connectivity_matrix">
+<span class="sig-prename descclassname"><span class="pre">eproducer.ase_utils.molecules.</span></span><span class="sig-name descname"><span class="pre">vmd_connectivity_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#vmd_connectivity_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.vmd_connectivity_matrix" title="Link to this definition"></a></dt>
+<dd><p>Builds the adjacency matrix of a molecule using the connectivity from VMD.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mol</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to a molecule file that VMD can read (e.g. xyz or pdb).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(numpy.array) [n_atoms x n_atoms] symmetric matrix with 1 where two atoms</em></p></li>
+<li><p><em>are bonded and 0 otherwise.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.ase_utils.molecules.vmd_connectivity_unique">
+<span class="sig-prename descclassname"><span class="pre">eproducer.ase_utils.molecules.</span></span><span class="sig-name descname"><span class="pre">vmd_connectivity_unique</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mol</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/ase_utils/molecules.html#vmd_connectivity_unique"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.ase_utils.molecules.vmd_connectivity_unique" title="Link to this definition"></a></dt>
+<dd><p>Extracts the connectivity of a molecule using VMD, keeping each bond only
+once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>mol</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to a molecule file that VMD can read (e.g. xyz or pdb).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(list) [n_atoms] list where the element i contains the indices j &gt; i of</em></p></li>
+<li><p><em>the atoms bonded to the atom i. Indices start from 0.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="eproducer.html" class="btn btn-neutral float-left" title="eproducer package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="eproducer.cli.html" class="btn btn-neutral float-right" title="eproducer.cli package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Daniel Sucerquia.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

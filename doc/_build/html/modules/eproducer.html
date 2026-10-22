@@ -1,0 +1,1663 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eproducer package &mdash; EPRoducer</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=32ed3f93" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="eproducer.ase_utils package" href="eproducer.ase_utils.html" />
+    <link rel="prev" title="Command-line interface" href="../cli.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #ffffff" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">Command-line interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">eproducer package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="eproducer.ase_utils.html">eproducer.ase_utils package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eproducer.cli.html">eproducer.cli package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-eproducer.g_valsetup">eproducer.g_valsetup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-eproducer.postpro">eproducer.postpro</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-eproducer.best_fit">eproducer.best_fit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-eproducer.bonds2npz">eproducer.bonds2npz</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-eproducer.miscellaneous">eproducer.miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#shell-scripts">Shell scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/basics.html">Script of EPRoducer basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/create_mol_png.html">Script of EPRoducer create_mol_png</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/extract_EPRspec.html">Script of EPRoducer extract_EPRspec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/extract_bonds_vmd.html">Script of EPRoducer extract_bonds_vmd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/gval_data_restart.html">Script of EPRoducer gval_data_restart</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/gval_dataset.html">Script of EPRoducer gval_dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/gval_postpro.html">Script of EPRoducer gval_postpro</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/gval_workflow.html">Script of EPRoducer gval_workflow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/gvals_template.html">Script of EPRoducer gvals_template</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bash_rsts_scripts/spectrum_from_gval.html">Script of EPRoducer spectrum_from_gval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#g-value-calculations">g-value calculations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spectra">Spectra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#post-processing">Post-processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#utilities">Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #ffffff" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">EPRoducer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">eproducer package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/eproducer.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-eproducer">
+<span id="eproducer-package"></span><h1>eproducer package<a class="headerlink" href="#module-eproducer" title="Link to this heading"></a></h1>
+<p>Tools for EPR g-value calculations and spectral analysis.</p>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="eproducer.ase_utils.html">eproducer.ase_utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="eproducer.ase_utils.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="eproducer.ase_utils.html#module-eproducer.ase_utils.molecules">eproducer.ase_utils.molecules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="eproducer.ase_utils.html#eproducer.ase_utils.molecules.Alignment"><code class="docutils literal notranslate"><span class="pre">Alignment</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="eproducer.ase_utils.html#eproducer.ase_utils.molecules.MoleculeSetter"><code class="docutils literal notranslate"><span class="pre">MoleculeSetter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="eproducer.ase_utils.html#eproducer.ase_utils.molecules.PCAMatcher"><code class="docutils literal notranslate"><span class="pre">PCAMatcher</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="eproducer.ase_utils.html#eproducer.ase_utils.molecules.vmd_connectivity"><code class="docutils literal notranslate"><span class="pre">vmd_connectivity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="eproducer.ase_utils.html#eproducer.ase_utils.molecules.vmd_connectivity_matrix"><code class="docutils literal notranslate"><span class="pre">vmd_connectivity_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="eproducer.ase_utils.html#eproducer.ase_utils.molecules.vmd_connectivity_unique"><code class="docutils literal notranslate"><span class="pre">vmd_connectivity_unique()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="eproducer.cli.html">eproducer.cli package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="eproducer.cli.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="eproducer.cli.html#module-eproducer.cli.main">eproducer.cli.main</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="eproducer.cli.html#eproducer.cli.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="eproducer.cli.html#eproducer.cli.main.open_doc"><code class="docutils literal notranslate"><span class="pre">open_doc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="eproducer.cli.html#eproducer.cli.main.output_terminal"><code class="docutils literal notranslate"><span class="pre">output_terminal()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<section id="module-eproducer.g_valsetup">
+<span id="eproducer-g-valsetup"></span><h3>eproducer.g_valsetup<a class="headerlink" href="#module-eproducer.g_valsetup" title="Link to this heading"></a></h3>
+<p>Molecular structure utilities for EPR g-value calculations: connectivity
+analysis, radical site location, and structure extraction from npz
+datasets.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.HFC_relevantA">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">HFC_relevantA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radicals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#HFC_relevantA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.HFC_relevantA" title="Link to this definition"></a></dt>
+<dd><p>Extract the H, O and N atoms in the neighborhood of the radicals up to
+certain depth (neighbors of neighbors, moving only through heavy atoms).
+It also includes the H atoms bonded to those O and N atoms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atoms</strong> (<em>ase.Atoms</em>) – Atoms object containing the molecule.</p></li>
+<li><p><strong>radicals</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – posible positions of the radicals, implying that that neighborhood is
+important for the HFC. Indexes starting from 1.</p></li>
+<li><p><strong>depth</strong> (<em>int. Default=2</em>) – number of times that it searches the neighbors of the neighbors.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>(dict) {element</strong> (<em>list of indexes} with the indexes of the H, O and N</em>)</p></li>
+<li><p><strong>atoms grouped by element, e.g. {‘H’</strong> (<em>[3, 4], ‘O’: [7]}. The indices start</em>)</p></li>
+<li><p><em>with 1.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.ase_to_nx_graph">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">ase_to_nx_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vmd'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#ase_to_nx_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.ase_to_nx_graph" title="Link to this definition"></a></dt>
+<dd><p>Converts a molecule into a networkx graph whose nodes are the atoms, with
+their atomic number in the attribute ‘atomic_number’, and whose edges are
+the bonds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atoms</strong> (<em>ase.Atoms</em>) – molecule to be converted.</p></li>
+<li><p><strong>engine</strong> (<em>str. Default='vmd'</em>) – engine used to get the connectivity, ‘vmd’ or ‘ase’. See
+get_connectivity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(networkx.Graph) graph of the molecule.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.ext_xyz_from_npz">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">ext_xyz_from_npz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">npz_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_xyz_files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#ext_xyz_from_npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.ext_xyz_from_npz" title="Link to this definition"></a></dt>
+<dd><p>Extracts structures in xyz files from a given npz file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>npz_file</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – file containing the structures.</p></li>
+<li><p><strong>selection</strong> (<em>list. Default=None</em>) – list of indexes of the structures to extract. If None, all structures
+are extracted.</p></li>
+<li><p><strong>create_xyz_files</strong> (<em>bool. Default=True</em>) – whether to create xyz files for the extracted structures or not.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)">list</a>) <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)">list</a> of ASE Atoms objects corresponding to the extracted structures.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.get_connectivity">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">get_connectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atoms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#get_connectivity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.get_connectivity" title="Link to this definition"></a></dt>
+<dd><p>Computes the connectivity of a molecule.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atoms</strong> (<em>ase.Atoms</em>) – molecule to be analyzed.</p></li>
+<li><p><strong>engine</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – ‘vmd’ to use the bonds detected by VMD (VMD must be in the PATH) or
+‘ase’ to use the natural cutoffs of ase.neighborlist.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(list) [n_atoms] list where the element i contains the indices of the</em></p></li>
+<li><p><em>atoms bonded to the atom i. Indices start from 0.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.get_isomorphic_permutation">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">get_isomorphic_permutation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nx_graph1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nx_graph2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#get_isomorphic_permutation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.get_isomorphic_permutation" title="Link to this definition"></a></dt>
+<dd><p>Returns a permutation list to reorder the atoms of <cite>nx_graph2</cite> to match
+<cite>nx_graph1</cite> based on their isomorphic structure (nodes are matched by
+their ‘atomic_number’), such that e.g.:</p>
+<p>permutation = get_isomorphic_permutation(g1, g2)
+numbers2[permutation] == numbers1</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nx_graph1</strong> (<em>networkx.Graph</em>) – first molecular graph (see ase_to_nx_graph).</p></li>
+<li><p><strong>nx_graph2</strong> (<em>networkx.Graph</em>) – second molecular graph (see ase_to_nx_graph).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(list) permutation such that the node i of nx_graph1 corresponds to the</em></p></li>
+<li><p><em>node permutation[i] of nx_graph2. Raises ValueError if the graphs are not</em></p></li>
+<li><p><em>isomorphic.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.get_permutation_of_heavy_atoms">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">get_permutation_of_heavy_atoms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">heavy_ref_mol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">heavy_mch_mol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vmd'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#get_permutation_of_heavy_atoms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.get_permutation_of_heavy_atoms" title="Link to this definition"></a></dt>
+<dd><p>Finds the permutation that maps the heavy atoms of the reference molecule
+onto the heavy atoms of the molecule to match, using the isomorphism of
+their molecular graphs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>heavy_ref_mol</strong> (<em>ase.Atoms</em>) – reference molecule (only heavy atoms).</p></li>
+<li><p><strong>heavy_mch_mol</strong> (<em>ase.Atoms</em>) – molecule to match (only heavy atoms).</p></li>
+<li><p><strong>engine</strong> (<em>str. Default='vmd'</em>) – engine used to get the connectivity, ‘vmd’ or ‘ase’. See
+get_connectivity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(list) permutation such that the atom i of heavy_ref_mol corresponds to</em></p></li>
+<li><p><em>the atom permutation[i] of heavy_mch_mol. Raises ValueError if the</em></p></li>
+<li><p><em>molecular graphs are not isomorphic.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.heavya_idx_from_ref">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">heavya_idx_from_ref</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_mol_xyz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rad_mol_xyz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'vmd'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#heavya_idx_from_ref"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.heavya_idx_from_ref" title="Link to this definition"></a></dt>
+<dd><p>Find the index, in the radical, of the heavy atom that corresponds to a
+given heavy atom of the reference molecule. The heavy atoms of both
+molecules are matched by graph isomorphism.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref_mol_xyz</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the file describing the molecule with the hydrogen included.</p></li>
+<li><p><strong>rad_mol_xyz</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the file describing the molecule without the hydrogen.</p></li>
+<li><p><strong>index</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><em>int</em></a>) – index of the heavy atom in the reference molecule to match in the new
+molecule. Starting from 1.</p></li>
+<li><p><strong>engine</strong> (<em>str. Default='vmd'</em>) – engine to use to get the connectivity. It can be ‘vmd’ or ‘ase’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(int) index of the corresponding heavy atom in rad_mol_xyz. Index</em></p></li>
+<li><p><em>counting starting from 1.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.iHFC_fromxyz">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">iHFC_fromxyz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radicals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#iHFC_fromxyz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.iHFC_fromxyz" title="Link to this definition"></a></dt>
+<dd><p>Extract the H, O and N atoms in the neighborhood of the radicals up to
+certain depth (see HFC_relevantA). Those atoms are the relevant ones for
+HyperFine Calculations (HFC). This function receives strings as inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the molecule that you want to analyse. ASE must be able to read
+this file.</p></li>
+<li><p><strong>radicals</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – index of the atoms of posible location of the radicals, implying that
+that neighborhoods of this atoms are important for the HFC. 1-based
+indexes. It should be a list of integers in string format, e.g.:
+“[1, 5, 7]”.</p></li>
+<li><p><strong>depth</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – number of times that it searches the neighbors of the neighbors.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>(dict) {element</strong> (<em>list of indexes} with the indexes of the H, O and N</em>)</p></li>
+<li><p><em>atoms grouped by element. The indices start from 1.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.nrand_rad">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">nrand_rad</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">npz_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'energy_MACE'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#nrand_rad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.nrand_rad" title="Link to this definition"></a></dt>
+<dd><p>Extracts a random subset of radical structures from a given npz file. It
+takes the Nmin structures with the lowest values of entry and randomly
+selects n of them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>npz_file</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – file containing the radicals.</p></li>
+<li><p><strong>n</strong> (<em>int. Default=None</em>) – number if radical structures to extract from the subset. If None, all
+the structures in the subset are selected.</p></li>
+<li><p><strong>Nmin</strong> (<em>int. Default=None</em>) – number of structures in the subset that minimizes the entry parameter.
+If None, all the structures are included in the subset.</p></li>
+<li><p><strong>entry</strong> (<em>str. Default='energy_MACE'</em>) – entry of the npz file from where the Nmin are selected.</p></li>
+<li><p><strong>exclude</strong> (<em>list. Default=None</em>) – indexes of the structures that cannot be selected, e.g. because they
+were already computed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)">list</a>) indexes of the selected entries in the npz file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.rad_loc">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">rad_loc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_mol_xyz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rad_mol_xyz</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vmd'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#rad_loc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.rad_loc" title="Link to this definition"></a></dt>
+<dd><p>Find the index of the atom where a hydrogen atom was attached. The heavy
+atoms of both molecules are matched by graph isomorphism and the first
+heavy atom with a different number of bonds is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref_mol_xyz</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the file describing the molecule with the hydrogen included.</p></li>
+<li><p><strong>rad_mol_xyz</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the file describing the molecule without the hydrogen.</p></li>
+<li><p><strong>engine</strong> (<em>str. Default='vmd'</em>) – engine to use to get the connectivity. It can be ‘vmd’ or ‘ase’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(int) index, in rad_mol_xyz, of the atom where the hydrogen was attached.</em></p></li>
+<li><p><em>Index counting starting from 1. None if no atom lost a bond.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.g_valsetup.rad_loc_deprecated">
+<span class="sig-prename descclassname"><span class="pre">eproducer.g_valsetup.</span></span><span class="sig-name descname"><span class="pre">rad_loc_deprecated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_mol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radical</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/eproducer/g_valsetup.html#rad_loc_deprecated"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.g_valsetup.rad_loc_deprecated" title="Link to this definition"></a></dt>
+<dd><p>Find the index of the atom where a hydrogen atom was attached.</p>
+<section id="parametes">
+<h4>Parametes<a class="headerlink" href="#parametes" title="Link to this heading"></a></h4>
+<dl class="simple">
+<dt>ref_mol: str</dt><dd><p>path to the file describing the molecule with the hydrogen included.</p>
+</dd>
+<dt>radical: str</dt><dd><p>path to the file describing the molecule without the hydrogen.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>(int) index of the atom where the hydrogen was attached. Index counting</em></p></li>
+<li><p><em>starting from 1.</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-eproducer.postpro">
+<span id="eproducer-postpro"></span><h3>eproducer.postpro<a class="headerlink" href="#module-eproducer.postpro" title="Link to this heading"></a></h3>
+<p>Post-processing of ORCA EPR outputs: g-value extraction, tabulation,
+spectral comparison, and bond dissociation enthalpy.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eproducer.postpro.</span></span><span class="sig-name descname"><span class="pre">GvalComparison</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">molecules</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Table (pandas.DataFrame stored in GvalComparison.df) to compare the
+g-values and spectra of several candidate molecules with each other and
+with experiments. Each method adds one or more columns to the table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>molecules</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – paths to the directories of the candidate molecules. They are stored
+in the column ‘molecule’.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison.add_gvals">
+<span class="sig-name descname"><span class="pre">add_gvals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison.add_gvals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison.add_gvals" title="Link to this definition"></a></dt>
+<dd><p>Extracts the g-values of each molecule from its orca output and stores
+them in the column ‘gval’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>output_files</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – orca output files, one per molecule. If a str is given, it is taken
+as the name of the file inside the directory of each molecule, i.e.
+&lt;molecule&gt;/&lt;output_files&gt;.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)">list</a>) g-values [gx, gy, gz] of each molecule.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison.add_peak_loc">
+<span class="sig-name descname"><span class="pre">add_peak_loc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison.add_peak_loc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison.add_peak_loc" title="Link to this definition"></a></dt>
+<dd><p>Stores the field where each spectrum has its maximum in the column
+‘peak_loc’. Requires the column ‘spectrum’ (see
+GvalComparison.add_spectra).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)">list</a>) field of the maximum of each spectrum.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison.add_spectra">
+<span class="sig-name descname"><span class="pre">add_spectra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spect_files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison.add_spectra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison.add_spectra" title="Link to this definition"></a></dt>
+<dd><p>Loads the computed spectrum of each molecule, interpolated onto the field
+of the experiment (see TheoMatchExpe), and stores it in the column
+‘spectrum’. It also adds the column ‘peak_loc’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spect_files</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – .dat files (field vs intensity) of the computed spectra, one per
+molecule. If a str is given, it is taken as the name of the file
+inside the directory of each molecule, i.e. &lt;molecule&gt;/&lt;spect_files&gt;.</p></li>
+<li><p><strong>experiment</strong> (<em>str. Default=None</em>) – .dat file of the experimental spectrum whose field is used for the
+interpolation. If None, the field of the first spectrum is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(numpy.array) [n_molecules x n_points] interpolated spectra.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison.d_target_gval">
+<span class="sig-name descname"><span class="pre">d_target_gval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gval_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison.d_target_gval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison.d_target_gval" title="Link to this definition"></a></dt>
+<dd><p>Computes the euclidean distance between the g-values of each molecule
+and a reference, and stores it in a new column. Requires the column
+‘gval’ (see GvalComparison.add_gvals).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gval_ref</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – reference g-values [gx, gy, gz], e.g. from the experiment.</p></li>
+<li><p><strong>column_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the new column.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(pandas.DataFrame) updated table.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison.fit_to">
+<span class="sig-name descname"><span class="pre">fit_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison.fit_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison.fit_to" title="Link to this definition"></a></dt>
+<dd><p>Fits the spectra of the molecules to an experimental spectrum, keeping
+only the molecules that contribute the most (see
+TheoMatchExpe.gradual_cleaning). Requires GvalComparison.add_spectra to
+be called first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment_file</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – .dat file of the experimental spectrum.</p></li>
+<li><p><strong>**kwargs</strong> – passed to TheoMatchExpe.gradual_cleaning, e.g. threshold, steps or
+shifting_width.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)">tuple</a>) files of the selected spectra and their percentages in the fit.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison.individual_corr">
+<span class="sig-name descname"><span class="pre">individual_corr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison.individual_corr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison.individual_corr" title="Link to this definition"></a></dt>
+<dd><p>Computes the Pearson correlation between each spectrum and an
+experimental spectrum, and stores it in a new column. Requires the column
+‘spectrum’ (see GvalComparison.add_spectra).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment</strong> (<em>numpy.array</em>) – [2 x n_points] experimental field and intensities. The spectra are
+interpolated onto this field before computing the correlation.</p></li>
+<li><p><strong>column_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the new column.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)">list</a>) correlation of each spectrum with the experiment.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison.lc_max_corr">
+<span class="sig-name descname"><span class="pre">lc_max_corr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison.lc_max_corr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison.lc_max_corr" title="Link to this definition"></a></dt>
+<dd><p>Finds the coefficients of the linear combination of the spectra that
+maximizes the Pearson correlation with an experimental spectrum, and
+stores them in a new column. Requires the column ‘spectrum’ (see
+GvalComparison.add_spectra).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment</strong> (<em>numpy.array</em>) – experimental intensities, defined on the same field values as the
+spectra in the column ‘spectrum’.</p></li>
+<li><p><strong>column_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the new column with the coefficients.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)">tuple</a>) coefficients and the maximum correlation reached.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The optimization starts from random coefficients, so the result can
+change between runs.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison.peak_loc">
+<span class="sig-name descname"><span class="pre">peak_loc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison.peak_loc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison.peak_loc" title="Link to this definition"></a></dt>
+<dd><p>Finds the maximum of a spectrum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.array</em>) – field values.</p></li>
+<li><p><strong>y</strong> (<em>numpy.array</em>) – intensities.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)">tuple</a>) field where the maximum is located and the maximum intensity.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.postpro.GvalComparison.pp_dist">
+<span class="sig-name descname"><span class="pre">pp_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reference</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#GvalComparison.pp_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.GvalComparison.pp_dist" title="Link to this definition"></a></dt>
+<dd><p>Computes the distance between the peak of each spectrum and a reference
+peak, and stores it in a new column. Requires the column ‘peak_loc’ (see
+GvalComparison.add_spectra).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reference</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a><em>, </em><em>numpy.array</em><em> or </em><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – field of the reference peak, or a [2 x n_points] spectrum (field and
+intensities) whose maximum is taken as reference, or the path to a
+.dat file with that spectrum.</p></li>
+<li><p><strong>column_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the new column.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(pandas.Series) peak_loc - reference for each molecule.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.postpro.add_gval2npz">
+<span class="sig-prename descclassname"><span class="pre">eproducer.postpro.</span></span><span class="sig-name descname"><span class="pre">add_gval2npz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#add_gval2npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.add_gval2npz" title="Link to this definition"></a></dt>
+<dd><p>Add g-values to the npz files in the entry ‘g-values’, based on the files
+with the shape &lt;name&gt;_&lt;index&gt;_epr.out next to &lt;name&gt;.npz. The g-values of
+each file are stored in the row &lt;index&gt; of ‘g-values’, which is created
+with zeros (one row per radical in ‘heavy_atom_missing_idxs’) if it does
+not exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the directory containing the npz files and the epr.out files,
+the npz file itself or a .dat file with a list of npz files.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.postpro.compute_bde">
+<span class="sig-prename descclassname"><span class="pre">eproducer.postpro.</span></span><span class="sig-name descname"><span class="pre">compute_bde</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reactants</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">products</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#compute_bde"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.compute_bde" title="Link to this definition"></a></dt>
+<dd><p>Compute the bond dissociation enthalpy (BDE) for a reaction as the
+difference between the total enthalpy of products (P) and reactants (R),
+such that BDE = H_P - H_R.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reactants</strong> (<em>iterable</em>) – An iterable (e.g., list or tuple) of reactant species. Each element
+should be an orca output file path with computed enthalpy.</p></li>
+<li><p><strong>products</strong> (<em>iterable</em>) – An iterable (e.g., list or tuple) of product species. Each element
+should be an orca output file path with computed enthalpy.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)">float</a>) The BDE computed. The units are the same as in the orca outputs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.postpro.create_table_per_method">
+<span class="sig-prename descclassname"><span class="pre">eproducer.postpro.</span></span><span class="sig-name descname"><span class="pre">create_table_per_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">methods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/eproducer/postpro.html#create_table_per_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.create_table_per_method" title="Link to this definition"></a></dt>
+<dd><p>For a given system, creates a table with the different methods used to
+compute the g-values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>numpy.array</em>) – g-values and errors in the shape [meth][gx, gy, gz, max absolute
+error, mean absolute error], as returned by several_gvals.</p></li>
+<li><p><strong>experiment</strong> (<em>numpy.array</em>) – expected values obtained from the exteriment. [gx, gy, gz] in
+decreassing order.</p></li>
+<li><p><strong>methods</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – list of names of the methods used. they has to be in the same order
+than data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(str) Table in LaTeX format of g-values with the different methods and</em></p></li>
+<li><p><em>the associated max error and average error. The table is also printed.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.postpro.create_table_per_system">
+<span class="sig-prename descclassname"><span class="pre">eproducer.postpro.</span></span><span class="sig-name descname"><span class="pre">create_table_per_system</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">systems</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">orca_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'epr_info.out'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/eproducer/postpro.html#create_table_per_system"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.create_table_per_system" title="Link to this definition"></a></dt>
+<dd><p>Creates a markdown table with the g-values of several systems computed
+with the same method, and their errors with respect to the experiment.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – expected values obtained from the exteriment. [gx, gy, gz] in
+decreassing order.</p></li>
+<li><p><strong>systems</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – paths to the directories of the systems, ending with ‘/’. Each
+directory contains orca_file, and the name of the system in the table
+links to &lt;system&gt;vmd_image.md.</p></li>
+<li><p><strong>orca_file</strong> (<em>str. Default='epr_info.out'</em>) – name of the orca file containing the g-values.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(str) Table of g-values with the different systems and the associated</em></p></li>
+<li><p><em>max error and average error.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.postpro.extract_gvals">
+<span class="sig-prename descclassname"><span class="pre">eproducer.postpro.</span></span><span class="sig-name descname"><span class="pre">extract_gvals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orca_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span></span><a class="reference internal" href="../_modules/eproducer/postpro.html#extract_gvals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.extract_gvals" title="Link to this definition"></a></dt>
+<dd><p>This function extracts the g-values calculated by orca.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>orca_out</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the output file from orca.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(np.array) [gx, gy, gz] in decreasing order.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.postpro.extract_system_info">
+<span class="sig-prename descclassname"><span class="pre">eproducer.postpro.</span></span><span class="sig-name descname"><span class="pre">extract_system_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sys_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">orca_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'epr_info.out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#extract_system_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.extract_system_info" title="Link to this definition"></a></dt>
+<dd><p>Creates gvalues_table.md and gvalues.png in sys_path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sys_path</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the folder containing the candidates. The candidates are the
+subdirectories whose name contains ‘-‘.</p></li>
+<li><p><strong>exp_values</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – String of the list of expected experimental values in shape of python
+list, f.e. ‘[2.0062, 2.0055, 2.0022]’. Use ‘’ if there are no
+experimental values.</p></li>
+<li><p><strong>orca_output</strong> (<em>str. Default='epr_info.out'</em>) – name of the orca output file with the g-values in each candidate
+directory.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(StandardPlotter) StandardPlotter used to plot the gvalues.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.postpro.extract_values">
+<span class="sig-prename descclassname"><span class="pre">eproducer.postpro.</span></span><span class="sig-name descname"><span class="pre">extract_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">systems</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">orca_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><span class="pre">list</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#extract_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.extract_values" title="Link to this definition"></a></dt>
+<dd><p>This function extracts the information of the gvalues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>systems</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – paths to the directories containing the orca files. Each path should
+correspond to a different system.</p></li>
+<li><p><strong>orca_files</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – names of the orca files containing the g-values separated by commas,
+e.g. ‘cc-pVDZ.out,epr_info.out’. Each one should correspond to the
+calculation of the gvalues with different methods.</p></li>
+<li><p><strong>experiment</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – expected values obtained from the experiment. [gx, gy, gz] in
+decreasing order.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>(dict) {&lt;system_path&gt;</strong> (<em>list with one array per orca file [gx, gy, gz,</em>)</p></li>
+<li><p><em>max absolute error, mean absolute error]}, see several_gvals.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.postpro.several_gvals">
+<span class="sig-prename descclassname"><span class="pre">eproducer.postpro.</span></span><span class="sig-name descname"><span class="pre">several_gvals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.5)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/postpro.html#several_gvals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.postpro.several_gvals" title="Link to this definition"></a></dt>
+<dd><p>Extract several gvals and compare them with experimental values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>names</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – names of the orca output files separated by commas.
+Eg: ‘cc-pVDZ.out,epr_info.out’</p></li>
+<li><p><strong>experiment</strong> (<em>numpy.array</em>) – expected values according to the experiment [gx, gy, gz] in
+decreasing order.</p></li>
+<li><p><strong>path</strong> (<em>str. Default='./'</em>) – path to the directory containing the output files from orca.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(list) one array per orca file with [gx, gy, gz, max absolute error,</em></p></li>
+<li><p><em>mean absolute error] as strings.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-eproducer.best_fit">
+<span id="eproducer-best-fit"></span><h3>eproducer.best_fit<a class="headerlink" href="#module-eproducer.best_fit" title="Link to this heading"></a></h3>
+<p>Spectral fitting of computed EPR spectra against experimental data using
+non-negative least squares.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="eproducer.best_fit.TheoMatchExpe">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">eproducer.best_fit.</span></span><span class="sig-name descname"><span class="pre">TheoMatchExpe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#TheoMatchExpe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.TheoMatchExpe" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Collects the computed data and tries to fit it to the experiment spectrum</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><em>list</em></a>) – paths to the .dat files (field vs intensity) of the computed spectra
+of the candidates.</p></li>
+<li><p><strong>experiment_file</strong> (<em>str. Default=None</em>) – .dat field vs intensity of the experiment. If None, the first file of
+files is used as experiment.</p></li>
+<li><p><strong>**kwargs</strong> – passed to TheoMatchExpe.fit_shifting, e.g. fieldrange or
+shifting_width.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The computed spectra are interpolated onto the field values of the
+experiment, and the experimental intensities are normalized to a maximum
+of 1.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.best_fit.TheoMatchExpe.clean_candidates">
+<span class="sig-name descname"><span class="pre">clean_candidates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#TheoMatchExpe.clean_candidates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.TheoMatchExpe.clean_candidates" title="Link to this definition"></a></dt>
+<dd><p>Removes the candidates that are expected to be less than certain
+percentage. It means, TheoMatchExpe.intensities and TheoMatchExpe.files
+might be reduced. The fit is repeated until all the remaining
+candidates reach the threshold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>threshold</strong> (<em>float. Default=1</em>) – minimum percentage that a candidate should have to be considered.</p></li>
+<li><p><strong>**kwargs</strong> – passed to TheoMatchExpe.fit_shifting, e.g. shifting_width.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(np.array) new set of intensities.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.best_fit.TheoMatchExpe.fit_shifting">
+<span class="sig-name descname"><span class="pre">fit_shifting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shifting_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#TheoMatchExpe.fit_shifting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.TheoMatchExpe.fit_shifting" title="Link to this definition"></a></dt>
+<dd><p>Shifts the experimental field within [-shifting_width, shifting_width]
+and keeps the shift whose fit (see TheoMatchExpe.fit_theoretical) has the
+smallest residual. The results are stored in the attributes coeffs,
+intensities, intensfit, error, corr and shift.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> (<em>list. Default=None</em>) – paths to the .dat files of the computed spectra. If None,
+TheoMatchExpe.files is used.</p></li>
+<li><p><strong>shifting_width</strong> (<em>float. Default=None</em>) – maximum shift of the field in both directions. If None, the last
+value given is used (0 at the beginning, i.e. no shifting).</p></li>
+<li><p><strong>shift_step</strong> (<em>float. Default=0.2</em>) – step between the tested shifts.</p></li>
+<li><p><strong>**kwargs</strong> – fieldrange: list. [min, max] field range to fit. If not given, the
+last value given is used. None (the initial value) means the
+whole range of the experiment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(tuple) coeffs, intensities, intensfit, error and corr of the best shift.</em></p></li>
+<li><p><em>See TheoMatchExpe.fit_theoretical.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.best_fit.TheoMatchExpe.fit_theoretical">
+<span class="sig-name descname"><span class="pre">fit_theoretical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldexp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldrange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#TheoMatchExpe.fit_theoretical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.TheoMatchExpe.fit_theoretical" title="Link to this definition"></a></dt>
+<dd><p>Fits the experimental spectrum with a non-negative linear combination of
+the computed spectra (non-negative least squares).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> (<em>list. Default=None</em>) – paths to the .dat files of the computed spectra. If None,
+TheoMatchExpe.files is used.</p></li>
+<li><p><strong>fieldexp</strong> (<em>numpy.array. Default=None</em>) – field values where the computed spectra are interpolated. If None,
+TheoMatchExpe.fieldexp is used.</p></li>
+<li><p><strong>fieldrange</strong> (<em>list. Default=None</em>) – [min, max] field range to fit. The experimental intensities outside
+this range (shifted by TheoMatchExpe.shift) are set to zero before
+fitting. If None, the whole range is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(tuple) coeffs [n_files x 1] of the linear combination, intensities</em></p></li>
+<li><p><em>[n_files x n_points] interpolated computed spectra, intensfit [n_points]</em></p></li>
+<li><p><em>fitted spectrum, error (residual of the fit) and corr (Pearson</em></p></li>
+<li><p><em>correlation between the fitted spectrum and the experiment).</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.best_fit.TheoMatchExpe.gradual_cleaning">
+<span class="sig-name descname"><span class="pre">gradual_cleaning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#TheoMatchExpe.gradual_cleaning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.TheoMatchExpe.gradual_cleaning" title="Link to this definition"></a></dt>
+<dd><p>Removes gradually the candidates that do not weight much in the fitting
+up to having all the candidates with a minimum percentage in the fitting.
+It starts again from all the candidates given initially.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>threshold</strong> (<em>float. Default=1</em>) – minimum percentage per candidate to be considered into the fitting.</p></li>
+<li><p><strong>steps</strong> (<em>float. Default=0.1</em>) – size of the steps in the filtering.</p></li>
+<li><p><strong>**kwargs</strong> – passed to TheoMatchExpe.fit_shifting, e.g. shifting_width.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(np.array) new set of intensities.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="eproducer.best_fit.TheoMatchExpe.proportions">
+<span class="sig-name descname"><span class="pre">proportions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">print_analysis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#TheoMatchExpe.proportions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.TheoMatchExpe.proportions" title="Link to this definition"></a></dt>
+<dd><p>Computes the percentage of each one of the candidates that fit better
+the experimental spectrum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>print_analysis</strong> (<em>Bool. Default=False</em>) – True to print the percentage of each one of the candidates.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(np.array) percentages.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.best_fit.best_fit">
+<span class="sig-prename descclassname"><span class="pre">eproducer.best_fit.</span></span><span class="sig-name descname"><span class="pre">best_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldrange</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">argv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#best_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.best_fit" title="Link to this definition"></a></dt>
+<dd><p>Fits an experimental spectrum with the computed spectra of several
+candidates, keeps the candidates that contribute at least 5 % to the fit,
+prints their percentages and saves a plot of the fit.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the .dat file containing the experimental field and the
+intensity.</p></li>
+<li><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the png file where the plot is stored.</p></li>
+<li><p><strong>fieldrange</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – [min, max] field range to fit in python list format, e.g.
+‘[640, 650]’. Use ‘’ to fit the whole range. The range is marked with
+dotted lines in the plot.</p></li>
+<li><p><strong>*argv</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – paths to the .dat files containing the computed spectra of the
+candidates.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(None) it prints the percentage of each candidate and the shift of the</em></p></li>
+<li><p><em>field, and saves the plot in output.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The experimental field is shifted up to 10 units in both directions (in
+steps of 0.2) to find the best fit. See TheoMatchExpe.fit_shifting.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.best_fit.create_fit_file">
+<span class="sig-prename descclassname"><span class="pre">eproducer.best_fit.</span></span><span class="sig-name descname"><span class="pre">create_fit_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experiment_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../experiments/field_vs_spectrum.dat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis_pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spectrum_wo_hyFiCorr.dat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis_location</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#create_fit_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.create_fit_file" title="Link to this definition"></a></dt>
+<dd><p>Creates a .dat file with field vs intensity of the best fit to an
+experiment with some given calculated spectrums.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the .dat file where you want to store the output.</p></li>
+<li><p><strong>experiment_file</strong> (<em>str. Default='../experiments/field_vs_spectrum.dat'</em>) – .dat field vs intensity of the experiment.</p></li>
+<li><p><strong>basis_pattern</strong> (<em>str. Default='spectrum_wo_hyFiCorr.dat'</em>) – pattern of the .dat files containing the spectrum of the computed spectrum.</p></li>
+<li><p><strong>basis_location</strong> (<em>str. Default='../'</em>) – location where to search for the files with the basis_pattern.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(None) it does not return anything but creates the .dat file with the fit.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The basis files are searched recursively in basis_location. They are
+interpolated onto the field of the experiment (see TheoMatchExpe).</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.best_fit.fit_experiment">
+<span class="sig-prename descclassname"><span class="pre">eproducer.best_fit.</span></span><span class="sig-name descname"><span class="pre">fit_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'../experiments/field_vs_spectrum.dat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">basis_pattern</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'spectrum_wo_hyFiCorr.dat'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#fit_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.fit_experiment" title="Link to this definition"></a></dt>
+<dd><p>Collects the computed data and tries to fit it to the experiment spectrum</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment_file</strong> (<em>str. Default='../experiments/field_vs_spectrum.dat'</em>) – .dat field vs intensity of the experiment.</p></li>
+<li><p><strong>basis_pattern</strong> (<em>str. Default='spectrum_wo_hyFiCorr.dat'</em>) – pattern of the .dat files containing the spectrum of the computed spectrum.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(tuple) fieldexp and intensexp of the experiment, field of the computed</em></p></li>
+<li><p><em>spectra and best_fit_intensity [n_files x n_points], i.e. each computed</em></p></li>
+<li><p><em>spectrum multiplied by its coefficient in the fit.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This script assumes that the basis files has a common pattern and they are all
+in subdirectories of ‘../’. It also assumes that all the values of the
+computed intensities are defined for the same values of the field.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.best_fit.mat2dat">
+<span class="sig-prename descclassname"><span class="pre">eproducer.best_fit.</span></span><span class="sig-name descname"><span class="pre">mat2dat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_spectrum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#mat2dat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.mat2dat" title="Link to this definition"></a></dt>
+<dd><p>Converts an experimental spectrum stored in MATLAB .mat files into a .dat
+file with two columns: field and spectrum.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_field</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – .mat file containing the field in a variable called ‘fieldexp’.</p></li>
+<li><p><strong>file_spectrum</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – .mat file containing the intensities in a variable called ‘specexp’.</p></li>
+<li><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the .dat file where the field vs spectrum is saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(None) it creates the .dat file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.best_fit.spect_w_experiment">
+<span class="sig-prename descclassname"><span class="pre">eproducer.best_fit.</span></span><span class="sig-name descname"><span class="pre">spect_w_experiment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/best_fit.html#spect_w_experiment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.best_fit.spect_w_experiment" title="Link to this definition"></a></dt>
+<dd><p>Fits the peak of the theoretical spectrum into the experimental value at
+that value of the field and saves a plot of both spectra.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the .dat file containing the experimental field and the
+intensity.</p></li>
+<li><p><strong>theory</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the .dat file containing the theoretical field and the
+intensity of the given candidate.</p></li>
+<li><p><strong>output</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the png file where the output is stored.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(None) it saves the plot of both spectra in output.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-eproducer.bonds2npz">
+<span id="eproducer-bonds2npz"></span><h3>eproducer.bonds2npz<a class="headerlink" href="#module-eproducer.bonds2npz" title="Link to this heading"></a></h3>
+<p>Utilities for adding bond connectivity and molecular ID information to npz
+dataset files.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.bonds2npz.addfile2npz">
+<span class="sig-prename descclassname"><span class="pre">eproducer.bonds2npz.</span></span><span class="sig-name descname"><span class="pre">addfile2npz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">npz_file_ref</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">npz_file_add</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/bonds2npz.html#addfile2npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.bonds2npz.addfile2npz" title="Link to this definition"></a></dt>
+<dd><p>Copies one entry of an npz file into another npz file. If the entry
+already exists in the second file, it is overwritten.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>npz_file_ref</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Path to the reference npz file.</p></li>
+<li><p><strong>npz_file_add</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Path to the npz file to add information.</p></li>
+<li><p><strong>file_name</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – key of the entry in npz_file_ref to be copied.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)">dict</a>) data in npz_file_add after adding the entry.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.bonds2npz.bonds2npz">
+<span class="sig-prename descclassname"><span class="pre">eproducer.bonds2npz.</span></span><span class="sig-name descname"><span class="pre">bonds2npz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">npz_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/bonds2npz.html#bonds2npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.bonds2npz.bonds2npz" title="Link to this definition"></a></dt>
+<dd><p>Add bond information to npz files in the entry ‘bonds’. The connectivity
+of the original molecule (‘original_atomic_numbers’ and ‘original_xyz’) is
+obtained with VMD. Then, for each hydrogen in ‘original_hydrogen_idxs’, the
+bonds of the molecule without that hydrogen are stored (with the indices
+shifted accordingly). The npz files that fail are listed in failed.dat.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>npz_file</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Path to the npz file or directory containing npz files. It could also
+be a path to a .dat file that contains a list of npz files.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(list) [n_hydrogens][n_bonds x 2] bonds of each radical of the last npz</em></p></li>
+<li><p><em>file processed.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.bonds2npz.molid2npz">
+<span class="sig-prename descclassname"><span class="pre">eproducer.bonds2npz.</span></span><span class="sig-name descname"><span class="pre">molid2npz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">npz_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/bonds2npz.html#molid2npz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.bonds2npz.molid2npz" title="Link to this definition"></a></dt>
+<dd><p>Add molecular ID information to npz files in the entry ‘molid’. The ID of
+the structure i is ‘&lt;npz path without extension&gt;_&lt;i&gt;’, with i written with
+three digits, e.g. ‘dir/mol_007’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>npz_file</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – Path to the npz file or directory containing npz files.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(None) it modifies the npz files.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-eproducer.miscellaneous">
+<span id="eproducer-miscellaneous"></span><h3>eproducer.miscellaneous<a class="headerlink" href="#module-eproducer.miscellaneous" title="Link to this heading"></a></h3>
+<p>General-purpose utilities: shell command execution and introspection
+helpers.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.miscellaneous.args_and_defaults">
+<span class="sig-prename descclassname"><span class="pre">eproducer.miscellaneous.</span></span><span class="sig-name descname"><span class="pre">args_and_defaults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/miscellaneous.html#args_and_defaults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.miscellaneous.args_and_defaults" title="Link to this definition"></a></dt>
+<dd><p>Takes a function and returns its parameters with their default values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the module containing the function, e.g.
+‘eproducer.ase_utils.molecules’.</p></li>
+<li><p><strong>*args</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the function inside the module, e.g. ‘MoleculeSetter’,
+‘rot_x’ for eproducer.ase_utils.molecules.MoleculeSetter.rot_x.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)">str</a>) <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#set" title="(in Python v3.15)">set</a> of arguments and defaults.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>moved to pkgdeveloper</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.miscellaneous.function_doc">
+<span class="sig-prename descclassname"><span class="pre">eproducer.miscellaneous.</span></span><span class="sig-name descname"><span class="pre">function_doc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/miscellaneous.html#function_doc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.miscellaneous.function_doc" title="Link to this definition"></a></dt>
+<dd><p>Takes a function and returns its documentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – name of the module containing the function, e.g.
+‘eproducer.ase_utils.molecules’.</p></li>
+<li><p><strong>*args</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – path to the function inside the module, e.g. ‘MoleculeSetter’,
+‘rot_x’ for eproducer.ase_utils.molecules.MoleculeSetter.rot_x.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)">str</a>) function documentation</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>moved to pkgdeveloper</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.miscellaneous.optimized_e">
+<span class="sig-prename descclassname"><span class="pre">eproducer.miscellaneous.</span></span><span class="sig-name descname"><span class="pre">optimized_e</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/miscellaneous.html#optimized_e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.miscellaneous.optimized_e" title="Link to this definition"></a></dt>
+<dd><p>This code finds the last energy in a log file of gaussian computed using
+RBMK functional. The output is given in eV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – log gaussian file.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)">float</a>) Potential energy in eV units.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.miscellaneous.output_terminal">
+<span class="sig-prename descclassname"><span class="pre">eproducer.miscellaneous.</span></span><span class="sig-name descname"><span class="pre">output_terminal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_error</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_cmd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/miscellaneous.html#output_terminal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.miscellaneous.output_terminal" title="Link to this definition"></a></dt>
+<dd><p>Runs a command in a terminal and returns its output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cmd</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><em>str</em></a>) – bash command to be executed in the terminal.</p></li>
+<li><p><strong>print_output</strong> (<em>bool. Default=True</em>) – True for printing the output (without empty lines) besides of
+returning it.</p></li>
+<li><p><strong>skip_error</strong> (<em>bool. Default=False</em>) – True for continuing running although the command fails. Otherwise, an
+AssertionError with the error message is raised.</p></li>
+<li><p><strong>print_cmd</strong> (<em>bool. Default=False</em>) – print the command before executing it.</p></li>
+<li><p><strong>**kwargs</strong> – additional options for subprocess.Popen</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>(<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)">str</a>) standard output of the executed command.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="eproducer.miscellaneous.time_g09">
+<span class="sig-prename descclassname"><span class="pre">eproducer.miscellaneous.</span></span><span class="sig-name descname"><span class="pre">time_g09</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/eproducer/miscellaneous.html#time_g09"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#eproducer.miscellaneous.time_g09" title="Link to this definition"></a></dt>
+<dd><p>Function that extracts the time spend for one gaussian simulation from a
+.log file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logfile</strong> (<em>string</em>) – .log file obtained during a gaussian simulation.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>(float) Time in minutes. The time in seconds, minutes and hours is also</em></p></li>
+<li><p><em>printed. If the simulation starts and ends in different months, it only</em></p></li>
+<li><p><em>prints a message and returns None.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="shell-scripts">
+<span id="id1"></span><h2>Shell scripts<a class="headerlink" href="#shell-scripts" title="Link to this heading"></a></h2>
+<p>The shell scripts run the calculations and the post-processing from the
+terminal. Get the path of a script with <code class="code docutils literal notranslate"><span class="pre">$(eproducer</span> <span class="pre">&lt;script&gt;</span> <span class="pre">-path)</span></code> to
+run it, copy it or submit it with <code class="code docutils literal notranslate"><span class="pre">sbatch</span></code>. The scripts with flags print
+the help messages below when they are called with <code class="code docutils literal notranslate"><span class="pre">-h</span></code>. Click
+<code class="code docutils literal notranslate"><span class="pre">[script]</span></code> to see the source code of a script.</p>
+<div class="toctree-wrapper compound">
+</div>
+<section id="g-value-calculations">
+<h3>g-value calculations<a class="headerlink" href="#g-value-calculations" title="Link to this heading"></a></h3>
+<section id="gval-workflow">
+<span id="doc-gval-workflow"></span><h4>gval_workflow<a class="headerlink" href="#gval-workflow" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/gval_workflow.html#script-gval-workflow"><span class="std std-ref">[script]</span></a> <strong>eproducer/gval_workflow.sh</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">This tool runs all the necessary steps to get the g-values. It works with some</div>
+<div class="line">flags:</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">-b  Use this flag to AVOID computation of frequencies.</div>
+<div class="line">-c  &lt;charge=0&gt; charge of the system.</div>
+<div class="line">-d  &lt;directory=’.’&gt; directory containing at least model.xyz</div>
+<div class="line">-e  Use this flag to AVOID computation of gvalues. Flags -f and -g are</div>
+<div class="line-block">
+<div class="line">unuseful when this flag is activated.</div>
+</div>
+<div class="line">-f  &lt;hyperfine=’’&gt; indexes of atoms to be included in hyperfine corrections.</div>
+<div class="line-block">
+<div class="line">If the argument of this flag starts with g, the guess util</div>
+<div class="line">‘eproducer iHFC_fromxyz’ is used to find the H, O, and N atoms around the</div>
+<div class="line">indexes atoms with the indexes given in the arguments. If you use the</div>
+<div class="line">guess util, be sure to add the depth of the neighborhood with the letter</div>
+<div class="line">d. E.g. ‘g4,5d3’ finds the relevant atoms in the 3-depth-neigborhood of</div>
+<div class="line">the atoms 4 and 5.</div>
+</div>
+<div class="line">-g  &lt;reference_mol=’’&gt; guess the location of the radical assuming an</div>
+<div class="line-block">
+<div class="line">abstraction process. Give the path of the file of the molecule before</div>
+<div class="line">the abstraction.</div>
+</div>
+<div class="line">-m  &lt;multiplicity=2&gt; multiplicity of the system.</div>
+<div class="line">-n  &lt;prior_name=’model’&gt; name of the input and output files. The script needs</div>
+<div class="line-block">
+<div class="line">at least a file called prior_name.xyz in the running directory (-d). Then,</div>
+<div class="line">it creates files called prior_name_opt., prior_name_epr., etc.</div>
+</div>
+<div class="line">-o  Use this flag to AVOID the optimization step. &lt;prior_name&gt;_opt.xyz must</div>
+<div class="line-block">
+<div class="line">exist, then.</div>
+</div>
+<div class="line">-p  &lt;processors=16&gt; number of processors used in the orca calculations.</div>
+<div class="line">-P  Use this flag to ENABLE preemption. When the job is preempted (or hits</div>
+<div class="line-block">
+<div class="line">its time limit) it resubmits itself with the same allocation (processors,</div>
+<div class="line">nice value, job name and partition) using the -R restart option, so a</div>
+<div class="line">higher priority job can run first.</div>
+</div>
+<div class="line">-r  &lt;reference_mol=’’&gt; guess the location of the radical assuming an</div>
+<div class="line-block">
+<div class="line">abstraction process. Give the path of the file of the molecule before</div>
+<div class="line">the abstraction.</div>
+</div>
+<div class="line">-R  Use this flag to RESTART the optimization. It uses the file</div>
+<div class="line-block">
+<div class="line">&lt;prior_name&gt;_opt.xyz as the input geometry for the optimization.</div>
+</div>
+<div class="line">-s  Use this flag to delete orca files like gbw…</div>
+<div class="line">-x  &lt;xc=’B3LYP EPR-II’&gt; functional and basis set for the g-value calculation.</div>
+<div class="line-block">
+<div class="line">The default is B3LYP EPR-II, which is a good choice for g-values.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">-h   prints this message.</div>
+<div class="line">-v   verbose.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gval-dataset">
+<span id="doc-gval-dataset"></span><h4>gval_dataset<a class="headerlink" href="#gval-dataset" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/gval_dataset.html#script-gval-dataset"><span class="std std-ref">[script]</span></a> <strong>eproducer/gval_dataset.sh</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">This script select n molecules, out of N molecules that minimizes one of the</div>
+<div class="line">entries in the npz dile. Then, it goes through the selected molecules,</div>
+<div class="line">optimizes them and then computes the g-values and A-matrices (HFC) of the atoms</div>
+<div class="line">in the second degree neighborhood of the relevant atoms defined in the npz</div>
+<div class="line">files, which are marked as ‘heavy_atom_missing_idxs’ and</div>
+<div class="line">‘atom_chargerelevant_idx’.</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">-e  &lt;entry=’energy_MACE’&gt; entry of the npz file from where the Nmin are</div>
+<div class="line-block">
+<div class="line">selected.</div>
+</div>
+<div class="line">-E  &lt;ending=’_epr.out’&gt; ending of the of the files that are excluded in the</div>
+<div class="line-block">
+<div class="line">selection of random radicals to compute. In the default case, it excludes</div>
+<div class="line">the radicals that already have an optimization, for example, it excludes</div>
+<div class="line">3 if &lt;file&gt;_003_epr.out already exists.</div>
+</div>
+<div class="line">-f  &lt;file&gt; file with list of npz files to analyze.</div>
+<div class="line">-j  &lt;job_options=’–nice’&gt; joboptions. avoid to add ‘-n’ in this string; that</div>
+<div class="line-block">
+<div class="line">variable enters as  the flag -p in of this script.</div>
+</div>
+<div class="line">-n  &lt;n=1&gt; number of radicals to be selected from each npz file.</div>
+<div class="line">-N  &lt;N=3&gt; number of radicals in the subset that minimizes the entry</div>
+<div class="line-block">
+<div class="line">parameter.</div>
+</div>
+<div class="line">-o  &lt;other_flags=’’&gt; extra flags passed through to ‘eproducer gval_workflow’.</div>
+<div class="line">-p  &lt;processors=8&gt; number of processors requested for each submitted job.</div>
+<div class="line">-r  Use this flag to RESTART the optimization; it is forwarded as the -R</div>
+<div class="line-block">
+<div class="line">flag to ‘eproducer gval_workflow’.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">-v  verbose.</div>
+<div class="line">-h  prints this message.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gval-data-restart">
+<span id="doc-gval-data-restart"></span><h4>gval_data_restart<a class="headerlink" href="#gval-data-restart" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/gval_data_restart.html#script-gval-data-restart"><span class="std std-ref">[script]</span></a> <strong>eproducer/gval_data_restart.sh</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">takes a list of xyz files and restarts the gval workflow for those files. This</div>
+<div class="line">is useful when the previous run failed or was interrupted.</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">-f  &lt;file&gt; file with list of xyz files to restart in the current directory.</div>
+<div class="line">-p  &lt;n processors&gt; number of processors.</div>
+<div class="line">-J  &lt;job options&gt; additional job options, e.g., “–partition=cpu”.</div>
+<div class="line">-P  use for preemptionable jobs.</div>
+<div class="line">-o  add ‘-R’ to restart, ‘-o’ to avoid optimization or ‘-b’ to avoid</div>
+<div class="line-block">
+<div class="line">frequencies…</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">-v  verbose.</div>
+<div class="line">-h  prints this message.</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="spectra">
+<h3>Spectra<a class="headerlink" href="#spectra" title="Link to this heading"></a></h3>
+<section id="extract-eprspec">
+<span id="doc-extract-eprspec"></span><h4>extract_EPRspec<a class="headerlink" href="#extract-eprspec" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/extract_EPRspec.html#script-extract-eprspec"><span class="std std-ref">[script]</span></a> <strong>eproducer/extract_EPRspec.sh</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">Extract the EPR absorption spectrum from an orca output file.</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">-a  &lt;float&gt; modulation amplitude in mT.</div>
+<div class="line">-d  &lt;disturb g-tensor=’[ 0 0 0 ]’&gt; disturbance to the g-tensor. It can vary</div>
+<div class="line-block">
+<div class="line">because of thermal effects or interactions not considered in the QM</div>
+<div class="line">calculations (like solvent).</div>
+</div>
+<div class="line">-e  &lt;file.dat&gt; experimental field vs absorption file.</div>
+<div class="line">-f  Use this flag to take into account hyperfine corrections. This uses a lot</div>
+<div class="line-block">
+<div class="line">of RAM memory. Be sure that you have enough memory or that you filtered</div>
+<div class="line">the nuclei to compute hyperfine correction.</div>
+</div>
+<div class="line">-O  &lt;file.out=’epr_info.out’&gt; orca output file with computed EPR quantities.</div>
+<div class="line">-o  &lt;output.dat=’spectrum_wo_hyFiCorr.dat’&gt; dat output file where you want to</div>
+<div class="line-block">
+<div class="line">save the field vs spectrum.</div>
+</div>
+<div class="line">-l  &lt;lwpp=1&gt; linewidth</div>
+<div class="line">-m  &lt;float=179.813&gt; experimental value of the microwave frequency. The</div>
+<div class="line-block">
+<div class="line">default value corresponds to G-band experiments.</div>
+</div>
+<div class="line">-n  &lt;int=401&gt; number of data points used to predict the absorption spectrum.</div>
+<div class="line">-t  &lt;int=0&gt; type of spectrum. 0 for absorption, 1 for first derivative, 2 for</div>
+<div class="line-block">
+<div class="line">second derivative.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">-v  verbose.</div>
+<div class="line">-h  prints this message.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="spectrum-from-gval">
+<span id="doc-spectrum-from-gval"></span><h4>spectrum_from_gval<a class="headerlink" href="#spectrum-from-gval" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/spectrum_from_gval.html#script-spectrum-from-gval"><span class="std std-ref">[script]</span></a> <strong>eproducer/spectrum_from_gval.sh</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">Creates the EPR absorption spectrum from a set of g-values using EasySpin.</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">-a  &lt;float&gt; modulation amplitude in mT.</div>
+<div class="line">-e  &lt;file.dat&gt; experimental field vs absorption file. Its first column is</div>
+<div class="line-block">
+<div class="line">used to define the field range of the predicted spectrum.</div>
+</div>
+<div class="line">-g  &lt;g-values&gt; g-values used to predict the spectrum, e.g. ‘[ 2.0 2.0 2.0 ]’.</div>
+<div class="line">-A  &lt;A-values&gt; hyperfine coupling values (HSC) in mT, one row per nucleus</div>
+<div class="line-block">
+<div class="line">group, e.g. ‘[ 1.40 1.55 1.94 ]’ or, for two nucleus groups,</div>
+<div class="line">‘[ 1.40 1.55 1.94 ; 2.94 2.94 2.94 ]’. Values are converted from mT to</div>
+<div class="line">MHz (EasySpin’s Sys.A units) using the isotropic average of the</div>
+<div class="line">g-values given with -g. If not given, no hyperfine correction is</div>
+<div class="line">applied.</div>
+</div>
+<div class="line">-N  &lt;Sys.Nucs&gt; comma-separated nucleus identifiers, one per row of -A, e.g.</div>
+<div class="line-block">
+<div class="line">‘1H,1H,1H’ for three equivalent 1H nuclei sharing the same A-row.</div>
+<div class="line">Equivalent nuclei must be listed explicitly (repeated), Sys.n is not</div>
+<div class="line">used. Defaults to as many ‘1H’ as rows in -A.</div>
+</div>
+<div class="line">-o  &lt;output.dat&gt; dat output file where the field vs spectrum is saved. If it</div>
+<div class="line-block">
+<div class="line">is not given, it is generated from the g-values.</div>
+</div>
+<div class="line">-l  &lt;lwpp=1&gt; linewidth.</div>
+<div class="line">-m  &lt;float=179.813&gt; experimental value of the microwave frequency. The</div>
+<div class="line-block">
+<div class="line">default value corresponds to G-band experiments.</div>
+</div>
+<div class="line">-M  &lt;matlab=’matlab’&gt; command used to call matlab.</div>
+<div class="line">-n  &lt;int=401&gt; number of data points used to predict the absorption spectrum.</div>
+<div class="line">-t  &lt;int=0&gt; type of spectrum. 0 for absorption, 1 for first derivative, 2 for</div>
+<div class="line-block">
+<div class="line">second derivative.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">-v  verbose.</div>
+<div class="line">-h  prints this message.</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="post-processing">
+<h3>Post-processing<a class="headerlink" href="#post-processing" title="Link to this heading"></a></h3>
+<section id="gval-postpro">
+<span id="doc-gval-postpro"></span><h4>gval_postpro<a class="headerlink" href="#gval-postpro" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/gval_postpro.html#script-gval-postpro"><span class="std std-ref">[script]</span></a> <strong>eproducer/gval_postpro.sh</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">Create all the files after complete the computation of the gvalues with Orca.</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">-c  &lt;molecule candidate&gt; Name of the radical candidate. It is assumed that</div>
+<div class="line-block">
+<div class="line">the files related with this candidate are in a directory with the same</div>
+<div class="line">name.</div>
+</div>
+<div class="line">-E  &lt;experimental values&gt; guess of the gvalues obtained experimentally in</div>
+<div class="line-block">
+<div class="line">python list format, f.e. ‘[2.0062, 2.0055, 2.0022]’</div>
+</div>
+<div class="line">-e  &lt;experiment1.dat,exp2.dat,…&gt; experimental field vs absorption files in</div>
+<div class="line-block">
+<div class="line">which this candidate can play a role. Relative paths are taken from each</div>
+<div class="line">candidate directory, e.g. ‘../../experiments/exp.dat’.</div>
+</div>
+<div class="line">-o  &lt;output.dat=’spectrum_wo_hyFiCorr.dat’&gt; dat output file where you want to</div>
+<div class="line-block">
+<div class="line">save the field vs spectrum. Several outputs can be given separated by</div>
+<div class="line">commas, f.e. ‘out1.dat,out2.dat’. In that case, the number of outputs must</div>
+<div class="line">match the number of experiments (-e) and they are compared pairwise.</div>
+</div>
+<div class="line">-O  &lt;orca_output=’epr_info.out’&gt; name of the orca output file containing the</div>
+<div class="line-block">
+<div class="line">gvalues.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">-v  verbose.</div>
+<div class="line">-h  prints this message.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">This code should produce:</div>
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">- A render of each model called opt.png</div>
+<div class="line">- The computed spectrum obtained by easyspin in a file called spectrum_wo_hyFiCorr.dat</div>
+<div class="line">- A plot of the gvalues of all the candidates called gvalues.png</div>
+<div class="line">- A table of the gvalues in gvalues_table.md</div>
+<div class="line">- A file called vmd_image.md in each one of the directories of the candidates.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line">This code should be executed in the folder containing the candidate, not in the</div>
+<div class="line">candidate directly.</div>
+</div>
+</div>
+</section>
+<section id="gvals-template">
+<span id="doc-gvals-template"></span><h4>gvals_template<a class="headerlink" href="#gvals-template" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/gvals_template.html#script-gvals-template"><span class="std std-ref">[script]</span></a> <strong>eproducer/gvals_template.sh</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">script to create the readme file. Execute it in the directory that contains</div>
+<div class="line">the possible molecules. Be sure that molecule.png, gvalues.png and</div>
+<div class="line">gvalues_table.md exist in the directory of the candidates.</div>
+</div>
+</div>
+</section>
+<section id="create-mol-png">
+<span id="doc-create-mol-png"></span><h4>create_mol_png<a class="headerlink" href="#create-mol-png" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/create_mol_png.html#script-create-mol-png"><span class="std std-ref">[script]</span></a> <strong>eproducer/create_mol_png.tcl</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">Load the molecule in VMD and display it in CPK representation, then save the image as a PNG file.</div>
+<div class="line">execute as vmd -e create_mol_png.tcl -args</div>
+</div>
+</div>
+</section>
+</section>
+<section id="utilities">
+<h3>Utilities<a class="headerlink" href="#utilities" title="Link to this heading"></a></h3>
+<section id="basics">
+<span id="doc-basics"></span><h4>basics<a class="headerlink" href="#basics" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/basics.html#script-basics"><span class="std std-ref">[script]</span></a> <strong>eproducer/basics.sh</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">This script contains basics tools for other bash scripts. With the code in</div>
+<div class="line">here, you can use the next functions</div>
+<div class="line"><br /></div>
+<div class="line">- &lt;first_argument&gt; Add a label in every output of each bash script by giving</div>
+<div class="line-block">
+<div class="line">it as a first argument.</div>
+</div>
+<div class="line">- &lt;second_argument&gt; Add anything in order to have verbose printing in the</div>
+<div class="line-block">
+<div class="line">output. otherwise, the your script will ignore all the verbose.</div>
+</div>
+<div class="line">- adjust &lt;text&gt;: add the label and print what &lt;text&gt; in an adjusted column of</div>
+<div class="line-block">
+<div class="line">80 characters.</div>
+</div>
+<div class="line">- verbose &lt;text&gt;: besides of the label, it adds the keyword VERBOSE in to the</div>
+<div class="line-block">
+<div class="line">begining of &lt;text&gt; and print the adjusted text.</div>
+</div>
+<div class="line">- warning &lt;text&gt;: besides of the label, it adds the keyword WARNING in to the</div>
+<div class="line-block">
+<div class="line">begining of &lt;text&gt; and print the adjusted text.</div>
+</div>
+<div class="line">- finish &lt;text&gt;: besides of the label, it use verbose to print &lt;text&gt; of the</div>
+<div class="line-block">
+<div class="line">word “finish” if &lt;text&gt; is not given. It also stops the script with ‘exit 0’</div>
+</div>
+<div class="line">- fail &lt;text&gt;: besides of the label, it adds the keyword VERBOSE in to the</div>
+<div class="line-block">
+<div class="line">begining of &lt;text&gt; and print the adjusted text. It also print the message</div>
+<div class="line">in the std_error and stops the script with ‘exit 1’</div>
+</div>
+<div class="line">- load_modules: loads the modules I need in my codes when running in a cluster.</div>
+</div>
+</div>
+</section>
+<section id="extract-bonds-vmd">
+<span id="doc-extract-bonds-vmd"></span><h4>extract_bonds_vmd<a class="headerlink" href="#extract-bonds-vmd" title="Link to this heading"></a></h4>
+<div class="bash-script-title docutils container">
+<p><a class="reference internal" href="bash_rsts_scripts/extract_bonds_vmd.html#script-extract-bonds-vmd"><span class="std std-ref">[script]</span></a> <strong>eproducer/extract_bonds_vmd.sh</strong></p>
+</div>
+<div class="bash-script-doc docutils container">
+<div class="line-block">
+<div class="line">Prints the bonds of a molecule detected by VMD: one line per atom with the</div>
+<div class="line">indices (starting from 0) of the atoms bonded to it. VMD must be installed.</div>
+<div class="line">Usage: eproducer extract_bonds_vmd &lt;molecule.pdb or molecule.xyz&gt;</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../cli.html" class="btn btn-neutral float-left" title="Command-line interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="eproducer.ase_utils.html" class="btn btn-neutral float-right" title="eproducer.ase_utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Daniel Sucerquia.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

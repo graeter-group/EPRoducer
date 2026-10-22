@@ -9,7 +9,7 @@ Tutorials
 Quantifying the quality of a fitting
 ------------------------------------
 
-This tutorial shows how :class:`eprtools.best_fit.TheoMatchExpe` fits a
+This tutorial shows how :class:`eproducer.best_fit.TheoMatchExpe` fits a
 spectrum with others, how the shift of the field and the field range improve
 the fit, and why both the error and the correlation are reported. It is a
 Jupyter notebook: download it together with its data files into the same
