@@ -46,11 +46,8 @@ jobs:
           cd doc
           make clean html
 
-      # Disabled while the repository is private, because GitHub Pages is not
-      # available for it yet. Uncomment it when the repository is public (see
-      # the note at the beginning of doc/index.rst).
-      # - name: Setup Pages
-      #   uses: actions/configure-pages@v5
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload pages
         uses: actions/upload-pages-artifact@v4

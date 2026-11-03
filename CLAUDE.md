@@ -26,8 +26,8 @@ Naming and history
   imports become `eproducer.*` (plotters come from `PlottingTool`), `myutils <cmd>` becomes
   `eproducer <cmd>` in the scripts, the docstrings, and the bug fixes listed below (myutils
   still has those bugs).
-- The git remote (origin = https://github.com/graeter-group/EPRoducer.git) was removed on
-  2026-10-22 at the user's request.
+- The git remote was removed on 2026-10-22 and later restored as
+  origin = git@github.com:graeter-group/EPRoducer.git.
 
 Layout
 ------
@@ -77,9 +77,9 @@ Documentation
   sith's `_templates/layout.html` was not copied: sphinx_rtd_theme 3.0.2 ignores it.
 - `doc/_build` is tracked in git (the workflow runs `make clean html`). Test builds go into a
   scratch copy so that it is not changed by accident.
-- GitHub Pages: the "Setup Pages" step of the workflow is commented until the repository is
-  public (TODO at the top of `doc/index.rst`). The deploy job will probably also fail while
-  the repository is private.
+- GitHub Pages: the repository is public and the workflow publishes the docs at
+  https://graeter-group.github.io/EPRoducer/ on every push to main (first successful deploy
+  2026-11-03, commit 69a52ae). Pages source must stay set to "GitHub Actions".
 
 Tutorials (`doc/tutorials`)
 ---------------------------

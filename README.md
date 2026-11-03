@@ -22,5 +22,6 @@ The calculations also need ORCA, MATLAB with EasySpin, and VMD.
 
 ## Documentation
 
-Run `eproducer doc` to open the documentation in your web browser, or
+The documentation is available at https://graeter-group.github.io/EPRoducer/.
+You can also run `eproducer doc` to open a local copy in your web browser, or
 `eproducer -h` to list all the tools.

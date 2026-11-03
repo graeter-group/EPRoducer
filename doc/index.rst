@@ -1,8 +1,3 @@
-.. TODO: when the repository is public, uncomment the "Setup Pages" step in
-   .github/workflows/jekyll-gh-pages.yml, so that this documentation is
-   published on GitHub Pages. It is commented because GitHub Pages is not
-   available while the repository is private.
-
 .. _eproducer:
 
 =========
