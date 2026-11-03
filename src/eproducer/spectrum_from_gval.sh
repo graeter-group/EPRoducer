@@ -29,6 +29,10 @@ Creates the EPR absorption spectrum from a set of g-values using EasySpin.
   -o  <output.dat> dat output file where the field vs spectrum is saved. If it
       is not given, it is generated from the g-values.
   -l  <lwpp=1> linewidth.
+  -s  <gStrain> g-strain (EasySpin's Sys.gStrain), i.e. FWHM of the
+      distribution of each g-value, in the same order as -g. It broadens each
+      principal direction separately, e.g. '[0.0015,0,0]' smooths only the
+      edge of the first g-value. If not given, no g-strain is applied.
   -m  <float=179.813> experimental value of the microwave frequency. The
       default value corresponds to G-band experiments.
   -M  <matlab='matlab'> command used to call matlab.
@@ -53,8 +57,9 @@ matlab='matlab'
 Avals=''
 nucs=''
 ModAmp=''
+gstrain=''
 type=0
-while getopts 'a:e:g:A:N:o:l:m:M:n:t:vh' flag;
+while getopts 'a:e:g:A:N:o:l:s:m:M:n:t:vh' flag;
 do
   case "${flag}" in
     a) ModAmp=${OPTARG} ;;
@@ -64,6 +69,7 @@ do
     N) nucs=${OPTARG} ;;
     o) output=${OPTARG} ;;
     l) lwpp=${OPTARG} ;;
+    s) gstrain=${OPTARG} ;;
     m) MicroWaveExper=${OPTARG} ;;
     M) matlab=${OPTARG} ;;
     n) ndpoints=${OPTARG} ;;
@@ -91,6 +97,15 @@ then
   mod_amp_info=""
 else
   mod_amp_info="Exp.ModAmp = $ModAmp ;"
+fi
+
+if [ -z "$gstrain" ]
+then
+  gstrain_info=""
+  gstrain_header=""
+else
+  gstrain_info="Sys.gStrain = $gstrain ;"
+  gstrain_header="'# gStrain=$gstrain\n' "
 fi
 
 # ----- hyperfine (A-matrix) setup --------------------------------------------
@@ -135,16 +150,25 @@ $mod_amp_info
 % ==== Theory
 Sys.g = $gvals
 Sys.lwpp = $lwpp
+$gstrain_info
 $hyperfine_block
 
-[ field, spec ] = pepper(Sys, Exp);
+% EasySpin 6.0.12 bug: for axial systems whose unique axis is not z (e.g.
+% g = [a b b]), hamsymm returns Dinfh and pepper drops the unique component.
+% Use the full Ci grid in the molecular frame in that case.
+Opt = struct();
+if strcmp(hamsymm(Sys), 'Dinfh')
+  Opt.GridSymmetry = 'Ci';
+  Opt.GridFrame = eye(3);
+end
+[ field, spec ] = pepper(Sys, Exp, Opt);
 data = [field(:), spec(:) ];
 
 % ==== create file
 fid = fopen('$output', 'w');
 fprintf(fid, ['# Theoretical spectrum\n' ...
               '# mwFreq=$MicroWaveExper\n' ...
-              '# lwpp=$lwpp\n' ...
+              '# lwpp=$lwpp\n' $gstrain_header...
               '# Field [mT] Intensity [A.U]\n']); % write header
 fclose(fid);
 writematrix(data, '$output', 'Delimiter', 'tab', 'WriteMode', 'append');

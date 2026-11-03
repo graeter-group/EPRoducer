@@ -25,6 +25,12 @@ extract_EPRspec
         -o  <output.dat='spectrum_wo_hyFiCorr.dat'> dat output file where you want to
             save the field vs spectrum.
         -l  <lwpp=1> linewidth
+        -s  <gStrain> g-strain (EasySpin's Sys.gStrain), i.e. FWHM of the
+            distribution of each g-value, in the same order as the g-values read from
+            the orca output (the same order used by -d), which is increasing. It
+            broadens each principal direction separately, e.g. '[0,0,0.0015]' smooths
+            only the low-field edge (largest g-value). If not given, no g-strain is
+            applied.
         -m  <float=179.813> experimental value of the microwave frequency. The
             default value corresponds to G-band experiments.
         -n  <int=401> number of data points used to predict the absorption spectrum.

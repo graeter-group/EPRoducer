@@ -30,6 +30,10 @@ spectrum_from_gval
         -o  <output.dat> dat output file where the field vs spectrum is saved. If it
             is not given, it is generated from the g-values.
         -l  <lwpp=1> linewidth.
+        -s  <gStrain> g-strain (EasySpin's Sys.gStrain), i.e. FWHM of the
+            distribution of each g-value, in the same order as -g. It broadens each
+            principal direction separately, e.g. '[0.0015,0,0]' smooths only the
+            edge of the first g-value. If not given, no g-strain is applied.
         -m  <float=179.813> experimental value of the microwave frequency. The
             default value corresponds to G-band experiments.
         -M  <matlab='matlab'> command used to call matlab.

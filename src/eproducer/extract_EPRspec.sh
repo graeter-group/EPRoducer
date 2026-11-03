@@ -24,6 +24,12 @@ Extract the EPR absorption spectrum from an orca output file.
   -o  <output.dat='spectrum_wo_hyFiCorr.dat'> dat output file where you want to
       save the field vs spectrum.
   -l  <lwpp=1> linewidth
+  -s  <gStrain> g-strain (EasySpin's Sys.gStrain), i.e. FWHM of the
+      distribution of each g-value, in the same order as the g-values read from
+      the orca output (the same order used by -d), which is increasing. It
+      broadens each principal direction separately, e.g. '[0,0,0.0015]' smooths
+      only the low-field edge (largest g-value). If not given, no g-strain is
+      applied.
   -m  <float=179.813> experimental value of the microwave frequency. The
       default value corresponds to G-band experiments.
   -n  <int=401> number of data points used to predict the absorption spectrum. 
@@ -49,7 +55,8 @@ disturb='[ 0 0 0 ]'
 verbose='false'
 type=0
 ModAmp=''
-while getopts 'a:d:e:fO:o:l:m:n:t:vh' flag;
+gstrain=''
+while getopts 'a:d:e:fO:o:l:s:m:n:t:vh' flag;
 do
   case "${flag}" in
     a) ModAmp=${OPTARG} ;;
@@ -60,6 +67,7 @@ do
     o) output=${OPTARG} ;;
     m) MicroWaveExper=${OPTARG} ;;
     l) lwpp=${OPTARG} ;;
+    s) gstrain=${OPTARG} ;;
     n) ndpoints=${OPTARG} ;;
     t) type=${OPTARG} ;;
 
@@ -92,6 +100,15 @@ then
 else
   mod_amp_info="Exp.ModAmp = $ModAmp ;"
 fi
+
+if [ -z "$gstrain" ]
+then
+  gstrain_info=""
+  gstrain_header=""
+else
+  gstrain_info="Sys.gStrain = $gstrain ;"
+  gstrain_header="'# gStrain=$gstrain\n' "
+fi
 # ---- BODY --------------- ----------------------------------------------------
 cat << EOF > ${output%.dat}.m
 clear, clf, clc
@@ -110,10 +127,19 @@ Sys = rmfield(Sys, 'Nucs');
 Sys = rmfield(Sys, 'A');
 Sys = rmfield(Sys, 'AFrame');
 Sys.lwpp = $lwpp ;
+$gstrain_info
 
 Sys.g = Sys.g + $disturb ;
 
-[ field, spec ] = pepper(Sys, Exp);
+% EasySpin 6.0.12 bug: for axial systems whose unique axis is not z (e.g.
+% g = [a b b]), hamsymm returns Dinfh and pepper drops the unique component.
+% Use the full Ci grid in the molecular frame in that case.
+Opt = struct();
+if strcmp(hamsymm(Sys), 'Dinfh')
+  Opt.GridSymmetry = 'Ci';
+  Opt.GridFrame = eye(3);
+end
+[ field, spec ] = pepper(Sys, Exp, Opt);
 data = [field(:), spec(:) ];
 
 % ==== create file
@@ -121,7 +147,7 @@ fid = fopen('$output', 'w');
 fprintf(fid, ['# Theoretical spectrum\n' ...
               '# file: $(pwd)/$orca_output\n' ...
               '# mwFreq=$MicroWaveExper\n' ...
-              '# lwpp=$lwpp\n' ...
+              '# lwpp=$lwpp\n' $gstrain_header...
               '# Field [mT] Intensity [A.U]\n']); % write header
 fclose(fid);
 writematrix(data, '$output', 'Delimiter', 'tab', 'WriteMode', 'append');
